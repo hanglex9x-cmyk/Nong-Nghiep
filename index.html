@@ -2,134 +2,301 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
 <title>THYM — Quản lý nông nghiệp</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
-:root{--bg:#f2f5ec;--surface:#ffffff;--surface2:#eef3e4;--ink:#1d2b1a;--ink2:#51624c;--ink3:#7d8c76;--line:#dde5d2;--brand:#2e7d32;--brand-deep:#1b5e20;--brand-soft:#e3f0dc;--green:#2f9e44;--amber:#dd9413;--amber-soft:#fdf0d3;--red:#cf3f38;--red-soft:#fbe7e4;--gray:#8d9a90;--gray-soft:#e8ece6;--gold:#b97f10;--shadow:0 1px 2px rgba(27,60,25,.06),0 8px 24px -12px rgba(27,60,25,.18);--radius:14px}
-@media (prefers-color-scheme: dark){:root{--bg:#10160e;--surface:#1a2216;--surface2:#222c1d;--ink:#e6efdd;--ink2:#a9bda0;--ink3:#7f9077;--line:#2e3d29;--brand:#66bb6a;--brand-deep:#a5d6a7;--brand-soft:#24371f;--green:#51cf66;--amber:#f0b429;--amber-soft:#3a2f12;--red:#ff8787;--red-soft:#3d1f1c;--gray:#93a295;--gray-soft:#2a332a;--gold:#f0b429;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6)}}
-*{box-sizing:border-box} html{scroll-behavior:smooth}
-body{margin:0;font-family:"Be Vietnam Pro",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
-button,input,select,textarea{font:inherit;color:inherit} a{color:var(--brand)} .mono{font-family:"JetBrains Mono",monospace} .hidden{display:none!important}
-.app{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
-.sidebar{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;background:var(--surface);border-right:1px solid var(--line);padding:18px 14px;z-index:30;overflow-y:auto}
-.farm-box{background:var(--brand-soft);border-radius:12px;padding:12px 14px;margin-bottom:16px}
-.farm-box b{display:block;font-size:14.5px;line-height:1.35}
-.farm-box span{font-size:12.5px;color:var(--ink2)}
-.nav{display:flex;flex-direction:column;gap:4px}
-.nav button{display:flex;align-items:center;gap:11px;width:100%;text-align:left;background:none;border:0;border-radius:10px;padding:10px 12px;font-weight:600;font-size:14.5px;color:var(--ink2);cursor:pointer}
-.nav button:hover{background:var(--surface2);color:var(--ink)}
-.nav button.on{background:var(--brand);color:#fff}
-.side-foot{margin-top:auto;font-size:12px;color:var(--ink3);border-top:1px solid var(--line);padding-top:12px;line-height:1.6}
+      :root{
+        --bg:#f2f5ec; --surface:#ffffff; --surface2:#eef3e4; --ink:#1d2b1a; --ink2:#51624c; --ink3:#7d8c76;
+        --line:#dde5d2; --brand:#2e7d32; --brand-deep:#1b5e20; --brand-soft:#e3f0dc;
+        --green:#2f9e44; --amber:#dd9413; --amber-soft:#fdf0d3; --red:#cf3f38; --red-soft:#fbe7e4;
+        --gray:#8d9a90; --gray-soft:#e8ece6; --gold:#b97f10;
+        --shadow:0 1px 2px rgba(27,60,25,.06),0 8px 24px -12px rgba(27,60,25,.18);
+        --radius:14px;
+      }
+      @media (prefers-color-scheme: dark){
+        :root{
+          --bg:#10160e; --surface:#1a2216; --surface2:#222c1d; --ink:#e6efdd; --ink2:#a9bda0; --ink3:#7f9077;
+          --line:#2e3d29; --brand:#66bb6a; --brand-deep:#a5d6a7; --brand-soft:#24371f;
+          --green:#51cf66; --amber:#f0b429; --amber-soft:#3a2f12; --red:#ff8787; --red-soft:#3d1f1c;
+          --gray:#93a295; --gray-soft:#2a332a; --gold:#f0b429;
+          --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+        }
+      }
+      *{box-sizing:border-box}
+      html{scroll-behavior:smooth}
+      body{margin:0;font-family:"Be Vietnam Pro",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+      button,input,select,textarea{font:inherit;color:inherit}
+      a{color:var(--brand)}
+      .mono{font-family:"JetBrains Mono",monospace}
+
+      /* ---------- Layout ---------- */
+      .app{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+      .sidebar{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;background:var(--surface);border-right:1px solid var(--line);padding:18px 14px;z-index:30}
+      .farm-box{background:var(--brand-soft);border-radius:12px;padding:12px 14px;margin-bottom:16px}
+      .farm-box b{display:block;font-size:14.5px;line-height:1.35}
+      .farm-box span{font-size:12.5px;color:var(--ink2)}
+      .nav{display:flex;flex-direction:column;gap:4px}
+      .nav button{display:flex;align-items:center;gap:11px;width:100%;text-align:left;background:none;border:0;border-radius:10px;padding:10px 12px;font-weight:600;font-size:14.5px;color:var(--ink2);cursor:pointer}
+      .nav button svg{flex:none}
+      .nav button:hover{background:var(--surface2);color:var(--ink)}
+      .nav button.on{background:var(--brand);color:#fff}
+      .nav button.on svg{stroke:#fff}
+      .side-foot{margin-top:auto;font-size:12px;color:var(--ink3);border-top:1px solid var(--line);padding-top:12px;line-height:1.6}
+      .main{min-width:0;padding:0 26px 90px}
+      .topbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:16px 0 12px;border-bottom:1px solid var(--line)}
+      .topbar h1{font-size:21px;margin:0;font-weight:800;letter-spacing:-.01em}
+      .sync-pill{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:12.5px;color:var(--ink2);font-weight:500}
+      .sync-dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+      @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(47,158,68,.45)}70%{box-shadow:0 0 0 7px rgba(47,158,68,0)}100%{box-shadow:0 0 0 0 rgba(47,158,68,0)}}
+      .demo-badge{background:var(--amber);color:#231a00;font-weight:800;font-size:12px;border-radius:8px;padding:5px 10px;letter-spacing:.02em}
+      .demo-note{margin:16px 0 0;background:var(--amber-soft);border:1px solid color-mix(in srgb,var(--amber) 40%,transparent);border-radius:12px;padding:11px 14px;font-size:13.5px}
+      .demo-note b{color:var(--gold)}
+      @media (prefers-color-scheme: dark){.demo-note b{color:var(--amber)}}
+
+      .view{display:none;padding-top:20px;animation:fade .25s ease}
+      .view.on{display:block}
+      @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+      @media (prefers-reduced-motion: reduce){.view{animation:none}.sync-dot{animation:none}}
+
+      /* ---------- Cards & grids ---------- */
+      .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+      .card h3{margin:0 0 4px;font-size:16px;font-weight:700}
+      .card .sub{font-size:13px;color:var(--ink2);margin:0 0 12px}
+      .grid{display:grid;gap:16px}
+      .kpi-grid{grid-template-columns:repeat(3,1fr)}
+      .kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px}
+      .kpi .lab{font-size:12.5px;font-weight:600;color:var(--ink2);text-transform:uppercase;letter-spacing:.05em}
+      .kpi .val{font-size:29px;font-weight:800;line-height:1.15;margin:3px 0 2px;font-variant-numeric:tabular-nums}
+      .kpi .val small{font-size:15px;font-weight:600;color:var(--ink2)}
+      .kpi .note{font-size:12.5px;color:var(--ink3)}
+      .kpi.alert-kpi{border-color:color-mix(in srgb,var(--red) 45%,transparent)}
+      .kpi.alert-kpi .val{color:var(--red)}
+      .cols-2{grid-template-columns:1.6fr 1fr}
+      .cols-2b{grid-template-columns:1fr 1fr}
+      @media (max-width:1100px){.cols-2,.cols-2b{grid-template-columns:1fr}.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+      @media (max-width:560px){.kpi-grid{grid-template-columns:1fr 1fr}.kpi .val{font-size:24px}}
+
+      /* ---------- Filters / forms ---------- */
+      .filters{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
+      .field{display:flex;flex-direction:column;gap:5px}
+      .field label{font-size:12.5px;font-weight:600;color:var(--ink2)}
+      select,input[type=text],input[type=number],input[type=date],textarea{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:14.5px;min-height:42px}
+      textarea{min-height:76px;resize:vertical}
+      select:focus,input:focus,textarea:focus{outline:2px solid color-mix(in srgb,var(--brand) 55%,transparent);outline-offset:1px;border-color:var(--brand)}
+      .btn{background:var(--brand);color:#fff;border:0;border-radius:10px;padding:10px 18px;font-weight:700;cursor:pointer;min-height:44px}
+      .btn:hover{background:var(--brand-deep)}
+      .btn.ghost{background:var(--surface);color:var(--brand);border:1.5px solid var(--brand)}
+      .btn.ghost:hover{background:var(--brand-soft)}
+      .btn.small{min-height:38px;padding:7px 13px;font-size:13.5px}
+      .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+      .form-grid .full{grid-column:1/-1}
+      @media (max-width:640px){.form-grid{grid-template-columns:1fr}}
+      .file-drop{border:1.5px dashed var(--line);border-radius:10px;padding:12px;font-size:13.5px;color:var(--ink2);background:var(--surface2)}
+      .file-drop input{max-width:100%}
+
+      /* ---------- Tables ---------- */
+      .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+      table{border-collapse:collapse;width:100%;font-size:13.4px}
+      th{background:var(--surface2);text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);padding:9px 10px;white-space:nowrap;border-bottom:1px solid var(--line)}
+      td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+      @media (max-width:700px){
+        .tbl-wrap{overflow:visible;border:0;background:transparent;border-radius:0}
+        .tbl-wrap table,.tbl-wrap tbody,.tbl-wrap tr,.tbl-wrap td{display:block;width:100%}
+        .tbl-wrap thead{display:none}
+        .tbl-wrap tr{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:10px;padding:4px 2px;box-shadow:var(--shadow)}
+        .tbl-wrap td{display:flex;justify-content:space-between;align-items:baseline;gap:16px;border-bottom:1px dashed var(--line);padding:7px 10px;text-align:right}
+        .tbl-wrap td:last-child{border-bottom:0}
+        .tbl-wrap td::before{content:attr(data-label);flex:none;font-weight:600;color:var(--ink2);text-align:left;font-size:11.8px;text-transform:uppercase;letter-spacing:.03em;padding-top:2px}
+        .tbl-wrap tr.lowrow td{background:transparent}
+        .tbl-wrap tr.lowrow{background:var(--red-soft)}
+      }
+      tr:last-child td{border-bottom:0}
+      td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+      tr.lowrow td{background:var(--red-soft)}
+      .sheet-table th{background:#1b5e20;color:#e8f5e9}
+      @media (prefers-color-scheme: dark){.sheet-table th{background:#24401f}}
+
+      /* ---------- Badges ---------- */
+      .badge{display:inline-flex;align-items:center;gap:6px;font-size:12.3px;font-weight:700;border-radius:999px;padding:3px 10px;white-space:nowrap}
+      .badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+      .b-green{background:color-mix(in srgb,var(--green) 15%,transparent);color:var(--green)}
+      .b-amber{background:var(--amber-soft);color:var(--gold)}
+      @media (prefers-color-scheme: dark){.b-amber{color:var(--amber)}}
+      .b-red{background:var(--red-soft);color:var(--red)}
+      .b-gray{background:var(--gray-soft);color:var(--ink2)}
+      .b-plain{background:var(--brand-soft);color:var(--brand-deep)}
+      @media (prefers-color-scheme: dark){.b-plain{color:var(--brand)}}
+      .perm{font-size:12px;font-weight:700;border-radius:6px;padding:2px 8px;background:var(--brand-soft);color:var(--brand-deep);white-space:nowrap}
+      @media (prefers-color-scheme: dark){.perm{color:var(--brand)}}
+      .perm.no{background:var(--gray-soft);color:var(--ink3)}
+
+      /* ---------- Alerts / lists ---------- */
+      .alert-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+      .alert-item:last-child{border-bottom:0}
+      .alert-ic{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-weight:800;font-size:16px}
+      .ai-red{background:var(--red-soft);color:var(--red)} .ai-amber{background:var(--amber-soft);color:var(--gold)}
+      .alert-item b{font-size:14.3px}
+      .alert-item p{margin:2px 0 0;font-size:13.2px;color:var(--ink2)}
+      .feed-item{display:flex;gap:11px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.8px}
+      .feed-item:last-child{border-bottom:0}
+      .feed-item time{flex:none;font-size:12.3px;color:var(--ink3);width:86px;padding-top:2px;font-variant-numeric:tabular-nums}
+      .progress-row{padding:9px 0;border-bottom:1px solid var(--line)}
+      .progress-row:last-child{border-bottom:0}
+      .progress-top{display:flex;justify-content:space-between;gap:10px;font-size:13.8px;margin-bottom:5px}
+      .bar{height:9px;border-radius:99px;background:var(--gray-soft);overflow:hidden}
+      .bar i{display:block;height:100%;border-radius:99px;background:var(--green)}
+      .bar i.amber{background:var(--amber)} .bar i.red{background:var(--red)}
+
+      /* ---------- Map ---------- */
+      .map-layout{display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start}
+      @media (max-width:1100px){.map-layout{grid-template-columns:1fr}}
+      #map{height:480px;border-radius:12px;border:1px solid var(--line);overflow:hidden;background:var(--surface2)}
+      @media (max-width:640px){#map{height:340px}}
+      .map-tools{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+      .map-tools input[type=text]{flex:1;min-width:170px}
+      .chip{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 13px;font-size:13px;font-weight:600;cursor:pointer;color:var(--ink2)}
+      .chip.on{border-color:var(--brand);background:var(--brand-soft);color:var(--brand-deep)}
+      @media (prefers-color-scheme: dark){.chip.on{color:var(--brand)}}
+      .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--ink2);margin-top:10px}
+      .legend span{display:inline-flex;align-items:center;gap:6px}
+      .sw{width:14px;height:14px;border-radius:4px;display:inline-block}
+      .plot-row{display:flex;gap:11px;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:11px 6px;cursor:pointer;align-items:center}
+      .plot-row:hover{background:var(--surface2)}
+      .plot-row.map-selected,.plot-row.sel{background:var(--brand-soft)}
+      .plot-num{flex:none;width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;font-size:12.5px;font-weight:700;display:grid;place-items:center}
+      .plot-row .pi{flex:1;min-width:0}
+      .plot-row .pi b{font-size:14px}
+      .plot-row .pi span{display:block;font-size:12.5px;color:var(--ink2)}
+      .pin{width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;font-weight:700;font-size:12.5px;display:grid;place-items:center;border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.35)}
+      .pin--on{background:var(--amber);color:#231a00}
+      .kv{display:grid;grid-template-columns:auto 1fr;gap:5px 14px;font-size:14px}
+      .kv dt{color:var(--ink2)} .kv dd{margin:0;font-weight:600;text-align:right}
+      .map-fallback{padding:16px;font-size:14px;color:var(--ink2)}
+
+      /* ---------- System view ---------- */
+      .flow{display:flex;flex-direction:column;gap:0;align-items:stretch}
+      .flow-step{background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:13px 16px}
+      .flow-step b{font-size:15px}
+      .flow-step p{margin:3px 0 0;font-size:13.3px;color:var(--ink2)}
+      .flow-arrow{text-align:center;color:var(--brand);font-size:19px;line-height:1;padding:3px 0;font-weight:800}
+      .tab-grid{grid-template-columns:repeat(3,1fr)}
+      @media (max-width:1100px){.tab-grid{grid-template-columns:repeat(2,1fr)}}
+      @media (max-width:640px){.tab-grid{grid-template-columns:1fr}}
+      .sheet-tab{border:1px solid var(--line);border-radius:12px;padding:13px 15px;background:var(--surface)}
+      .sheet-tab .mono{font-weight:600;color:var(--brand-deep);font-size:14.5px}
+      @media (prefers-color-scheme: dark){.sheet-tab .mono{color:var(--brand)}}
+      .sheet-tab p{margin:4px 0 6px;font-size:13.2px;color:var(--ink2)}
+      .sheet-tab span{font-size:12.3px;color:var(--ink3)}
+      .role-card h4{margin:0 0 3px;font-size:15.5px}
+      .role-card .who{font-size:13px;color:var(--ink2);margin:0 0 10px}
+      .role-card ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px;font-size:13.5px}
+      .role-card li{display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed var(--line);padding-bottom:6px}
+      .role-card li:last-child{border-bottom:0}
+
+      .toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);background:#1b5e20;color:#fff;padding:13px 20px;border-radius:12px;font-weight:600;font-size:14.5px;box-shadow:0 12px 32px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:.3s;z-index:99;max-width:92vw;text-align:center}
+      .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+      @media (min-width:1025px){.toast{bottom:28px}}
+
+      /* ---------- Mobile nav ---------- */
+      .bottomnav{display:none}
+      @media (max-width:1024px){
+        .app{grid-template-columns:1fr}
+        .sidebar{display:none}
+        .main{padding:0 15px 96px}
+        .bottomnav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--surface);border-top:1px solid var(--line);padding:6px 2px calc(6px + env(safe-area-inset-bottom))}
+        .bottomnav button{flex:1 1 0;min-width:0;background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;line-height:1.2;text-align:center;font-weight:600;color:var(--ink3);padding:5px 1px;cursor:pointer;border-radius:9px}
+        .bottomnav button.on{color:var(--brand)}
+        .topbar h1{font-size:18px}
+      }
+      .sec-title{font-size:17px;font-weight:800;margin:22px 0 10px}
+      .sec-title:first-child{margin-top:0}
+      .chart-box{width:100%}
+      .chart-box svg{width:100%;height:auto;display:block}
+      .hbars{display:flex;flex-direction:column;gap:11px}
+      .hbar-row{display:grid;grid-template-columns:118px 1fr 86px;gap:10px;align-items:center;font-size:13.5px}
+      .hbar-row .track{height:14px;background:var(--gray-soft);border-radius:99px;overflow:hidden}
+      .hbar-row .fill{height:100%;background:var(--brand);border-radius:99px}
+      .hbar-row .v{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+      @media (max-width:560px){.hbar-row{grid-template-columns:92px 1fr 74px;font-size:12.8px}}
+    
+/* ===== BO SUNG cho ban that — demo khong co cac phan tu nay (dang nhap, tien ich, Leaflet). Khoi CSS cua demo o tren giu nguyen van. ===== */
+.hidden{display:none!important}
+.err{color:var(--red);font-size:13.5px;min-height:20px;margin-top:10px}
+.sidebar{overflow-y:auto}
 .side-foot .uinfo{font-size:12.5px;color:var(--ink2);margin-bottom:10px;line-height:1.6}
-.main{min-width:0;padding:0 26px 90px}
-.topbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:16px 0 12px;border-bottom:1px solid var(--line)}
-.topbar h1{font-size:21px;margin:0;font-weight:800;letter-spacing:-.01em}
-.sync-pill{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:12.5px;color:var(--ink2);font-weight:500}
-.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(47,158,68,.45)}70%{box-shadow:0 0 0 7px rgba(47,158,68,0)}100%{box-shadow:0 0 0 0 rgba(47,158,68,0)}}
-.demo-note{margin:16px 0 0;background:var(--amber-soft);border:1px solid color-mix(in srgb,var(--amber) 40%,transparent);border-radius:12px;padding:11px 14px;font-size:13.5px}
-.demo-note b{color:var(--gold)} @media (prefers-color-scheme: dark){.demo-note b{color:var(--amber)}}
-.view{display:none;padding-top:20px;animation:fade .25s ease} .view.on{display:block}
-@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion: reduce){.view{animation:none}.sync-dot{animation:none}}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
-.card h3{margin:0 0 4px;font-size:16px;font-weight:700} .card .sub{font-size:13px;color:var(--ink2);margin:0 0 12px}
-.grid{display:grid;gap:16px} .kpi-grid{grid-template-columns:repeat(3,1fr)}
-.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px}
-.kpi .lab{font-size:12.5px;font-weight:600;color:var(--ink2);text-transform:uppercase;letter-spacing:.05em}
-.kpi .val{font-size:29px;font-weight:800;line-height:1.15;margin:3px 0 2px;font-variant-numeric:tabular-nums}
-.kpi .val small{font-size:15px;font-weight:600;color:var(--ink2)} .kpi .note{font-size:12.5px;color:var(--ink3)}
-.kpi.alert-kpi{border-color:color-mix(in srgb,var(--red) 45%,transparent)} .kpi.alert-kpi .val{color:var(--red)}
-.cols-2{grid-template-columns:1.6fr 1fr} .cols-2b{grid-template-columns:1fr 1fr}
-@media (max-width:1100px){.cols-2,.cols-2b{grid-template-columns:1fr}.kpi-grid{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:560px){.kpi-grid{grid-template-columns:1fr 1fr}.kpi .val{font-size:24px}}
-.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
-.field{display:flex;flex-direction:column;gap:5px} .field label{font-size:12.5px;font-weight:600;color:var(--ink2)}
-label{display:block;font-size:12.5px;font-weight:600;margin:10px 0 4px;color:var(--ink2)} .field label{margin:0}
-select,input,textarea{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:14.5px;min-height:42px}
-textarea{min-height:76px;resize:vertical}
-select:focus,input:focus,textarea:focus{outline:2px solid color-mix(in srgb,var(--brand) 55%,transparent);outline-offset:1px;border-color:var(--brand)}
-.btn{background:var(--brand);color:#fff;border:0;border-radius:10px;padding:10px 18px;font-weight:700;cursor:pointer;min-height:44px}
-.btn:hover{background:var(--brand-deep)} .btn.ghost{background:var(--surface);color:var(--brand);border:1.5px solid var(--brand)} .btn.ghost:hover{background:var(--brand-soft)}
-.btn.small{min-height:38px;padding:7px 13px;font-size:13.5px} .btn.sec{background:var(--surface);color:var(--brand);border:1.5px solid var(--brand)} .btn.sec:hover{background:var(--brand-soft)}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px} .form-grid .full{grid-column:1/-1} @media (max-width:640px){.form-grid{grid-template-columns:1fr}}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:13px} @media (max-width:640px){.grid2{grid-template-columns:1fr}}
-.tbl-wrap{overflow:auto;max-height:62vh;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
-table{border-collapse:collapse;width:100%;font-size:13.4px}
-th{background:var(--surface2);text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);padding:9px 10px;white-space:nowrap;border-bottom:1px solid var(--line)}
-td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;white-space:nowrap;font-variant-numeric:tabular-nums}
-tr:last-child td{border-bottom:0} td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap} tr.lowrow td{background:var(--red-soft)}
-.badge{display:inline-flex;align-items:center;gap:6px;font-size:12.3px;font-weight:700;border-radius:999px;padding:3px 10px;white-space:nowrap}
-.badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
-.b-green{background:color-mix(in srgb,var(--green) 15%,transparent);color:var(--green)} .b-amber{background:var(--amber-soft);color:var(--gold)} .b-red{background:var(--red-soft);color:var(--red)} .b-gray{background:var(--gray-soft);color:var(--ink2)} .b-plain{background:var(--brand-soft);color:var(--brand-deep)}
-.alert-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)} .alert-item:last-child{border-bottom:0}
-.alert-ic{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-weight:800;font-size:16px}
-.ai-red{background:var(--red-soft);color:var(--red)} .ai-amber{background:var(--amber-soft);color:var(--gold)}
-.alert-item b{font-size:14.3px} .alert-item p{margin:2px 0 0;font-size:13.2px;color:var(--ink2)}
-.feed-item{display:flex;gap:11px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.8px;align-items:baseline} .feed-item:last-child{border-bottom:0}
-.feed-item time{flex:none;font-size:12.3px;color:var(--ink3);width:86px;padding-top:2px;font-variant-numeric:tabular-nums}
-.feed .fi{display:flex;gap:11px;padding:10px 0;border-bottom:1px solid var(--line);align-items:baseline;font-size:13.8px} .feed .fi:last-child{border-bottom:0}
-.feed .tag{flex-shrink:0;display:inline-flex;align-items:center;gap:6px;font-size:12.3px;font-weight:700;background:var(--brand-soft);color:var(--brand-deep);border-radius:999px;padding:3px 10px;white-space:nowrap}
-.feed .tm{margin-left:auto;flex-shrink:0;color:var(--ink3);font-size:12.3px;white-space:nowrap;font-variant-numeric:tabular-nums}
-.bar{height:9px;border-radius:99px;background:var(--gray-soft);overflow:hidden} .bar i{display:block;height:100%;border-radius:99px;background:var(--green)} .bar i.amber{background:var(--amber)} .bar i.red{background:var(--red)}
-.pbar{background:var(--gray-soft);border-radius:99px;height:9px;min-width:80px;overflow:hidden} .pbar>div{background:var(--green);height:100%;border-radius:99px}
-.chart{display:flex;align-items:flex-end;gap:6px;height:195px;padding:6px 4px 0;border-bottom:2px solid var(--line)}
-.col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0}
-.col .tot{font-size:11px;color:var(--ink2);margin-bottom:4px;white-space:nowrap;font-variant-numeric:tabular-nums}
-.col .cbar{width:70%;max-width:46px;display:flex;flex-direction:column-reverse;border-radius:4px 4px 0 0;overflow:hidden}
-.col .segCo{background:var(--green)} .col .segNgo{background:#e8a13a} .col .mlab{font-size:11px;color:var(--ink3);margin-top:5px}
-.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--ink2);margin-top:10px} .legend span{display:inline-flex;align-items:center;gap:6px} .sw{width:14px;height:14px;border-radius:4px;display:inline-block}
-#map{height:480px;border-radius:12px;border:1px solid var(--line);overflow:hidden;background:var(--surface2)} @media (max-width:640px){#map{height:340px}}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin-bottom:16px}
-.panel h4{margin:0 0 12px;font-size:16px;font-weight:700} .panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px} .panel-head h4{margin:0}
-.warn{background:var(--amber-soft);border:1px solid color-mix(in srgb,var(--amber) 40%,transparent);padding:11px 14px;border-radius:12px;font-size:13.5px;margin:6px 0 12px;line-height:1.55}
-.note{font-size:13px;color:var(--ink2);margin-top:8px;line-height:1.55} .err{color:var(--red);font-size:13px;min-height:18px;margin-top:8px}
-#loginBox{max-width:380px;margin:8vh auto;background:var(--surface);border:1px solid var(--line);padding:28px;border-radius:var(--radius);box-shadow:var(--shadow)}
-#loginBox h1{font-size:20px;margin:0 0 4px;color:var(--brand-deep);font-weight:800;letter-spacing:-.01em} #loginBox p{margin:0 0 16px;color:var(--ink2);font-size:13px}
-.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);background:#1b5e20;color:#fff;padding:13px 20px;border-radius:12px;font-weight:600;font-size:14.5px;box-shadow:0 12px 32px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:.3s;z-index:99;max-width:92vw;text-align:center}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)} @media (min-width:1025px){.toast{bottom:28px}}
-.bottomnav{display:none}
-@media (max-width:1024px){.app{grid-template-columns:1fr}.sidebar{display:none}.main{padding:0 15px 96px}.bottomnav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--surface);border-top:1px solid var(--line);padding:6px 2px calc(6px + env(safe-area-inset-bottom));overflow-x:auto}.bottomnav button{flex:0 0 auto;min-width:64px;background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;line-height:1.2;text-align:center;font-weight:600;color:var(--ink3);padding:5px 6px;cursor:pointer;border-radius:9px}.bottomnav button.on{color:var(--brand)}.topbar h1{font-size:18px}}
-.sec-title{font-size:17px;font-weight:800;margin:22px 0 10px} .sec-title:first-child{margin-top:0}
-.hbars{display:flex;flex-direction:column;gap:11px}
-.leaflet-tooltip.lo-label{background:rgba(255,255,255,.88);border:1px solid var(--line);font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700}
+input[type=password],input[type=time]{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:14.5px;min-height:42px}
+input[type=password]:focus,input[type=time]:focus{outline:2px solid color-mix(in srgb,var(--brand) 55%,transparent);outline-offset:1px;border-color:var(--brand)}
+.sec-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:22px 0 10px}
+.sec-head .sec-title{margin:0}
+.view>.sec-head:first-child{margin-top:2px}
+.login-wrap{min-height:100vh;display:grid;place-items:center;padding:22px 16px}
+.login-card{display:grid;grid-template-columns:1.05fr 1fr;width:min(880px,100%);background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.login-brand{background:linear-gradient(150deg,#2e7d32 0%,#1b5e20 80%);color:#fff;padding:30px 28px;display:flex;flex-direction:column;gap:10px}
+.login-logo{width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.16);display:grid;place-items:center}
+.login-brand b{font-size:21px;line-height:1.3;letter-spacing:-.01em}
+.login-brand>span{font-size:13.5px;opacity:.85}
+.login-brand p{margin:6px 0 0;font-size:14px;line-height:1.6;opacity:.93}
+.login-stats{margin-top:auto;display:flex;gap:8px;flex-wrap:wrap}
+.login-stats span{background:rgba(255,255,255,.16);border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:700}
+.login-form{padding:30px 28px}
+.login-form h1{font-size:21px;margin:0 0 4px;font-weight:800;letter-spacing:-.01em}
+.login-form .sub{font-size:13.5px;color:var(--ink2);margin:0 0 18px;line-height:1.55}
+.login-form .field{margin-bottom:13px}
+.login-foot{margin:16px 0 0;font-size:12.5px;color:var(--ink3);border-top:1px solid var(--line);padding-top:12px}
+@media (max-width:700px){.login-card{grid-template-columns:1fr}.login-brand{padding:22px}.login-stats{margin-top:12px}.login-form{padding:22px}}
+.leaflet-tooltip.lo-label{background:rgba(255,255,255,.88);border:1px solid var(--line);box-shadow:0 2px 8px rgba(20,40,20,.18);font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;color:#1c2b1c}
 </style>
 </head>
 <body>
 
-<div id="loginBox">
-  <h1>🌱 THYM — Trang trại sữa Yên Mỹ</h1>
-  <p>Trang trại sữa Yên Mỹ · Nông Cống, Thanh Hóa<br>Đăng nhập để tiếp tục</p>
-  <label>Tài khoản</label><input id="lgUser" autocomplete="username">
-  <label>Mật khẩu</label><input id="lgPass" type="password" autocomplete="current-password">
-  <div style="margin-top:16px"><button class="btn" style="width:100%" onclick="doLogin()">Đăng nhập</button></div>
-  <div class="err" id="lgErr"></div>
+<div id="loginBox" class="login-wrap">
+  <div class="login-card">
+    <div class="login-brand">
+      <div class="login-logo"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 21v-7.5"/><path d="M12 13.5c0-3.6-2.9-5.7-7.2-5.7 0 4.3 2.4 6.7 7.2 5.7Z"/><path d="M12 11.2c0-3.1 2.4-5 6.2-5 0 3.7-2 5.8-6.2 5Z"/></svg></div>
+      <b>THYM — Trang trại sữa Yên Mỹ</b>
+      <span>Nông Cống, Thanh Hóa</span>
+      <p>Hệ thống quản lý vùng trồng cỏ Mombasa &amp; ngô sinh khối cho trang trại sữa: nhân viên nhập liệu tại hiện trường, số liệu tổng hợp theo thời gian thực cho quản lý và CEO.</p>
+      <div class="login-stats"><span>467 ha gieo trồng</span><span>12 vùng</span><span>15 lô</span></div>
+    </div>
+    <div class="login-form">
+      <h1>Đăng nhập</h1>
+      <p class="sub">Dùng tài khoản được cấp theo vai trò: CEO · Quản lý · Nhân viên nhập liệu · Feed Center</p>
+      <div class="field"><label for="lgUser">Tài khoản</label><input id="lgUser" autocomplete="username"></div>
+      <div class="field"><label for="lgPass">Mật khẩu</label><input id="lgPass" type="password" autocomplete="current-password"></div>
+      <button class="btn" style="width:100%;margin-top:6px" onclick="doLogin()">Đăng nhập</button>
+      <div class="err" id="lgErr"></div>
+      <p class="login-foot">Database trung tâm: <b>Google Sheets</b> · Dữ liệu thuộc tài khoản Google của trang trại</p>
+    </div>
+  </div>
 </div>
 
-<div id="app" class="hidden">
+<div id="app" class="app hidden">
   <aside class="sidebar">
-    <div class="farm-box"><b>🌱 THYM — Trang trại sữa Yên Mỹ</b><span>Nông Cống, Thanh Hóa</span></div>
+    <div class="farm-box"><b>THYM — Trang trại sữa Yên Mỹ</b><span>467 ha gieo trồng · 12 vùng · 15 lô · Cỏ Mombasa &amp; ngô sinh khối · Nông Cống, Thanh Hóa</span></div>
     <nav class="nav" id="sideNav">
-      <button class="on" data-pg="dashboard" onclick="go('dashboard',this)">📊 Tổng quan</button>
-      <button data-pg="vunglo" onclick="go('vunglo',this)">🗺️ Vùng &amp; Lô</button>
-      <button data-pg="canxe" onclick="go('canxe',this)">🚛 Cân xe</button>
-      <button data-pg="giomay" onclick="go('giomay',this)">🚜 Giờ máy</button>
-      <button data-pg="dau" onclick="go('dau',this)">⛽ Dầu diesel</button>
-      <button data-pg="bon" onclick="go('bon',this)">🌿 Bón phân</button>
-      <button data-pg="sanluong" onclick="go('sanluong',this)">🌾 Sản lượng</button>
-      <button data-pg="bando" onclick="go('bando',this)">🛰️ Bản đồ</button>
+      <button data-pg="dashboard" class="on" onclick="go('dashboard')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span>Dashboard CEO</span></button>
+      <button data-pg="vunglo" class="" onclick="go('vunglo')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 13 9 5 9-5"/></svg><span>Vùng & Lô</span></button>
+      <button data-pg="canxe" class="" onclick="go('canxe')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 6.5h11.5V16H2.5z"/><path d="M14 10h3.8l3.2 3.4V16H14"/><circle cx="6.6" cy="17.9" r="1.8"/><circle cx="17.2" cy="17.9" r="1.8"/><path d="M8.4 17.9h7"/></svg><span>Cân xe</span></button>
+      <button data-pg="giomay" class="" onclick="go('giomay')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3.2 2"/></svg><span>Giờ máy</span></button>
+      <button data-pg="dau" class="" onclick="go('dau')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3.4c3.1 3.9 5.9 7.2 5.9 10.2a5.9 5.9 0 1 1-11.8 0C6.1 10.6 8.9 7.3 12 3.4Z"/></svg><span>Dầu diesel</span></button>
+      <button data-pg="bon" class="" onclick="go('bon')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21v-7.5"/><path d="M12 13.5c0-3.6-2.9-5.7-7.2-5.7 0 4.3 2.4 6.7 7.2 5.7Z"/><path d="M12 11.2c0-3.1 2.4-5 6.2-5 0 3.7-2 5.8-6.2 5Z"/></svg><span>Bón phân</span></button>
+      <button data-pg="sanluong" class="" onclick="go('sanluong')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg><span>Sản lượng</span></button>
+      <button data-pg="bando" class="" onclick="go('bando')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg><span>Bản đồ</span></button>
     </nav>
     <div class="side-foot">
       <div class="uinfo" id="uinfo"></div>
       Database trung tâm: <b>Google Sheets</b><br>
-      <button class="btn ghost small" style="margin-top:10px;width:100%" onclick="doLogout()">🚪 Đăng xuất</button>
+      <button class="btn ghost small" style="margin-top:10px;width:100%" onclick="doLogout()">Đăng xuất</button>
     </div>
   </aside>
   <div class="main">
-    <div class="topbar"><h1 id="viewTitle">Dashboard CEO</h1><span class="sync-pill"><span class="sync-dot"></span>Dữ liệu thật · Google Sheet</span></div>
+    <div class="topbar"><h1 id="viewTitle">Dashboard CEO</h1><span class="sync-pill"><span class="sync-dot"></span><span>Dữ liệu thật · Google Sheets</span></span></div>
     <section class="view on" id="pg-dashboard"></section>
     <section class="view" id="pg-vunglo"></section>
     <section class="view" id="pg-canxe"></section>
@@ -141,21 +308,22 @@ tr:last-child td{border-bottom:0} td.num,th.num{text-align:right;font-variant-nu
   </div>
 </div>
 <nav class="bottomnav hidden" id="bottomNav">
-  <button class="on" data-pg="dashboard" onclick="go('dashboard',this)">📊<span>Tổng quan</span></button>
-  <button data-pg="vunglo" onclick="go('vunglo',this)">🗺️<span>Vùng &amp; Lô</span></button>
-  <button data-pg="canxe" onclick="go('canxe',this)">🚛<span>Cân xe</span></button>
-  <button data-pg="giomay" onclick="go('giomay',this)">🚜<span>Giờ máy</span></button>
-  <button data-pg="dau" onclick="go('dau',this)">⛽<span>Dầu</span></button>
-  <button data-pg="bon" onclick="go('bon',this)">🌿<span>Bón phân</span></button>
-  <button data-pg="sanluong" onclick="go('sanluong',this)">🌾<span>Sản lượng</span></button>
-  <button data-pg="bando" onclick="go('bando',this)">🛰️<span>Bản đồ</span></button>
+  <button data-pg="dashboard" class="on" onclick="go('dashboard')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span>Tổng quan</span></button>
+  <button data-pg="vunglo" class="" onclick="go('vunglo')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 13 9 5 9-5"/></svg><span>Vùng & Lô</span></button>
+  <button data-pg="canxe" class="" onclick="go('canxe')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 6.5h11.5V16H2.5z"/><path d="M14 10h3.8l3.2 3.4V16H14"/><circle cx="6.6" cy="17.9" r="1.8"/><circle cx="17.2" cy="17.9" r="1.8"/><path d="M8.4 17.9h7"/></svg><span>Cân xe</span></button>
+  <button data-pg="giomay" class="" onclick="go('giomay')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3.2 2"/></svg><span>Giờ máy</span></button>
+  <button data-pg="dau" class="" onclick="go('dau')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3.4c3.1 3.9 5.9 7.2 5.9 10.2a5.9 5.9 0 1 1-11.8 0C6.1 10.6 8.9 7.3 12 3.4Z"/></svg><span>Dầu</span></button>
+  <button data-pg="bon" class="" onclick="go('bon')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21v-7.5"/><path d="M12 13.5c0-3.6-2.9-5.7-7.2-5.7 0 4.3 2.4 6.7 7.2 5.7Z"/><path d="M12 11.2c0-3.1 2.4-5 6.2-5 0 3.7-2 5.8-6.2 5Z"/></svg><span>Bón phân</span></button>
+  <button data-pg="sanluong" class="" onclick="go('sanluong')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg><span>Sản lượng</span></button>
+  <button data-pg="bando" class="" onclick="go('bando')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg><span>Bản đồ</span></button>
 </nav>
 <div class="toast" id="toast"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 var API_BASE='https://script.google.com/macros/s/AKfycbx7KJtZDvyiQDLiRukt9QMx6yX_oM55on7WHky036wWXjfmLp99A9KhvdctqUbl8Dma0A/exec';
 var TOKEN=localStorage.getItem('thym_token')||'';
-var USER=null, INIT=null, VUNG=[], LO=[], CUR_VUNG='TATCA', MAP_OBJ=null, MAP_INIT=false;
+var USER=null, INIT=null, VUNG=[], LO=[], CUR_VUNG='TATCA', MAP_OBJ=null, MAP_INIT=false, MAP_LAYERS={}, MAP_CROP='all', MAP_SEL=null;
 try{ USER=JSON.parse(localStorage.getItem('thym_user')||'null'); }catch(e){ USER=null; }
 
 function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3200);}
@@ -223,7 +391,7 @@ function taiXuong(name,aoa){return ensureXLSX().then(function(){var ws=XLSX.util
 function xuatRows(name,rows){ if(!rows||!rows.length){toast('Chua co du lieu de xuat.');return;} var head=Object.keys(rows[0]); var aoa=[head].concat(rows.map(function(r){return head.map(function(h){var v=r[h];return (v===null||v===undefined)?'':v;});})); taiXuong(name,aoa).then(function(){toast('Da xuat file Excel: '+name);}).catch(function(e){toast(e.message);});}
 function xuatVung(){var aoa=[['Ma vung','Ten vung','Cost Center SAP','KC ve Farm (km)','DT vung (ha)','DT co (ha)']].concat(VUNG.map(function(v){return [v.MaVung,v.TenVung,v.CostCenterSAP,v.KhoangCachVeFarm_Km,v.DienTichVung_ha,v.DienTichCo_ha];})); taiXuong('Vung',aoa).then(function(){toast('Da xuat file Excel: Vung');}).catch(function(e){toast(e.message);});}
 function xuatLo(){var aoa=[['Ma lo','Ma vung','Cay trong','Dien tich (ha)','Giong','Trang thai ban do','Trang thai canh tac']].concat(LO.map(function(l){return [l.MaLo,l.MaVung,l.CayTrong,l.DienTich_ha,l.Giong,l.TrangThaiBanDo,l.TrangThaiCanhTac];})); taiXuong('Lo',aoa).then(function(){toast('Da xuat file Excel: Lo');}).catch(function(e){toast(e.message);});}
-function nutXuat(label,fn){return '<button class="btn sec small" onclick="'+fn+'">⬇ Xuat Excel</button>';}
+function nutXuat(label,fn){return '<button class="btn ghost small" onclick="'+fn+'">⬇ Xuất Excel</button>';}
 
 /* Dashboard */
 function allowedVungList(){
@@ -233,7 +401,7 @@ function allowedVungList(){
 function vungFilterHtml(){
   var list=allowedVungList(); var isNV=USER&&USER.role==='NVNhapLieu';
   var opts='<option value="TATCA">'+(isNV?'Tất cả vùng phụ trách':'Tất cả vùng')+'</option>'+list.map(function(v){return '<option value="'+esc(v.MaVung)+'"'+(CUR_VUNG===v.MaVung?' selected':'')+'>'+esc(v.TenVung)+' ('+esc(v.MaVung)+')</option>';}).join('');
-  return '<div class="card" style="margin-bottom:16px"><div class="filters"><div class="field"><label for="fVung">Vùng</label><select id="fVung" onchange="onVungChange(this.value)">'+opts+'</select></div></div></div>';
+  return '<div class="card" style="margin-bottom:16px"><div class="filters"><div class="field"><label for="fVung">Vùng</label><select id="fVung" onchange="onVungChange(this.value)">'+opts+'</select></div><div class="field"><label>&nbsp;</label><span style="font-size:13px;color:var(--ink2)" id="filterNote">Số liệu Dashboard tự lọc theo vùng đã chọn</span></div></div></div>';
 }
 function onVungChange(v){ CUR_VUNG=v; loadDashboard(); }
 async function loadDashboard(){
@@ -244,16 +412,23 @@ async function loadDashboard(){
     var pf=d.phamVi||{};
     var rankHtml='';
     if(pf.loai==='CONGTY' && d.xepHangVung && d.xepHangVung.length){
-      var rank=d.xepHangVung.map(function(v,i){return '<tr><td>'+(i+1)+'</td><td>'+esc(v.tenVung)+'</td><td class="mono">'+esc(v.maVung)+'</td><td class="num">'+fmt(v.dienTichLo_ha,2)+'</td><td class="num">'+fmt(v.heo_tan,2)+'</td><td class="num">'+fmt(v.canXe_tan,2)+'</td><td class="num">'+fmt(v.dm_tan,2)+'</td><td class="num">'+fmt(v.dm_ha,3)+'</td></tr>';}).join('');
+      var rank=d.xepHangVung.map(function(v,i){return '<tr><td data-label="#">'+(i+1)+'</td><td data-label="Vùng">'+esc(v.tenVung)+'</td><td class="mono" data-label="Mã vùng">'+esc(v.maVung)+'</td><td class="num" data-label="DT lô (ha)">'+fmt(v.dienTichLo_ha,2)+'</td><td class="num" data-label="Héo (tấn)">'+fmt(v.heo_tan,2)+'</td><td class="num" data-label="Qua cân (tấn)">'+fmt(v.canXe_tan,2)+'</td><td class="num" data-label="DM (tấn)">'+fmt(v.dm_tan,2)+'</td><td class="num" data-label="DM/ha">'+fmt(v.dm_ha,3)+'</td></tr>';}).join('');
       rankHtml='<div class="card" style="margin-top:16px"><h3>Xếp hạng vùng theo năng suất DM/ha</h3><p class="sub">Diện tích lô làm mẫu số · DM mới tính trên các chuyến cân có ghi %DM</p><div class="tbl-wrap"><table><thead><tr><th>#</th><th>Vùng</th><th>Mã vùng</th><th class="num">DT lô (ha)</th><th class="num">Héo (tấn)</th><th class="num">Qua cân (tấn)</th><th class="num">DM (tấn)</th><th class="num">DM/ha</th></tr></thead><tbody>'+rank+'</tbody></table></div></div>';
     }
-    var warns=(d.canhBao||[]).map(function(w){return '<div class="alert-item"><div class="alert-ic ai-amber">!</div><div><b>Cảnh báo</b><p>'+esc(typeof w==='string'?w:(w.noiDung||w.tieuDe||JSON.stringify(w)))+'</p></div></div>';}).join('');
+    var warns=(d.canhBao||[]).map(function(w){var wt=(typeof w==='string')?'Cảnh báo':(w.tieuDe||'Cảnh báo'); var wd=(typeof w==='string')?w:(w.noiDung||w.tieuDe||JSON.stringify(w)); return '<div class="alert-item"><div class="alert-ic ai-amber">!</div><div><b>'+esc(wt)+'</b><p>'+esc(wd)+'</p></div></div>';}).join('');
     var maxT=0; (d.heoThangCay||[]).forEach(function(m){if(m.tong>maxT)maxT=m.tong;});
-    var tongCo=0,tongNgo=0;
-    var cols=(d.heoThangCay||[]).map(function(m){ tongCo+=Number(m.co)||0; tongNgo+=Number(m.ngo)||0; var h=maxT>0&&m.tong>0?Math.max(4,Math.round(m.tong/maxT*118)):0; var hCo=m.tong>0?Math.round(h*m.co/m.tong):0; return '<div class="col"><div class="tot">'+(m.tong>0?fmt(m.tong):'')+'</div><div class="cbar" style="height:'+h+'px"><div class="segCo" style="height:'+hCo+'px"></div><div class="segNgo" style="height:'+(h-hCo)+'px"></div></div><div class="mlab">T'+esc(m.thang)+'</div></div>';}).join('');
-    var chartHtml='<div class="chart">'+cols+'</div><div class="legend"><span><i class="sw" style="background:#2f9e44"></i>Cỏ: <b>'+fmt(tongCo,2)+' tấn</b></span><span><i class="sw" style="background:#e8a13a"></i>Ngô: <b>'+fmt(tongNgo,2)+' tấn</b></span><span>Tổng: <b>'+fmt(tongCo+tongNgo,2)+' tấn héo</b></span></div>';
-    var lotRows=(d.tienDoLo||[]).map(function(l){var pct=Math.max(0,Math.min(100,Number(l.kpi_PhanTram)||0)); var cls=pct>=80?'':(pct>=40?'amber':'red'); return '<tr><td class="mono">'+esc(l.maLo)+'</td><td>'+esc(l.tenVung)+'</td><td>'+esc(l.cayTrong)+'</td><td class="num">'+fmt(l.dienTich_ha,2)+'</td><td class="num">'+fmt(l.daThu_tan,2)+'</td><td class="num">'+fmt(l.soDot)+'</td><td>'+esc(l.thuGanNhat||'—')+'</td><td class="num">'+fmt(l.dm_ha,3)+(l.dmTheoLo?'':' *')+'</td><td style="min-width:180px"><div style="display:flex;align-items:center;gap:8px"><div class="bar" style="flex:1"><i class="'+cls+'" style="width:'+pct+'%"></i></div><span class="mono">'+fmt(l.kpi_PhanTram,1)+'%</span></div></td></tr>';}).join('');
-    var feedRows=(d.hoatDongMoi||[]).map(function(f){return '<div class="feed-item"><time>'+esc(f.thoiGian)+'</time><span class="badge b-plain">'+esc(f.loai)+'</span><span>'+esc(f.noiDung)+'</span></div>';}).join('');
+    var tongCo=0,tongNgo=0; (d.heoThangCay||[]).forEach(function(m){tongCo+=Number(m.co)||0;tongNgo+=Number(m.ngo)||0;});
+    var niceMax=Math.max(500,Math.ceil(maxT/500)*500);
+    var SW=660,SH=270,SBase=228,STop=18,SLeft=52,SRight=14,SPlotW=SW-SLeft-SRight;
+    var months=d.heoThangCay||[]; var sStep=months.length?SPlotW/months.length:SPlotW; var sBw=Math.min(46,sStep*0.55);
+    var svg='<svg viewBox="0 0 '+SW+' '+SH+'" role="img" aria-label="Biểu đồ sản lượng héo theo tháng">';
+    for(var gi=0;gi<=4;gi++){ var gy=SBase-(SBase-STop)*gi/4, gv=niceMax*gi/4; svg+='<line x1="'+SLeft+'" y1="'+gy+'" x2="'+(SW-SRight)+'" y2="'+gy+'" stroke="var(--line)" stroke-width="1"/><text x="'+(SLeft-8)+'" y="'+(gy+4)+'" text-anchor="end" font-size="11.5" fill="var(--ink3)">'+fmt(gv)+'</text>'; }
+    months.forEach(function(m,mi){ var cx=SLeft+sStep*mi+sStep/2; if(m.tong>0){ var bh=(SBase-STop)*m.tong/niceMax; var bhNgo=bh*(Number(m.ngo)||0)/m.tong; var bhCo=bh-bhNgo; var bx=cx-sBw/2; svg+='<rect x="'+bx+'" y="'+(SBase-bhCo)+'" width="'+sBw+'" height="'+bhCo+'"'+(bhNgo>0?'':' rx="5"')+' fill="var(--green)"/>'; if(bhNgo>0) svg+='<rect x="'+bx+'" y="'+(SBase-bh)+'" width="'+sBw+'" height="'+bhNgo+'" rx="5" fill="#e8a13a"/>'; svg+='<text x="'+cx+'" y="'+(SBase-bh-7)+'" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--ink)">'+fmt(m.tong)+'</text>'; } svg+='<text x="'+cx+'" y="'+(SBase+20)+'" text-anchor="middle" font-size="12" fill="var(--ink2)">Tháng '+esc(m.thang)+'</text>'; });
+    svg+='<line x1="'+SLeft+'" y1="'+SBase+'" x2="'+(SW-SRight)+'" y2="'+SBase+'" stroke="var(--ink3)" stroke-width="1.2"/></svg>';
+    var chartHtml='<div class="chart-box">'+svg+'</div><div class="legend"><span><i class="sw" style="background:var(--green)"></i>Cỏ: <b>'+fmt(tongCo,2)+' tấn</b></span><span><i class="sw" style="background:#e8a13a"></i>Ngô: <b>'+fmt(tongNgo,2)+' tấn</b></span><span>Tổng: <b>'+fmt(tongCo+tongNgo,2)+' tấn héo</b></span></div>';
+    var lotRows=(d.tienDoLo||[]).map(function(l){var pct=Math.max(0,Math.min(100,Number(l.kpi_PhanTram)||0)); return '<tr><td class="mono" data-label="Mã lô">'+esc(l.maLo)+'</td><td data-label="Vùng">'+esc(l.tenVung)+'</td><td data-label="Cây">'+esc(l.cayTrong)+'</td><td class="num" data-label="DT (ha)">'+fmt(l.dienTich_ha,2)+'</td><td class="num" data-label="Đã thu (tấn héo)">'+fmt(l.daThu_tan,2)+'</td><td class="num" data-label="Số đợt thu">'+fmt(l.soDot)+'</td><td data-label="Thu gần nhất">'+esc(l.thuGanNhat||'—')+'</td><td class="num" data-label="DM ước (tấn/ha)">'+fmt(l.dm_ha,3)+(l.dmTheoLo?'':' *')+'</td><td data-label="Ước đạt KPI năm" style="min-width:180px"><div class="bar" style="margin-bottom:5px"><i class="'+(pct>=80?'':(pct>=40?'amber':'red'))+'" style="width:'+pct+'%"></i></div><b>'+fmt(l.kpi_PhanTram,1)+'% KPI</b></td></tr>';}).join('');
+    var progRows=(d.tienDoLo||[]).map(function(l){var pct=Math.max(0,Math.min(100,Number(l.kpi_PhanTram)||0)); var cls=pct>=80?'':(pct>=40?'amber':'red'); return '<div class="progress-row"><div class="progress-top"><span><b>'+esc(l.maLo)+'</b> · '+esc(l.cayTrong)+' · '+esc(l.tenVung)+' — đã thu '+fmt(l.daThu_tan,2)+' tấn · '+fmt(l.soDot)+' đợt · DM ước '+fmt(l.dm_ha,3)+' tấn/ha'+(l.dmTheoLo?'':' *')+'</span><b>'+fmt(l.kpi_PhanTram,1)+'%</b></div><div class="bar"><i class="'+cls+'" style="width:'+pct+'%"></i></div></div>';}).join('');
+    var feedRows=(d.hoatDongMoi||[]).map(function(f){return '<div class="feed-item"><time>'+esc(f.thoiGian)+'</time><div><b>'+esc(f.loai)+'</b><br/><span style="color:var(--ink2)">'+esc(f.noiDung)+'</span></div></div>';}).join('');
     var dauVal=(d.tongDau_lit===null||d.tongDau_lit===undefined)?'—':fmt(d.tongDau_lit)+' <small>lít</small>';
     var dauNote=(d.tongDau_lit===null||d.tongDau_lit===undefined)?'Dầu cấp theo máy, không ghi vùng nên không tách theo vùng được':('Tiêu hao TB '+(d.tieuHaoDau_lit_gio===null||d.tieuHaoDau_lit_gio===undefined?'—':fmt(d.tieuHaoDau_lit_gio,2)+' lít/giờ máy'));
     var dtNote=pf.dienTichCoSo==='TONG_LO'?'Diện tích lô thuộc phạm vi':'Chuẩn hiển thị 2026 (CauHinh)';
@@ -267,31 +442,33 @@ async function loadDashboard(){
       '<div class="kpi"><div class="lab">Tiến độ KPI DM</div><div class="val">'+fmt(d.kpiDM_tienDo,2)+'%</div><div class="bar" style="margin-top:8px"><i style="width:'+kpiPct+'%"></i></div><div class="note">KPI '+fmt(d.kpiDM_ha)+' tấn DM/ha · Đạt '+fmt(d.dmCanXe_tan,2)+' tấn DM</div></div>'+
       '<div class="kpi"><div class="lab">Giờ máy</div><div class="val">'+fmt(d.tongGioMay_gio,1)+' <small>giờ</small></div><div class="note">Toàn bộ máy năm 2026</div></div>'+
       '<div class="kpi"><div class="lab">Dầu diesel</div><div class="val">'+dauVal+'</div><div class="note">'+dauNote+'</div></div>'+
+      '<div class="kpi alert-kpi"><div class="lab">Cảnh báo cần xử lý</div><div class="val">'+(d.canhBao||[]).length+' <small>mục</small></div><div class="note">Tự động quét từ dữ liệu vận hành mới nhất</div></div>'+
       '</div>'+
-      (warns?'<div class="card" style="margin-top:16px"><h3>Cảnh báo cần xử lý</h3>'+warns+'</div>':'')+
-      '<div class="grid cols-2b" style="margin-top:16px;align-items:start"><div class="card"><h3>🌾 Sản lượng héo theo tháng — Cỏ / Ngô (tấn)</h3><p class="sub">Cột chồng theo tháng · tổng trên đầu cột</p>'+chartHtml+'</div>'+
-      '<div class="card"><h3>🕒 Hoạt động mới nhất</h3><div>'+(feedRows||'<p class="sub">Chưa có hoạt động.</p>')+'</div></div></div>'+
-      '<div class="card" style="margin-top:16px"><h3>🚜 Tiến độ vụ/lứa theo lô — đã thu qua cân xe</h3><div class="tbl-wrap"><table><thead><tr><th>Mã lô</th><th>Vùng</th><th>Cây</th><th class="num">DT (ha)</th><th class="num">Đã thu (tấn héo)</th><th class="num">Số đợt thu</th><th>Thu gần nhất</th><th class="num">DM ước (tấn/ha)</th><th>Ước đạt KPI năm</th></tr></thead><tbody>'+lotRows+'</tbody></table></div>'+
-      '<p class="note">Cách tính: “Đã thu” cộng khối lượng cân xe (NetWeight) gán về từng lô — dữ liệu lịch sử chưa ghi Mã lô nên hệ thống suy ra lô từ Vùng + loại vật tư (Wilted Mombasa → lô cỏ, Fresh Corn → lô ngô của vùng đó). Tấn DM ước tính = tấn héo × %DM bình quân gia quyền của lô trên các chuyến có ghi %DM; lô chưa có chuyến nào ghi %DM (đánh dấu *) tạm dùng %DM bình quân toàn hệ thống ('+fmt(d.dmHeThong_PhanTram,2)+'%). %KPI = DM ước (tấn/ha) ÷ KPI '+fmt(d.kpiDM_ha)+' tấn DM/ha/năm.</p></div>'+
+      '<div class="grid cols-2" style="margin-top:16px;align-items:start"><div class="card"><h3>Sản lượng héo theo tháng — Cỏ / Ngô</h3><p class="sub">Cộng dồn từ tab <span class="mono">SanLuong</span> của Database trung tâm · đơn vị: tấn héo · cột chồng theo tháng</p>'+chartHtml+'</div>'+
+      '<div class="card"><h3>Cảnh báo cần xử lý</h3><p class="sub">Tự động tổng hợp từ dữ liệu vận hành — quản lý cần theo dõi</p>'+(warns||'<p style="color:var(--ink2);font-size:14px">Không có cảnh báo trong phạm vi đang xem.</p>')+'</div></div>'+
+      '<div class="grid cols-2" style="margin-top:16px;align-items:start"><div class="card"><h3>Tiến độ vụ / lứa theo lô</h3><p class="sub">% ước đạt KPI '+fmt(d.kpiDM_ha)+' tấn DM/ha/năm · sản lượng đã thu qua cân xe</p>'+(progRows||'<p class="sub">Chưa có dữ liệu lô trong phạm vi đang xem.</p>')+'</div>'+
+      '<div class="card"><h3>Hoạt động mới nhất</h3><p class="sub">Dữ liệu vừa nhập ở hiện trường và Feed Center — hiện ngay trên Dashboard</p>'+(feedRows||'<p class="sub">Chưa có hoạt động.</p>')+'</div></div>'+
+      '<div class="card" style="margin-top:16px"><h3>Chi tiết tiến độ vụ/lứa theo lô — đã thu qua cân xe</h3><div class="tbl-wrap"><table><thead><tr><th>Mã lô</th><th>Vùng</th><th>Cây</th><th class="num">DT (ha)</th><th class="num">Đã thu (tấn héo)</th><th class="num">Số đợt thu</th><th>Thu gần nhất</th><th class="num">DM ước (tấn/ha)</th><th>Ước đạt KPI năm</th></tr></thead><tbody>'+lotRows+'</tbody></table></div>'+'<p class="note">Cách tính: “Đã thu” cộng khối lượng cân xe (NetWeight) gán về từng lô — dữ liệu lịch sử chưa ghi Mã lô nên hệ thống suy ra lô từ Vùng + loại vật tư (Wilted Mombasa → lô cỏ, Fresh Corn → lô ngô của vùng đó). Tấn DM ước tính = tấn héo × %DM bình quân gia quyền của lô trên các chuyến có ghi %DM; lô chưa có chuyến nào ghi %DM (đánh dấu *) tạm dùng %DM bình quân toàn hệ thống ('+fmt(d.dmHeThong_PhanTram,2)+'%). %KPI = DM ước (tấn/ha) ÷ KPI '+fmt(d.kpiDM_ha)+' tấn DM/ha/năm.</p>'+'</div>'+
       rankHtml;
     var sel=document.getElementById('fVung'); if(sel) sel.value=CUR_VUNG;
+    var fnote=document.getElementById('filterNote'); if(fnote) fnote.textContent='Đang xem: '+(d.tienDoLo||[]).length+' lô · '+(pf.loai==='CONGTY'?'toàn công ty':(pf.loai==='VUNG'?'1 vùng sản xuất':'các vùng được phân công'));
   }catch(e){ el.innerHTML=vungFilterHtml()+'<div class="demo-note">'+esc(e.message)+'</div>'; }
 }
 
 /* Vung & Lo */
 function loadVungLo(){
   var el=document.getElementById('pg-vunglo');
-  var vr=VUNG.map(function(v){return '<tr><td class="mono">'+esc(v.MaVung)+'</td><td>'+esc(v.TenVung)+'</td><td class="mono">'+esc(v.CostCenterSAP)+'</td><td class="num">'+fmt(v.KhoangCachVeFarm_Km,1)+'</td><td class="num">'+fmt(v.DienTichVung_ha,2)+'</td><td class="num">'+fmt(v.DienTichCo_ha,1)+'</td></tr>';}).join('');
-  var lr=LO.map(function(l){return '<tr><td class="mono">'+esc(l.MaLo)+'</td><td class="mono">'+esc(l.MaVung)+'</td><td>'+esc(l.CayTrong)+'</td><td class="num">'+fmt(l.DienTich_ha,2)+'</td><td>'+esc(l.Giong)+'</td><td>'+esc(l.TrangThaiBanDo)+'</td><td>'+esc(l.TrangThaiCanhTac)+'</td></tr>';}).join('');
-  el.innerHTML='<div class="panel"><div class="panel-head"><h4>12 vùng sản xuất</h4>'+nutXuat('Vung','xuatVung()')+'</div><div class="tbl-wrap"><table><thead><tr><th>Mã vùng</th><th>Tên vùng</th><th>Cost Center SAP</th><th class="num">KC về Farm (km)</th><th class="num">DT vùng (ha)</th><th class="num">DT cỏ (ha)</th></tr></thead><tbody>'+vr+'</tbody></table></div></div>'+
-  '<div class="panel"><div class="panel-head"><h4>15 lô (Vùng × Cây trồng)</h4>'+nutXuat('Lo','xuatLo()')+'</div><div class="tbl-wrap"><table><thead><tr><th>Mã lô</th><th>Mã vùng</th><th>Cây trồng</th><th class="num">Diện tích (ha)</th><th>Giống</th><th>Trạng thái bản đồ</th><th>Trạng thái canh tác</th></tr></thead><tbody>'+lr+'</tbody></table></div></div>';
+  var vr=VUNG.map(function(v){return '<tr><td class="mono" data-label="Mã vùng">'+esc(v.MaVung)+'</td><td data-label="Tên vùng"><b>'+esc(v.TenVung)+'</b></td><td class="mono" data-label="Cost Center SAP">'+esc(v.CostCenterSAP)+'</td><td class="num" data-label="KC về Farm (km)">'+fmt(v.KhoangCachVeFarm_Km,1)+'</td><td class="num" data-label="DT vùng (ha)">'+fmt(v.DienTichVung_ha,2)+'</td><td class="num" data-label="DT cỏ (ha)">'+fmt(v.DienTichCo_ha,1)+'</td></tr>';}).join('');
+  var lr=LO.map(function(l){return '<tr><td class="mono" data-label="Mã lô">'+esc(l.MaLo)+'</td><td class="mono" data-label="Mã vùng">'+esc(l.MaVung)+'</td><td data-label="Cây trồng"><b>'+esc(l.CayTrong)+'</b></td><td class="num" data-label="Diện tích (ha)">'+fmt(l.DienTich_ha,2)+'</td><td data-label="Giống">'+esc(l.Giong)+'</td><td data-label="Trạng thái bản đồ">'+esc(l.TrangThaiBanDo)+'</td><td data-label="Trạng thái canh tác"><span class="badge b-plain">'+esc(l.TrangThaiCanhTac)+'</span></td></tr>';}).join('');
+  el.innerHTML='<div class="sec-head"><h2 class="sec-title">12 vùng sản xuất</h2>'+nutXuat('Vung','xuatVung()')+'</div><div class="tbl-wrap"><table><thead><tr><th>Mã vùng</th><th>Tên vùng</th><th>Cost Center SAP</th><th class="num">KC về Farm (km)</th><th class="num">DT vùng (ha)</th><th class="num">DT cỏ (ha)</th></tr></thead><tbody>'+vr+'</tbody></table></div>'+
+  '<div class="sec-head"><h2 class="sec-title">15 lô (Vùng × Cây trồng)</h2>'+nutXuat('Lo','xuatLo()')+'</div><div class="tbl-wrap"><table><thead><tr><th>Mã lô</th><th>Mã vùng</th><th>Cây trồng</th><th class="num">Diện tích (ha)</th><th>Giống</th><th>Trạng thái bản đồ</th><th>Trạng thái canh tác</th></tr></thead><tbody>'+lr+'</tbody></table></div>';
 }
 function chiXem(){return USER&&USER.role==='CEO';}
 var FORM_KHOA='<div class="demo-note">🔒 Tài khoản CEO chỉ xem — form nhập liệu đã ẩn. Ghi dữ liệu do nhân viên phụ trách vùng / Feed Center thực hiện (máy chủ cũng từ chối ghi từ tài khoản CEO).</div>';
-function tableHtml(rows){ if(!rows.length) return '<p>Chưa có dữ liệu.</p>'; var head=Object.keys(rows[0]); var th=head.map(function(h){return '<th>'+esc(h)+'</th>';}).join(''); var trs=rows.map(function(r){return '<tr>'+head.map(function(h){var v=r[h];return '<td>'+esc(typeof v==='number'?fmt(v,2):v)+'</td>';}).join('')+'</tr>';}).join(''); return '<div class="tbl-wrap"><table><thead><tr>'+th+'</tr></thead><tbody>'+trs+'</tbody></table></div>'; }
+function tableHtml(rows){ if(!rows.length) return '<p>Chưa có dữ liệu.</p>'; var head=Object.keys(rows[0]); var th=head.map(function(h){return '<th>'+esc(h)+'</th>';}).join(''); var trs=rows.map(function(r){return '<tr>'+head.map(function(h){var v=r[h];return '<td data-label="'+esc(h).replace(/"/g,'&quot;')+'">'+esc(typeof v==='number'?fmt(v,2):v)+'</td>';}).join('')+'</tr>';}).join(''); return '<div class="tbl-wrap"><table><thead><tr>'+th+'</tr></thead><tbody>'+trs+'</tbody></table></div>'; }
 async function loadTablePage(pg,tab,title){
   var el=document.getElementById('pg-'+pg); el.innerHTML='<p>Đang tải…</p>';
-  try{ var rows=await rpc('getTable',TOKEN,tab); LASTROWS[tab]=rows; var tenFile='SanLuong'; el.innerHTML='<div class="panel"><div class="panel-head"><h4>'+fmt(rows.length)+' bản ghi</h4>'+nutXuat(tenFile,"xuatRows('"+tenFile+"', LASTROWS['"+tab+"'])")+'</div>'+tableHtml(rows)+'</div>'; }
+  try{ var rows=await rpc('getTable',TOKEN,tab); LASTROWS[tab]=rows; var tenFile='SanLuong'; el.innerHTML='<div class="sec-head"><h2 class="sec-title">Sản lượng theo tháng × vùng/lô</h2>'+nutXuat(tenFile,"xuatRows('"+tenFile+"', LASTROWS['"+tab+"'])")+'</div><p style="font-size:13.5px;color:var(--ink2);margin:0 0 12px">'+fmt(rows.length)+' bản ghi · tab <span class="mono">SanLuong</span> của Database trung tâm</p>'+tableHtml(rows); }
   catch(e){ el.innerHTML='<div class="demo-note">'+esc(e.message)+'</div>'; }
 }
 /* Can xe */
@@ -299,9 +476,9 @@ function vungOptions(){return VUNG.map(function(v){return '<option value="'+esc(
 async function loadCanXe(){
   var el=document.getElementById('pg-canxe'); el.innerHTML='<p>Đang tải…</p>';
   try{ var rows=await rpc('getTable',TOKEN,'CanXe_NhapCoNgo'); LASTROWS['CanXe_NhapCoNgo']=rows;
-    var form='<div class="panel"><h4>➕ Thêm chuyến cân xe</h4><div class="grid2"><div><label>Biển số xe</label><input id="cx_bs"></div><div><label>Ngày vào</label><input id="cx_ngay" type="date"></div><div><label>Giờ vào</label><input id="cx_giovao" type="time"></div><div><label>Giờ ra</label><input id="cx_giora" type="time"></div><div><label>Vùng (Cost Center SAP)</label><select id="cx_cc">'+vungOptions()+'</select></div><div><label>Vật tư (Materials)</label><select id="cx_mat"><option>Wilted Mombasa</option><option>Fresh Corn</option><option>Fresh Corn (low-grain)</option><option>Corn stalk</option><option>Sugar cane top</option><option>Rice straw</option></select></div><div><label>Mã SAP vật tư</label><input id="cx_sap" value="106200001"></div><div><label>KL vào (kg)</label><input id="cx_in" type="number"></div><div><label>KL ra (kg)</label><input id="cx_out" type="number"></div><div><label>%DM (nếu có)</label><input id="cx_dm" type="number" step="0.01"></div><div><label>Xã</label><input id="cx_xa"></div></div><div style="margin-top:12px"><button class="btn" onclick="submitCanXe()">Lưu chuyến cân</button></div></div>';
+    var form='<div class="card" style="margin-bottom:16px"><h3>Thêm chuyến cân xe</h3><p class="sub">Ghi nhận xe chở cỏ/ngô qua trạm cân · tab <span class="mono">CanXe_NhapCoNgo</span> của Database trung tâm</p><div class="form-grid"><div class="field"><label>Biển số xe</label><input id="cx_bs"></div><div class="field"><label>Ngày vào</label><input id="cx_ngay" type="date"></div><div class="field"><label>Giờ vào</label><input id="cx_giovao" type="time"></div><div class="field"><label>Giờ ra</label><input id="cx_giora" type="time"></div><div class="field"><label>Vùng (Cost Center SAP)</label><select id="cx_cc">'+vungOptions()+'</select></div><div class="field"><label>Vật tư (Materials)</label><select id="cx_mat"><option>Wilted Mombasa</option><option>Fresh Corn</option><option>Fresh Corn (low-grain)</option><option>Corn stalk</option><option>Sugar cane top</option><option>Rice straw</option></select></div><div class="field"><label>Mã SAP vật tư</label><input id="cx_sap" value="106200001"></div><div class="field"><label>KL vào (kg)</label><input id="cx_in" type="number"></div><div class="field"><label>KL ra (kg)</label><input id="cx_out" type="number"></div><div class="field"><label>%DM (nếu có)</label><input id="cx_dm" type="number" step="0.01"></div><div class="field"><label>Xã</label><input id="cx_xa"></div></div><button class="btn" style="margin-top:14px;width:100%" onclick="submitCanXe()">Lưu chuyến cân</button></div>';
     if(chiXem()) form=FORM_KHOA;
-    el.innerHTML=form+'<div class="panel"><div class="panel-head"><h4>'+fmt(rows.length)+' chuyến đã ghi</h4>'+nutXuat('CanXe',"xuatRows('CanXe', LASTROWS['CanXe_NhapCoNgo'])")+'</div>'+tableHtml(rows)+'</div>';
+    el.innerHTML=form+'<div class="sec-head"><h2 class="sec-title">'+fmt(rows.length)+' chuyến đã ghi</h2>'+nutXuat('CanXe',"xuatRows('CanXe', LASTROWS['CanXe_NhapCoNgo'])")+'</div>'+tableHtml(rows);
   }catch(e){ el.innerHTML='<div class="demo-note">'+esc(e.message)+'</div>'; }
 }
 async function submitCanXe(){ var vin=Number(document.getElementById('cx_in').value)||0, vout=Number(document.getElementById('cx_out').value)||0; var obj={BienSoXe:document.getElementById('cx_bs').value.trim(),NgayVao:document.getElementById('cx_ngay').value,NgayRa:document.getElementById('cx_ngay').value,GioVao:document.getElementById('cx_giovao').value,GioRa:document.getElementById('cx_giora').value,CostCenterSAP:document.getElementById('cx_cc').value,Materials:document.getElementById('cx_mat').value,CodeSAP:document.getElementById('cx_sap').value.trim(),NetWeightIn_kg:vin,NetWeightOut_kg:vout,NetWeight_kg:Math.abs(vin-vout),DM_PhanTram:document.getElementById('cx_dm').value,Xa:document.getElementById('cx_xa').value.trim()}; if(!obj.BienSoXe||!obj.NgayVao){toast('Nhập biển số xe và ngày vào.');return;} try{await rpc('addRecord',TOKEN,'CanXe_NhapCoNgo',obj);toast('Đã lưu chuyến cân xe.');loadCanXe();}catch(e){toast(e.message);} }
@@ -312,9 +489,9 @@ function splitDate(id){var v=document.getElementById(id).value;var p=v.split('-'
 async function loadGioMay(){
   var el=document.getElementById('pg-giomay'); el.innerHTML='<p>Đang tải…</p>';
   try{ var rows=await rpc('getTable',TOKEN,'GioMay'); LASTROWS['GioMay']=rows;
-    var form='<div class="panel"><h4>➕ Thêm dòng giờ máy</h4><div class="grid2"><div><label>Ngày</label><input id="gm_ngay" type="date"></div><div><label>Lô</label><select id="gm_lo">'+loOptions()+'</select></div><div><label>Hoạt động / loại máy</label><select id="gm_hd"><option>R450</option><option>Pickup</option><option>Máy khác</option></select></div><div><label>Số máy (ID)</label><input id="gm_somay" type="number"></div><div><label>Giờ máy bắt đầu (số đồng hồ)</label><input id="gm_bd" type="number" step="0.1"></div><div><label>Giờ máy kết thúc (số đồng hồ)</label><input id="gm_kt" type="number" step="0.1"></div><div><label>Giờ hoạt động (h)</label><input id="gm_hd2" type="number" step="0.1"></div><div><label>Tên lái máy</label><input id="gm_lai"></div><div><label>Diện tích thực hiện (ha)</label><input id="gm_dt" type="number" step="0.01"></div><div><label>Ghi chú</label><input id="gm_gc"></div></div><div style="margin-top:12px"><button class="btn" onclick="submitGioMay()">Lưu giờ máy</button></div></div>';
+    var form='<div class="card" style="margin-bottom:16px"><h3>Thêm dòng giờ máy</h3><p class="sub">Giờ máy chạy theo lô · tab <span class="mono">GioMay</span> của Database trung tâm</p><div class="form-grid"><div class="field"><label>Ngày</label><input id="gm_ngay" type="date"></div><div class="field"><label>Lô</label><select id="gm_lo">'+loOptions()+'</select></div><div class="field"><label>Hoạt động / loại máy</label><select id="gm_hd"><option>R450</option><option>Pickup</option><option>Máy khác</option></select></div><div class="field"><label>Số máy (ID)</label><input id="gm_somay" type="number"></div><div class="field"><label>Giờ máy bắt đầu (số đồng hồ)</label><input id="gm_bd" type="number" step="0.1"></div><div class="field"><label>Giờ máy kết thúc (số đồng hồ)</label><input id="gm_kt" type="number" step="0.1"></div><div class="field"><label>Giờ hoạt động (h)</label><input id="gm_hd2" type="number" step="0.1"></div><div class="field"><label>Tên lái máy</label><input id="gm_lai"></div><div class="field"><label>Diện tích thực hiện (ha)</label><input id="gm_dt" type="number" step="0.01"></div><div class="field"><label>Ghi chú</label><input id="gm_gc"></div></div><button class="btn" style="margin-top:14px;width:100%" onclick="submitGioMay()">Lưu giờ máy</button></div>';
     if(chiXem()) form=FORM_KHOA;
-    el.innerHTML=form+'<div class="panel"><div class="panel-head"><h4>'+fmt(rows.length)+' bản ghi</h4>'+nutXuat('GioMay',"xuatRows('GioMay', LASTROWS['GioMay'])")+'</div>'+tableHtml(rows)+'</div>';
+    el.innerHTML=form+'<div class="sec-head"><h2 class="sec-title">'+fmt(rows.length)+' bản ghi giờ máy</h2>'+nutXuat('GioMay',"xuatRows('GioMay', LASTROWS['GioMay'])")+'</div>'+tableHtml(rows);
   }catch(e){ el.innerHTML='<div class="demo-note">'+esc(e.message)+'</div>'; }
 }
 async function submitGioMay(){ var dt=splitDate('gm_ngay'); if(!dt.full){toast('Chọn ngày.');return;} var sel=document.getElementById('gm_lo'); var lo=LO[sel.selectedIndex]||{}; var bd=Number(document.getElementById('gm_bd').value)||'', kt=Number(document.getElementById('gm_kt').value)||''; var hd=document.getElementById('gm_hd2').value; if(hd===''&&bd!==''&&kt!=='') hd=Math.round((kt-bd)*10)/10; var obj={Ngay:dt.d,Thang:dt.m,Nam:dt.y,MaLo:sel.value,TenVungGoc:'Yên Mỹ',CostCenterSAP:lo.CostCenterSAP||'',HoatDong:document.getElementById('gm_hd').value,LoaiCay:lo.CayTrong||'',SoMay:document.getElementById('gm_somay').value,GioBatDau:bd,GioKetThuc:kt,GioHoatDong:hd,TenLaiMay:document.getElementById('gm_lai').value.trim(),DienTichThucHien_ha:document.getElementById('gm_dt').value,GhiChu:document.getElementById('gm_gc').value.trim()}; try{await rpc('addRecord',TOKEN,'GioMay',obj);toast('Đã lưu giờ máy.');loadGioMay();}catch(e){toast(e.message);} }
@@ -322,9 +499,9 @@ async function submitGioMay(){ var dt=splitDate('gm_ngay'); if(!dt.full){toast('
 async function loadDau(){
   var el=document.getElementById('pg-dau'); el.innerHTML='<p>Đang tải…</p>';
   try{ var rows=await rpc('getTable',TOKEN,'DauDiezel'); LASTROWS['DauDiezel']=rows;
-    var form='<div class="panel"><h4>➕ Thêm phiếu cấp dầu</h4><div class="grid2"><div><label>Ngày</label><input id="dd_ngay" type="date"></div><div><label>ID máy</label><input id="dd_may" type="number"></div><div><label>Số giờ máy tại thời điểm cấp</label><input id="dd_gio" type="number" step="0.1"></div><div><label>Số lít cấp (SL)</label><input id="dd_sl" type="number" step="0.1"></div><div><label>Hoạt động</label><input id="dd_hd"></div><div><label>Ghi chú</label><input id="dd_gc"></div></div><div style="margin-top:12px"><button class="btn" onclick="submitDau()">Lưu phiếu dầu</button></div></div>';
+    var form='<div class="card" style="margin-bottom:16px"><h3>Thêm phiếu cấp dầu</h3><p class="sub">Cấp dầu diesel theo máy · tab <span class="mono">DauDiezel</span> của Database trung tâm</p><div class="form-grid"><div class="field"><label>Ngày</label><input id="dd_ngay" type="date"></div><div class="field"><label>ID máy</label><input id="dd_may" type="number"></div><div class="field"><label>Số giờ máy tại thời điểm cấp</label><input id="dd_gio" type="number" step="0.1"></div><div class="field"><label>Số lít cấp (SL)</label><input id="dd_sl" type="number" step="0.1"></div><div class="field"><label>Hoạt động</label><input id="dd_hd"></div><div class="field"><label>Ghi chú</label><input id="dd_gc"></div></div><button class="btn" style="margin-top:14px;width:100%" onclick="submitDau()">Lưu phiếu dầu</button></div>';
     if(chiXem()) form=FORM_KHOA;
-    el.innerHTML=form+'<div class="panel"><div class="panel-head"><h4>'+fmt(rows.length)+' bản ghi</h4>'+nutXuat('Dau',"xuatRows('Dau', LASTROWS['DauDiezel'])")+'</div>'+tableHtml(rows)+'</div>';
+    el.innerHTML=form+'<div class="sec-head"><h2 class="sec-title">'+fmt(rows.length)+' phiếu cấp dầu</h2>'+nutXuat('Dau',"xuatRows('Dau', LASTROWS['DauDiezel'])")+'</div>'+tableHtml(rows);
   }catch(e){ el.innerHTML='<div class="demo-note">'+esc(e.message)+'</div>'; }
 }
 async function submitDau(){ var dt=splitDate('dd_ngay'); if(!dt.full){toast('Chọn ngày.');return;} var obj={Ngay:dt.full,Thang:dt.m,Material:'Dầu Diezen (DO)',IDMay:document.getElementById('dd_may').value,GioMay:document.getElementById('dd_gio').value,SL:document.getElementById('dd_sl').value,HoatDong:document.getElementById('dd_hd').value.trim(),GhiChu:document.getElementById('dd_gc').value.trim()}; try{await rpc('addRecord',TOKEN,'DauDiezel',obj);toast('Đã lưu phiếu dầu.');loadDau();}catch(e){toast(e.message);} }
@@ -332,9 +509,9 @@ async function submitDau(){ var dt=splitDate('dd_ngay'); if(!dt.full){toast('Ch�
 async function loadBon(){
   var el=document.getElementById('pg-bon'); el.innerHTML='<p>Đang tải…</p>';
   try{ var rows=await rpc('getTable',TOKEN,'BonPhan'); LASTROWS['BonPhan']=rows;
-    var form='<div class="panel"><h4>➕ Thêm đợt bón phân</h4><div class="grid2"><div><label>Ngày</label><input id="bp_ngay" type="date"></div><div><label>Vùng</label><select id="bp_vung">'+vungOptions2()+'</select></div><div><label>Cây trồng</label><select id="bp_cay"><option>Cỏ Mombasa</option><option>Ngô</option></select></div><div><label>Diện tích bón (ha)</label><input id="bp_dt" type="number" step="0.01"></div><div><label>NPK (kg)</label><input id="bp_npk" type="number"></div><div><label>DAP (kg)</label><input id="bp_dap" type="number"></div><div><label>KCL (kg)</label><input id="bp_kcl" type="number"></div><div><label>UREA (kg)</label><input id="bp_urea" type="number"></div><div><label>Hữu cơ (tấn)</label><input id="bp_hc" type="number" step="0.01"></div><div><label>Phân lỏng (m3)</label><input id="bp_pl" type="number" step="0.01"></div></div><div style="margin-top:12px"><button class="btn" onclick="submitBon()">Lưu đợt bón</button></div></div>';
+    var form='<div class="card" style="margin-bottom:16px"><h3>Thêm đợt bón phân</h3><p class="sub">Bón phân theo vùng và cây trồng · tab <span class="mono">BonPhan</span> của Database trung tâm</p><div class="form-grid"><div class="field"><label>Ngày</label><input id="bp_ngay" type="date"></div><div class="field"><label>Vùng</label><select id="bp_vung">'+vungOptions2()+'</select></div><div class="field"><label>Cây trồng</label><select id="bp_cay"><option>Cỏ Mombasa</option><option>Ngô</option></select></div><div class="field"><label>Diện tích bón (ha)</label><input id="bp_dt" type="number" step="0.01"></div><div class="field"><label>NPK (kg)</label><input id="bp_npk" type="number"></div><div class="field"><label>DAP (kg)</label><input id="bp_dap" type="number"></div><div class="field"><label>KCL (kg)</label><input id="bp_kcl" type="number"></div><div class="field"><label>UREA (kg)</label><input id="bp_urea" type="number"></div><div class="field"><label>Hữu cơ (tấn)</label><input id="bp_hc" type="number" step="0.01"></div><div class="field"><label>Phân lỏng (m3)</label><input id="bp_pl" type="number" step="0.01"></div></div><button class="btn" style="margin-top:14px;width:100%" onclick="submitBon()">Lưu đợt bón</button></div>';
     if(chiXem()) form=FORM_KHOA;
-    el.innerHTML=form+'<div class="panel"><div class="panel-head"><h4>'+fmt(rows.length)+' bản ghi</h4>'+nutXuat('BonPhan',"xuatRows('BonPhan', LASTROWS['BonPhan'])")+'</div>'+tableHtml(rows)+'</div>';
+    el.innerHTML=form+'<div class="sec-head"><h2 class="sec-title">'+fmt(rows.length)+' đợt bón phân</h2>'+nutXuat('BonPhan',"xuatRows('BonPhan', LASTROWS['BonPhan'])")+'</div>'+tableHtml(rows);
   }catch(e){ el.innerHTML='<div class="demo-note">'+esc(e.message)+'</div>'; }
 }
 async function submitBon(){ var dt=splitDate('bp_ngay'); if(!dt.full){toast('Chọn ngày.');return;} var sel=document.getElementById('bp_vung'); var v=VUNG[sel.selectedIndex]||{}; var obj={Ngay:dt.full,Thang:dt.m,Nam:dt.y,CayTrong:document.getElementById('bp_cay').value,MaVung:sel.value,CostCenterSAP:v.CostCenterSAP||'',DienTich_ha:document.getElementById('bp_dt').value,NPK_kg:document.getElementById('bp_npk').value,DAP_kg:document.getElementById('bp_dap').value,KCL_kg:document.getElementById('bp_kcl').value,UREA_kg:document.getElementById('bp_urea').value,HuuCo_tan:document.getElementById('bp_hc').value,PhanLong_m3:document.getElementById('bp_pl').value}; try{await rpc('addRecord',TOKEN,'BonPhan',obj);toast('Đã lưu đợt bón phân.');loadBon();}catch(e){toast(e.message);} }
@@ -342,9 +519,13 @@ async function submitBon(){ var dt=splitDate('bp_ngay'); if(!dt.full){toast('Ch�
 function ensureLeaflet(){return new Promise(function(res,rej){ if(window.L) return res(); var s=document.createElement('script'); s.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'; s.onload=function(){res();}; s.onerror=function(){rej(new Error('Khong tai duoc Leaflet'));}; document.head.appendChild(s); });}
 async function loadBanDo(){
   var el=document.getElementById('pg-bando');
-  el.innerHTML='<div class="demo-note">Polygon MINH HỌA theo diện tích thật của từng lô, vị trí chưa phải ranh đo đạc — chờ file ranh vùng từ địa chính (CauHinh: Cho file ranh vung).</div><div id="map" style="margin-top:16px"></div><div class="legend"><span><i class="sw" style="background:#2f9e44"></i>Cỏ</span><span><i class="sw" style="background:#e8a13a"></i>Ngô</span><span>Bấm polygon để xem chi tiết lô · Chuyển lớp nền: vệ tinh Esri / bản đồ OSM ở góc phải bản đồ</span></div>';
-  try{ await ensureLeaflet(); }catch(e){ el.innerHTML+='<div class="demo-note">'+esc(e.message)+'</div>'; return; }
   if(MAP_INIT && MAP_OBJ){ setTimeout(function(){ MAP_OBJ.invalidateSize(); },80); return; }
+  el.innerHTML='<div class="demo-note">Polygon MINH HỌA theo diện tích thật của từng lô, vị trí chưa phải ranh đo đạc — chờ file ranh vùng từ địa chính (CauHinh: Cho file ranh vung). Bấm vào polygon hoặc chọn lô trong danh sách bên phải để xem chi tiết.</div>'+
+  '<div class="map-tools" style="margin-top:16px"><input type="text" id="mapSearch" placeholder="Tìm lô theo mã, cây trồng, vùng…"><select id="mapVungSel"><option value="all">Tất cả vùng</option>'+VUNG.map(function(v){return '<option value="'+esc(v.MaVung)+'">'+esc(v.TenVung)+' ('+esc(v.MaVung)+')</option>';}).join('')+'</select></div>'+
+  '<div class="map-tools" id="cropChips"><button type="button" class="chip on" data-crop="all">Tất cả cây trồng</button><button type="button" class="chip" data-crop="co">Cỏ</button><button type="button" class="chip" data-crop="ngo">Ngô</button></div>'+
+  '<div class="map-layout"><div><div id="map"></div><div class="legend"><span><i class="sw" style="background:#2f9e44"></i>Cỏ</span><span><i class="sw" style="background:#e8a13a"></i>Ngô</span><span style="margin-left:auto">Bấm polygon để xem chi tiết lô · Chuyển lớp nền: vệ tinh Esri / bản đồ OSM ở góc phải bản đồ</span></div></div>'+
+  '<div><div class="card" id="plotDetail" style="margin-bottom:16px"></div><div class="card" style="padding:8px 12px"><h3 style="padding:10px 6px 4px">Danh sách lô (<span id="plotCount"></span>)</h3><div id="plotList"></div></div></div></div>';
+  try{ await ensureLeaflet(); }catch(e){ el.innerHTML+='<div class="demo-note">'+esc(e.message)+'</div>'; return; }
   var center=[19.62,105.62];
   MAP_OBJ=L.map('map').setView(center,12);
   var esri=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Esri World Imagery',maxZoom:19});
@@ -370,9 +551,45 @@ async function loadBanDo(){
     var poly=L.rectangle(bounds,{color:color,weight:2,fillColor:color,fillOpacity:0.45}).addTo(MAP_OBJ);
     poly.bindTooltip(esc(l.MaLo),{permanent:true,direction:'center',className:'lo-label'});
     poly.bindPopup('<b>'+esc(l.MaLo)+' · '+esc(tenVung)+'</b><br>Cây trồng: '+esc(l.CayTrong)+'<br>Diện tích: '+fmt(l.DienTich_ha,2)+' ha<br>Trạng thái canh tác: '+esc(l.TrangThaiCanhTac||''));
+    MAP_LAYERS[l.MaLo]=poly;
+    poly.on('click',function(){ selectLotOnMap(l.MaLo,false); });
   });
   MAP_INIT=true;
+  document.getElementById('mapSearch').addEventListener('input',renderPlotPanel);
+  document.getElementById('mapVungSel').addEventListener('change',renderPlotPanel);
+  document.querySelectorAll('#cropChips .chip').forEach(function(c){ c.addEventListener('click',function(){ document.querySelectorAll('#cropChips .chip').forEach(function(x){x.classList.remove('on');}); c.classList.add('on'); MAP_CROP=c.getAttribute('data-crop'); renderPlotPanel(); }); });
+  renderPlotPanel();
+  if(LO.length) selectLotOnMap(LO[0].MaLo,false);
   setTimeout(function(){ MAP_OBJ.invalidateSize(); },120);
+}
+function lotIsNgo(l){ var s=String(l.CayTrong||'').toLowerCase(); return s.indexOf('ngô')>=0||s.indexOf('ngo')>=0; }
+function renderPlotPanel(){
+  var qEl=document.getElementById('mapSearch'); var q=qEl?qEl.value.trim().toLowerCase():'';
+  var kEl=document.getElementById('mapVungSel'); var kv=kEl?kEl.value:'all';
+  var list=LO.filter(function(l){
+    if(kv!=='all'&&l.MaVung!==kv) return false;
+    if(MAP_CROP==='co'&&lotIsNgo(l)) return false;
+    if(MAP_CROP==='ngo'&&!lotIsNgo(l)) return false;
+    if(q){ var ten=''; VUNG.forEach(function(v){ if(v.MaVung===l.MaVung) ten=v.TenVung; }); if((l.MaLo+' '+l.CayTrong+' '+ten+' '+l.MaVung).toLowerCase().indexOf(q)<0) return false; }
+    return true;
+  });
+  var cnt=document.getElementById('plotCount'); if(cnt) cnt.textContent=list.length+'/'+LO.length;
+  var box=document.getElementById('plotList'); if(!box) return;
+  box.innerHTML=list.map(function(l){
+    var idx=LO.indexOf(l); var ten=''; VUNG.forEach(function(v){ if(v.MaVung===l.MaVung) ten=v.TenVung; });
+    return '<button type="button" class="plot-row'+(MAP_SEL===l.MaLo?' sel':'')+'" onclick="selectLotOnMap(\''+l.MaLo+'\',true)"><span class="plot-num" style="background:'+(lotIsNgo(l)?'#e8a13a':'#2f9e44')+'">'+(idx+1)+'</span><span class="pi"><b>'+esc(l.MaLo)+' · '+esc(l.CayTrong)+'</b><span>'+esc(ten)+' · '+fmt(l.DienTich_ha,2)+' ha</span></span><span class="badge '+(lotIsNgo(l)?'b-amber':'b-green')+'">'+esc(l.TrangThaiCanhTac||'')+'</span></button>';
+  }).join('')||'<p style="padding:12px 6px;color:var(--ink2);font-size:14px">Không tìm thấy lô phù hợp bộ lọc.</p>';
+  if(MAP_OBJ){ LO.forEach(function(l){ var layer=MAP_LAYERS[l.MaLo]; if(!layer) return; var vis=list.indexOf(l)>=0; var on=MAP_OBJ.hasLayer(layer); if(vis&&!on) layer.addTo(MAP_OBJ); if(!vis&&on) MAP_OBJ.removeLayer(layer); }); }
+}
+function selectLotOnMap(maLo,pan){
+  MAP_SEL=maLo;
+  var l=null; LO.forEach(function(x){ if(x.MaLo===maLo) l=x; }); if(!l) return;
+  var ten=''; VUNG.forEach(function(v){ if(v.MaVung===l.MaVung) ten=v.TenVung; });
+  var det=document.getElementById('plotDetail');
+  if(det){ det.innerHTML='<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px"><h3 style="font-size:19px">Lô '+esc(l.MaLo)+' — '+esc(l.CayTrong)+'</h3><span class="badge '+(lotIsNgo(l)?'b-amber':'b-green')+'">'+esc(l.TrangThaiCanhTac||'')+'</span></div><p class="sub">'+esc(ten)+' ('+esc(l.MaVung)+') · polygon minh họa theo diện tích thật — bản chính import từ file bản đồ của khách</p><dl class="kv"><dt>Diện tích</dt><dd>'+fmt(l.DienTich_ha,2)+' ha</dd><dt>Giống</dt><dd>'+esc(l.Giong||'—')+'</dd><dt>Vùng</dt><dd>'+esc(ten)+'</dd><dt>Trạng thái bản đồ</dt><dd>'+esc(l.TrangThaiBanDo||'—')+'</dd><dt>Trạng thái canh tác</dt><dd>'+esc(l.TrangThaiCanhTac||'—')+'</dd></dl>'; }
+  renderPlotPanel();
+  var layer=MAP_LAYERS[maLo];
+  if(layer){ if(pan&&MAP_OBJ) MAP_OBJ.fitBounds(layer.getBounds().pad(0.6)); layer.openPopup(); }
 }
 if(TOKEN){ boot().catch(function(e){ if(String(e.message||'').indexOf('Phien dang nhap het han')>=0) forceLogout(); }); }
 document.getElementById('lgPass').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
