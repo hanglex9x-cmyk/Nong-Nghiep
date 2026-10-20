@@ -288,6 +288,7 @@ input[type=password]:focus,input[type=time]:focus{outline:2px solid color-mix(in
       <button data-pg="bon" class="" onclick="go('bon')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21v-7.5"/><path d="M12 13.5c0-3.6-2.9-5.7-7.2-5.7 0 4.3 2.4 6.7 7.2 5.7Z"/><path d="M12 11.2c0-3.1 2.4-5 6.2-5 0 3.7-2 5.8-6.2 5Z"/></svg><span>Bón phân</span></button>
       <button data-pg="sanluong" class="" onclick="go('sanluong')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg><span>Sản lượng</span></button>
       <button data-pg="bando" class="" onclick="go('bando')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg><span>Bản đồ</span></button>
+      <button data-pg="hethong" class="nav-sys hidden" onclick="go('hethong')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 4.5-3.2 7.7-8 9-4.8-1.3-8-4.5-8-9V6l8-3Z"/><path d="m9 12 2 2 4-4"/></svg><span>Phân quyền &amp; Hệ thống</span></button>
     </nav>
     <div class="side-foot">
       <div class="uinfo" id="uinfo"></div>
@@ -305,6 +306,7 @@ input[type=password]:focus,input[type=time]:focus{outline:2px solid color-mix(in
     <section class="view" id="pg-bon"></section>
     <section class="view" id="pg-sanluong"></section>
     <section class="view" id="pg-bando"></section>
+    <section class="view" id="pg-hethong"></section>
   </div>
 </div>
 <nav class="bottomnav hidden" id="bottomNav">
@@ -316,6 +318,7 @@ input[type=password]:focus,input[type=time]:focus{outline:2px solid color-mix(in
   <button data-pg="bon" class="" onclick="go('bon')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21v-7.5"/><path d="M12 13.5c0-3.6-2.9-5.7-7.2-5.7 0 4.3 2.4 6.7 7.2 5.7Z"/><path d="M12 11.2c0-3.1 2.4-5 6.2-5 0 3.7-2 5.8-6.2 5Z"/></svg><span>Bón phân</span></button>
   <button data-pg="sanluong" class="" onclick="go('sanluong')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg><span>Sản lượng</span></button>
   <button data-pg="bando" class="" onclick="go('bando')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg><span>Bản đồ</span></button>
+  <button data-pg="hethong" class="nav-sys hidden" onclick="go('hethong')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 4.5-3.2 7.7-8 9-4.8-1.3-8-4.5-8-9V6l8-3Z"/><path d="m9 12 2 2 4-4"/></svg><span>Hệ thống</span></button>
 </nav>
 <div class="toast" id="toast"></div>
 
@@ -365,10 +368,12 @@ async function boot(){
   document.getElementById('app').classList.remove('hidden');
   document.getElementById('bottomNav').classList.remove('hidden');
   document.getElementById('uinfo').innerHTML=esc(USER.ten||USER.u||'')+'<br>Vai trò: '+esc(USER.role||'')+(USER.vung?'<br>Vùng phụ trách: '+esc(USER.vung):'');
+  document.querySelectorAll('.nav-sys').forEach(function(b){ b.classList.toggle('hidden', !canSys()); });
   loadDashboard();
 }
-var TITLES={dashboard:'Dashboard CEO',vunglo:'Vùng & Lô',canxe:'Cân xe nhập cỏ/ngô',giomay:'Giờ máy',dau:'Dầu diesel',bon:'Bón phân',sanluong:'Sản lượng',bando:'Bản đồ vệ tinh & polygon lô'};
+var TITLES={dashboard:'Dashboard CEO',vunglo:'Vùng & Lô',canxe:'Cân xe nhập cỏ/ngô',giomay:'Giờ máy',dau:'Dầu diesel',bon:'Bón phân',sanluong:'Sản lượng',bando:'Bản đồ vệ tinh & polygon lô',hethong:'Phân quyền & Hệ thống'};
 function go(pg,btn){
+  if(pg==='hethong'&&!canSys()) pg='dashboard';
   document.querySelectorAll('#app .view').forEach(function(s){s.classList.remove('on');});
   document.getElementById('pg-'+pg).classList.add('on');
   document.querySelectorAll('.nav button, .bottomnav button').forEach(function(n){ if(n.getAttribute('data-pg')===pg) n.classList.add('on'); else if(n.getAttribute('data-pg')) n.classList.remove('on'); });
@@ -381,6 +386,7 @@ function go(pg,btn){
   if(pg==='bon') loadBon();
   if(pg==='sanluong') loadTablePage('sanluong','SanLuong','🌾 Sản lượng theo tháng × vùng/lô');
   if(pg==='bando') loadBanDo();
+  if(pg==='hethong') loadHeThong();
 }
 
 /* Excel — SheetJS lazy nhu ban chinh */
@@ -451,6 +457,46 @@ async function loadDashboard(){
     var sel=document.getElementById('fVung'); if(sel) sel.value=CUR_VUNG;
     var fnote=document.getElementById('filterNote'); if(fnote) fnote.textContent='Đang xem: '+(d.tienDoLo||[]).length+' lô · '+(pf.loai==='CONGTY'?'toàn công ty':(pf.loai==='VUNG'?'1 vùng sản xuất':'các vùng được phân công'));
   }catch(e){ el.innerHTML=vungFilterHtml()+'<div class="demo-note">'+esc(e.message)+'</div>'; }
+}
+
+/* Phan quyen & He thong — chi Admin / CEO / QuanLy (server getHeThong cung chan theo vai tro) */
+function canSys(){ return !!(USER && ['Admin','CEO','QuanLy'].indexOf(USER.role)>=0); }
+var ROLE_CARDS=[
+  {ten:'Admin hệ thống',who:'Tài khoản admin · quản trị tài khoản & cấu hình',perms:[['Dashboard & báo cáo','Toàn quyền xem'],['Nhập liệu (Cân xe · Giờ máy · Dầu · Bón phân)','Toàn công ty'],['Xem theo vùng','Tất cả 12 vùng'],['Màn hình Hệ thống','Toàn quyền']]},
+  {ten:'CEO / Ban lãnh đạo',who:'Xem toàn cảnh · không nhập liệu',perms:[['Dashboard & báo cáo','Chỉ xem · toàn công ty'],['Nhập liệu (Cân xe · Giờ máy · Dầu · Bón phân)','—'],['Xem theo vùng','Từng vùng / toàn công ty'],['Màn hình Hệ thống','Xem']]},
+  {ten:'Quản lý',who:'Quản lý sản xuất · xem + nhập toàn công ty',perms:[['Dashboard & báo cáo','Xem · toàn công ty'],['Nhập liệu (Cân xe · Giờ máy · Dầu · Bón phân)','Toàn công ty'],['Xem theo vùng','Tất cả 12 vùng'],['Màn hình Hệ thống','Xem']]},
+  {ten:'Nhân viên nhập liệu',who:'3 tài khoản · mỗi người phụ trách 4 vùng',perms:[['Dashboard & báo cáo','Chỉ vùng phụ trách'],['Nhập liệu (Cân xe · Giờ máy · Dầu · Bón phân)','Chỉ vùng phụ trách'],['Xem theo vùng','Vùng được phân công'],['Màn hình Hệ thống','—']]},
+  {ten:'Feed Center',who:'Tiếp nhận & cấp phát tại Feed Center',perms:[['Dashboard & báo cáo','Xem tổng quan'],['Nhập liệu (Cân xe · Giờ máy · Dầu · Bón phân)','Toàn công ty'],['Xem theo vùng','Tất cả 12 vùng'],['Màn hình Hệ thống','—']]}
+];
+var CFG_LABEL={DienTichGieoTrongNam_2026:'Diện tích gieo trồng năm 2026',KPI_NangSuat_DM:'KPI năng suất DM',TenDonVi:'Tên đơn vị',TenTrangTrai:'Tên trang trại',NamHienTai:'Năm hiện tại',TrangThaiBanDo:'Trạng thái bản đồ',DienTichVungTong_ha:'Tổng diện tích 12 vùng',DienTichLoTong_ha:'Tổng diện tích 15 lô'};
+async function loadHeThong(){
+  var el=document.getElementById('pg-hethong');
+  el.innerHTML='<p>Đang tải dữ liệu hệ thống…</p>';
+  try{
+    var d=await rpc('getHeThong',TOKEN);
+    var urows=(d.users||[]).map(function(u){
+      var st=String(u.TrangThai||'');
+      var badge=st==='Hoat dong'?'<span class="badge b-green">Hoạt động</span>':'<span class="badge b-gray">'+esc(st||'—')+'</span>';
+      return '<tr><td data-label="Họ tên"><b>'+esc(u.HoTen)+'</b></td><td class="mono" data-label="Tài khoản">'+esc(u.TaiKhoan)+'</td><td data-label="Vai trò">'+esc(u.VaiTro)+'</td><td data-label="Vùng phụ trách">'+esc(u.VungPhuTrach||'—')+'</td><td data-label="Trạng thái">'+badge+'</td><td data-label="Đăng nhập cuối">'+esc(u.LanDangNhapCuoi||'—')+'</td></tr>';
+    }).join('');
+    var roles=ROLE_CARDS.map(function(r){
+      return '<div class="card role-card"><h4>'+esc(r.ten)+'</h4><p class="who">'+esc(r.who)+'</p><ul>'+r.perms.map(function(pm){return '<li><span>'+esc(pm[0])+'</span><span class="perm'+(pm[1]==='—'?' no':'')+'">'+esc(pm[1])+'</span></li>';}).join('')+'</ul></div>';
+    }).join('');
+    var cfg=(d.cauHinh||[]).map(function(c){ return '<dt>'+esc(CFG_LABEL[c.Khoa]||c.Khoa)+'</dt><dd>'+esc(c.GiaTri)+(c.DonVi?' '+esc(c.DonVi):'')+'</dd>'; }).join('');
+    var nkrows=(d.nhatKy||[]).map(function(r){
+      return '<tr><td data-label="Thời gian" style="white-space:nowrap">'+esc(r.ThoiGian)+'</td><td class="mono" data-label="Tài khoản">'+esc(r.TaiKhoan)+'</td><td data-label="Hành động">'+esc(r.HanhDong)+'</td><td data-label="Tab">'+esc(r.Tab)+'</td><td data-label="Nội dung" style="white-space:normal;min-width:220px">'+esc(r.NoiDungThayDoi)+'</td></tr>';
+    }).join('');
+    el.innerHTML=
+      '<h2 class="sec-title">Tài khoản người dùng</h2>'+
+      '<div class="tbl-wrap"><table><thead><tr><th>Họ tên</th><th>Tài khoản</th><th>Vai trò</th><th>Vùng phụ trách</th><th>Trạng thái</th><th>Đăng nhập cuối</th></tr></thead><tbody>'+urows+'</tbody></table></div>'+
+      '<h2 class="sec-title" style="margin-top:26px">Phân quyền theo vai trò</h2>'+
+      '<div class="grid tab-grid" style="grid-template-columns:repeat(auto-fit,minmax(215px,1fr))">'+roles+'</div>'+
+      '<h2 class="sec-title" style="margin-top:26px">Cấu hình hệ thống</h2>'+
+      '<div class="card"><dl class="kv">'+cfg+'</dl><p style="font-size:13px;color:var(--ink2);margin:10px 0 0">Cấu hình lưu tại tab CauHinh của Database trung tâm (Google Sheets) — sửa trong Sheet là app áp dụng ngay, không cần sửa code.</p></div>'+
+      '<h2 class="sec-title" style="margin-top:26px">Nhật ký hệ thống gần nhất</h2>'+
+      '<div class="tbl-wrap"><table><thead><tr><th>Thời gian</th><th>Tài khoản</th><th>Hành động</th><th>Tab</th><th>Nội dung</th></tr></thead><tbody>'+nkrows+'</tbody></table></div>'+
+      '<p style="font-size:13px;color:var(--ink2);margin-top:8px">30 dòng mới nhất từ tab NhatKyHeThong — hệ thống tự ghi mọi lần đăng nhập và thao tác thêm dữ liệu để truy vết.</p>';
+  }catch(e){ el.innerHTML='<div class="demo-note">'+esc(e.message)+'</div>'; }
 }
 
 /* Vung & Lo */
