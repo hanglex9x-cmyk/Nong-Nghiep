@@ -11,7 +11,7 @@ Bản tĩnh GitHub Pages của app nông nghiệp THYM: thiết kế giống h�
 - Base: `https://script.google.com/macros/s/AKfycbx7KJtZDvyiQDLiRukt9QMx6yX_oM55on7WHky036wWXjfmLp99A9KhvdctqUbl8Dma0A/exec`
 - Giao thức: `rpc(fn, ...args)` — POST `text/plain`, body `{"fn","args"}`, trả `{ok, data|error}`. Token lưu `localStorage` khóa `thym_token` / `thym_user`; lỗi hết phiên tự đăng xuất về màn hình login.
 - Xuất Excel: SheetJS (cdnjs `xlsx 0.18.5`) nạp lười khi bấm xuất, tên file `TenMuc_YYYYMMDD.xlsx`.
-- Bản đồ: Leaflet 1.9.4 (unpkg) + Esri World Imagery / OSM, polygon minh họa sinh phía client theo diện tích thật từng lô quanh Nông Cống, Thanh Hóa `[19.62, 105.62]`.
+- Bản đồ: Leaflet 1.9.4 (unpkg) + Esri World Imagery / OSM, polygon minh họa sinh phía client theo diện tích thật từng lô quanh Công Chính, Thanh Hóa `[19.62, 105.62]`.
 
 ## Deploy lên GitHub Pages
 
