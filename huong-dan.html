@@ -47,7 +47,8 @@ a{color:var(--brand-deep)}
 }
 .hero h1{font-size:clamp(22px,3.4vw,32px);font-weight:800;line-height:1.25;letter-spacing:.2px}
 .hero p{margin-top:6px;font-size:15px;color:#e3f1df;max-width:640px}
-.hero .logo-th-hero{display:block;height:38px;width:auto;margin-bottom:12px}
+.hero .logo-inline{display:inline-flex;align-items:center;background:#fff;padding:4px 6px;border-radius:6px;vertical-align:middle;margin-left:8px;line-height:0}
+.hero .logo-inline img{height:28px;width:auto;display:block}
 .btn-open{
   display:inline-flex;align-items:center;gap:8px;
   background:#fff;color:var(--brand-deep);
@@ -173,8 +174,7 @@ footer{
 <header class="hero">
   <div class="hero-inner">
     <div>
-      <img class="logo-th-hero" src="./logo-th.png" alt="Logo TH">
-      <h1>Hệ thống quản lý vùng trồng cỏ Mombasa &amp; Ngô — Hướng dẫn sử dụng</h1>
+      <h1>Hệ thống quản lý vùng trồng cỏ Mombasa &amp; Ngô <span class="logo-inline"><img src="./logo-th.png" alt="Logo TH"></span> — Hướng dẫn sử dụng</h1>
       <p>Tài liệu hướng dẫn Quý đơn vị sử dụng các chức năng của hệ thống: tổng quan, nhập liệu, bản đồ, báo cáo và phân quyền.</p>
     </div>
     <a class="btn-open" href="./index.html">
