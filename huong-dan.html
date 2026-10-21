@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hướng dẫn sử dụng — Hệ thống quản lý vùng trồng cỏ Mombasa &amp; Ngô</title>
+<link rel="icon" type="image/png" href="./logo-th.png">
 <meta name="description" content="Trang hướng dẫn sử dụng Hệ thống quản lý vùng trồng cỏ Mombasa &amp; Ngô: đăng nhập, Dashboard, cân xe, giờ máy, dầu diesel, bón phân, sản lượng, bản đồ và phân quyền.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,6 +47,7 @@ a{color:var(--brand-deep)}
 }
 .hero h1{font-size:clamp(22px,3.4vw,32px);font-weight:800;line-height:1.25;letter-spacing:.2px}
 .hero p{margin-top:6px;font-size:15px;color:#e3f1df;max-width:640px}
+.hero .logo-th-hero{display:block;height:38px;width:auto;background:#fff;padding:7px 10px;border-radius:10px;margin-bottom:12px;box-shadow:0 3px 10px rgba(0,0,0,.25)}
 .btn-open{
   display:inline-flex;align-items:center;gap:8px;
   background:#fff;color:var(--brand-deep);
@@ -171,6 +173,7 @@ footer{
 <header class="hero">
   <div class="hero-inner">
     <div>
+      <img class="logo-th-hero" src="./logo-th.png" alt="Logo TH">
       <h1>Hệ thống quản lý vùng trồng cỏ Mombasa &amp; Ngô — Hướng dẫn sử dụng</h1>
       <p>Tài liệu hướng dẫn Quý đơn vị sử dụng các chức năng của hệ thống: tổng quan, nhập liệu, bản đồ, báo cáo và phân quyền.</p>
     </div>
@@ -210,7 +213,7 @@ footer{
     <section class="card" id="gioi-thieu">
       <h2><span class="num">1</span>Giới thiệu</h2>
       <p>Kính gửi Quý đơn vị,</p>
-      <p>Hệ thống quản lý vùng trồng cỏ Mombasa &amp; Ngô được xây dựng cho trang trại sữa Yên Mỹ (Công Chính, Thanh Hóa) để quản lý hoạt động trồng cỏ và ngô phục vụ trang trại: theo dõi <strong>12 vùng trồng và 15 lô</strong>, ghi nhận cân xe, giờ máy, dầu diesel, bón phân và sản lượng; tổng hợp báo cáo theo thời gian thực cho ban lãnh đạo. Toàn bộ dữ liệu hiện có của Quý đơn vị đã được nạp sẵn vào hệ thống. Tài liệu này hướng dẫn cách sử dụng từng chức năng.</p>
+      <p>Hệ thống quản lý vùng trồng cỏ Mombasa &amp; Ngô được xây dựng cho Trang trại bò sữa Yên Mỹ - Công Chính, Thanh Hóa để quản lý hoạt động trồng cỏ và ngô phục vụ trang trại: theo dõi <strong>12 vùng trồng và 15 lô</strong>, ghi nhận cân xe, giờ máy, dầu diesel, bón phân và sản lượng; tổng hợp báo cáo theo thời gian thực cho ban lãnh đạo. Toàn bộ dữ liệu hiện có của Quý đơn vị đã được nạp sẵn vào hệ thống. Tài liệu này hướng dẫn cách sử dụng từng chức năng.</p>
     </section>
 
     <section class="card" id="truy-cap">
@@ -306,7 +309,7 @@ footer{
 
     <section class="card" id="he-thong">
       <h2><span class="num">12</span>Phân quyền &amp; Hệ thống</h2>
-      <p>Mục này chỉ hiển thị với tài khoản <strong>Quản trị viên</strong>, <strong>Lãnh đạo (CEO)</strong> và <strong>Quản lý</strong>, gồm:</p>
+      <p>Mục này chỉ hiển thị với tài khoản <strong>Quản trị viên</strong> và <strong>Quản lý</strong> (tài khoản Lãnh đạo (CEO) không xem được mục này), gồm:</p>
       <ul>
         <li><strong>Tài khoản người dùng:</strong> danh sách các tài khoản của hệ thống — tên người dùng, tài khoản, vai trò, vùng phụ trách, trạng thái và lần đăng nhập gần nhất.</li>
         <li><strong>Phân quyền theo vai trò:</strong> bảng mô tả quyền của từng vai trò trong hệ thống (xem bảng ở mục 14).</li>
@@ -330,7 +333,7 @@ footer{
           </thead>
           <tbody>
             <tr><td>Quản trị viên (Admin)</td><td>Có</td><td>Có</td><td>Toàn công ty; quản lý cả nhật ký hệ thống</td></tr>
-            <tr><td>Lãnh đạo (CEO)</td><td>Có</td><td>Không</td><td>Toàn công ty</td></tr>
+            <tr><td>Lãnh đạo (CEO)</td><td>Có</td><td>Không</td><td>Toàn công ty; không xem được mục Phân quyền &amp; Hệ thống</td></tr>
             <tr><td>Quản lý (QuanLy)</td><td>Có</td><td>Có</td><td>Toàn công ty</td></tr>
             <tr><td>Nhân viên nhập liệu (NVNhapLieu)</td><td>Có</td><td>Có</td><td>Chỉ các vùng được phân công</td></tr>
             <tr><td>Feed Center</td><td>Có</td><td>Có</td><td>Toàn công ty</td></tr>
