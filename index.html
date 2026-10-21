@@ -486,6 +486,7 @@ async function loadHeThong(){
     var nkrows=(d.nhatKy||[]).map(function(r){
       return '<tr><td data-label="Thời gian" style="white-space:nowrap">'+esc(r.ThoiGian)+'</td><td class="mono" data-label="Tài khoản">'+esc(r.TaiKhoan)+'</td><td data-label="Hành động">'+esc(r.HanhDong)+'</td><td data-label="Tab">'+esc(r.Tab)+'</td><td data-label="Nội dung" style="white-space:normal;min-width:220px">'+esc(r.NoiDungThayDoi)+'</td></tr>';
     }).join('');
+    var nutXoaNhatKy=(USER&&USER.role==='Admin')?'<button class="btn ghost small" onclick="xoaToanBoNhatKy()">Xoá toàn bộ nhật ký</button>':'';
     el.innerHTML=
       '<h2 class="sec-title">Tài khoản người dùng</h2>'+
       '<div class="tbl-wrap"><table><thead><tr><th>Họ tên</th><th>Tài khoản</th><th>Vai trò</th><th>Vùng phụ trách</th><th>Trạng thái</th><th>Đăng nhập cuối</th></tr></thead><tbody>'+urows+'</tbody></table></div>'+
@@ -493,10 +494,18 @@ async function loadHeThong(){
       '<div class="grid tab-grid" style="grid-template-columns:repeat(auto-fit,minmax(215px,1fr))">'+roles+'</div>'+
       '<h2 class="sec-title" style="margin-top:26px">Cấu hình hệ thống</h2>'+
       '<div class="card"><dl class="kv">'+cfg+'</dl><p style="font-size:13px;color:var(--ink2);margin:10px 0 0">Cấu hình lưu tại tab CauHinh của Database trung tâm (Google Sheets) — sửa trong Sheet là app áp dụng ngay, không cần sửa code.</p></div>'+
-      '<h2 class="sec-title" style="margin-top:26px">Nhật ký hệ thống gần nhất</h2>'+
+      '<div class="sec-head" style="margin-top:26px"><h2 class="sec-title">Nhật ký hệ thống gần nhất</h2>'+nutXoaNhatKy+'</div>'+
       '<div class="tbl-wrap"><table><thead><tr><th>Thời gian</th><th>Tài khoản</th><th>Hành động</th><th>Tab</th><th>Nội dung</th></tr></thead><tbody>'+nkrows+'</tbody></table></div>'+
       '<p style="font-size:13px;color:var(--ink2);margin-top:8px">30 dòng mới nhất từ tab NhatKyHeThong — hệ thống tự ghi mọi lần đăng nhập và thao tác thêm dữ liệu để truy vết.</p>';
   }catch(e){ el.innerHTML='<div class="demo-note">'+esc(e.message)+'</div>'; }
+}
+async function xoaToanBoNhatKy(){
+  if(!confirm('Xoá toàn bộ nhật ký hệ thống? Hành động này không thể hoàn tác.')) return;
+  try{
+    var r=await rpc('xoaNhatKy',TOKEN);
+    toast('Đã xoá '+(r.deleted||0)+' dòng nhật ký.');
+    await loadHeThong();
+  }catch(e){ toast(e.message); }
 }
 
 /* Vung & Lo */
