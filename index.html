@@ -325,9 +325,11 @@ input[type=password]:focus,input[type=time]:focus{outline:2px solid color-mix(in
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 var API_BASE='https://script.google.com/macros/s/AKfycbx7KJtZDvyiQDLiRukt9QMx6yX_oM55on7WHky036wWXjfmLp99A9KhvdctqUbl8Dma0A/exec';
-var TOKEN=localStorage.getItem('thym_token')||'';
+/* Phien dang nhap CHI giu trong bo nho trang - xoa moi token da luu tu cac ban truoc */
+try{ localStorage.removeItem('thym_token'); localStorage.removeItem('thym_user'); sessionStorage.removeItem('thym_token'); sessionStorage.removeItem('thym_user'); }catch(e){}
+var TOKEN='';
 var USER=null, INIT=null, VUNG=[], LO=[], CUR_VUNG='TATCA', MAP_OBJ=null, MAP_INIT=false, MAP_LAYERS={}, MAP_CROP='all', MAP_SEL=null;
-try{ USER=JSON.parse(localStorage.getItem('thym_user')||'null'); }catch(e){ USER=null; }
+
 
 function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3200);}
 function fmt(n,dec){if(n===null||n===undefined||n==='')return '—';var x=Number(n);if(isNaN(x))return n;return x.toLocaleString('vi-VN',{minimumFractionDigits:dec||0,maximumFractionDigits:dec||0});}
@@ -356,14 +358,13 @@ function run(fn){ var a=Array.prototype.slice.call(arguments,1); return rpc.appl
 async function doLogin(){
   var u=document.getElementById('lgUser').value.trim(), p=document.getElementById('lgPass').value;
   var err=document.getElementById('lgErr'); err.textContent='';
-  try{ var s=await rpc('dangNhap',u,p); TOKEN=s.token; localStorage.setItem('thym_token',TOKEN); localStorage.setItem('thym_user',JSON.stringify({ten:s.ten,role:s.role,vung:s.vung})); await boot(); }
+  try{ var s=await rpc('dangNhap',u,p); TOKEN=s.token; await boot(); }
   catch(e){ err.textContent=e.message; }
 }
 async function doLogout(){ try{ await rpc('dangXuat',TOKEN); }catch(e){} forceLogout(); location.reload(); }
 async function boot(){
   INIT=await rpc('getInitData',TOKEN);
   USER=INIT.user; VUNG=INIT.vung||[]; LO=INIT.lo||[];
-  localStorage.setItem('thym_user',JSON.stringify(USER));
   document.getElementById('loginBox').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
   document.getElementById('bottomNav').classList.remove('hidden');
@@ -644,7 +645,6 @@ function selectLotOnMap(maLo,pan){
   var layer=MAP_LAYERS[maLo];
   if(layer){ if(pan&&MAP_OBJ) MAP_OBJ.fitBounds(layer.getBounds().pad(0.6)); layer.openPopup(); }
 }
-if(TOKEN){ boot().catch(function(e){ if(String(e.message||'').indexOf('Phien dang nhap het han')>=0) forceLogout(); }); }
 document.getElementById('lgPass').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
 </script>
 </body>
