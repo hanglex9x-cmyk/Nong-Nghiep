@@ -599,40 +599,33 @@ function ensureLeaflet(){return new Promise(function(res,rej){ if(window.L) retu
 async function loadBanDo(){
   var el=document.getElementById('pg-bando');
   if(MAP_INIT && MAP_OBJ){ setTimeout(function(){ MAP_OBJ.invalidateSize(); },80); return; }
-  el.innerHTML='<div class="demo-note">Polygon MINH HỌA theo diện tích thật của từng lô, vị trí chưa phải ranh đo đạc — chờ file ranh vùng từ địa chính (CauHinh: Cho file ranh vung). Bấm vào polygon hoặc chọn lô trong danh sách bên phải để xem chi tiết.</div>'+
+  el.innerHTML='<div class="demo-note">Đã nạp RANH THẬT của 8/12 vùng từ file bản đồ KMZ khách gửi 21/10/2026: Z03 Mỹ Phú, Z04 Xuân Thịnh, Z06 Mỹ Lộc, Z07 Mỹ Hưng, Z09 Huyện Đội, Z11 Tân Tiến (đủ) và Z01 Lâm Hòa, Z12 Mỹ Thắng (một phần). Các lô chưa có ranh thật — Z02 Trang Trại, Z05 Mỹ Phong, Z08 Mỹ Lạc, Z10 Kỳ Thượng, Z07-NGO, Z11-NGO — không hiển thị polygon. Bấm vào polygon hoặc chọn lô trong danh sách bên phải để xem chi tiết.</div>'+
   '<div class="map-tools" style="margin-top:16px"><input type="text" id="mapSearch" placeholder="Tìm lô theo mã, cây trồng, vùng…"><select id="mapVungSel"><option value="all">Tất cả vùng</option>'+VUNG.map(function(v){return '<option value="'+esc(v.MaVung)+'">'+esc(v.TenVung)+' ('+esc(v.MaVung)+')</option>';}).join('')+'</select></div>'+
   '<div class="map-tools" id="cropChips"><button type="button" class="chip on" data-crop="all">Tất cả cây trồng</button><button type="button" class="chip" data-crop="co">Cỏ</button><button type="button" class="chip" data-crop="ngo">Ngô</button></div>'+
   '<div class="map-layout"><div><div id="map"></div><div class="legend"><span><i class="sw" style="background:#2f9e44"></i>Cỏ</span><span><i class="sw" style="background:#e8a13a"></i>Ngô</span><span style="margin-left:auto">Bấm polygon để xem chi tiết lô · Chuyển lớp nền: vệ tinh Esri / bản đồ OSM ở góc phải bản đồ</span></div></div>'+
   '<div><div class="card" id="plotDetail" style="margin-bottom:16px"></div><div class="card" style="padding:8px 12px"><h3 style="padding:10px 6px 4px">Danh sách lô (<span id="plotCount"></span>)</h3><div id="plotList"></div></div></div></div>';
   try{ await ensureLeaflet(); }catch(e){ el.innerHTML+='<div class="demo-note">'+esc(e.message)+'</div>'; return; }
-  var center=[19.62,105.62];
-  MAP_OBJ=L.map('map').setView(center,12);
+  var center=[19.502,105.648];
+  MAP_OBJ=L.map('map').setView(center,13);
   var esri=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Esri World Imagery',maxZoom:19});
   var osm=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:19});
   esri.addTo(MAP_OBJ); L.control.layers({'Vệ tinh (Esri)':esri,'Bản đồ (OSM)':osm}).addTo(MAP_OBJ);
-  /* Grid layout: 5 cols, rect per lot sized by sqrt(area) */
-  var colsN=5, gapM=60;
-  var cellMax=0; LO.forEach(function(l){var s=Math.sqrt((Number(l.DienTich_ha)||1)*10000); if(s>cellMax)cellMax=s;});
-  var stepM=cellMax+gapM;
-  var totalW=colsN*stepM, rowsN=Math.ceil(LO.length/colsN), totalH=rowsN*stepM;
-  var lat0=center[0], lng0=center[1];
-  function mToLat(m){return m/111320;} function mToLng(m){return m/(111320*Math.cos(lat0*Math.PI/180));}
-  var startLat=lat0+mToLat(totalH/2), startLng=lng0-mToLng(totalW/2);
-  LO.forEach(function(l,idx){
-    var side=Math.sqrt((Number(l.DienTich_ha)||1)*10000);
-    var cx=startLng+mToLng((idx%colsN)*stepM+stepM/2), cy=startLat-mToLat(Math.floor(idx/colsN)*stepM+stepM/2);
-    var dLat=mToLat(side/2), dLng=mToLng(side/2);
-    var bounds=[[cy-dLat,cx-dLng],[cy+dLat,cx+dLng]];
-    var isCo=String(l.CayTrong||'').toLowerCase().indexOf('cỏ')>=0||String(l.CayTrong||'').toLowerCase().indexOf('co')>=0&&String(l.CayTrong||'').toLowerCase().indexOf('ngô')<0;
-    var isNgo=String(l.CayTrong||'').toLowerCase().indexOf('ngô')>=0||String(l.CayTrong||'').toLowerCase().indexOf('ngo')>=0;
-    var color=isNgo?'#e8a13a':'#2f9e44';
+  /* Ranh that tu cot GeoJSON_Polygon (tab Lo) — lo khong co GeoJSON thi khong ve */
+  var allBounds=null;
+  LO.forEach(function(l){
+    if(!l.GeoJSON_Polygon) return;
+    var geom=null; try{ geom=JSON.parse(l.GeoJSON_Polygon); }catch(e){ geom=null; }
+    if(!geom) return;
     var tenVung=''; VUNG.forEach(function(v){if(v.MaVung===l.MaVung)tenVung=v.TenVung;});
-    var poly=L.rectangle(bounds,{color:color,weight:2,fillColor:color,fillOpacity:0.45}).addTo(MAP_OBJ);
+    var color=lotIsNgo(l)?'#e8a13a':'#2f9e44';
+    var poly=L.geoJSON(geom,{style:{color:color,weight:2,fillColor:color,fillOpacity:0.45}}).addTo(MAP_OBJ);
     poly.bindTooltip(esc(l.MaLo),{permanent:true,direction:'center',className:'lo-label'});
-    poly.bindPopup('<b>'+esc(l.MaLo)+' · '+esc(tenVung)+'</b><br>Cây trồng: '+esc(l.CayTrong)+'<br>Diện tích: '+fmt(l.DienTich_ha,2)+' ha<br>Trạng thái canh tác: '+esc(l.TrangThaiCanhTac||''));
+    poly.bindPopup('<b>'+esc(l.MaLo)+' · '+esc(tenVung)+'</b><br>Cây trồng: '+esc(l.CayTrong)+'<br>Diện tích: '+fmt(l.DienTich_ha,2)+' ha<br>Trạng thái bản đồ: '+esc(l.TrangThaiBanDo||'')+'<br>Trạng thái canh tác: '+esc(l.TrangThaiCanhTac||''));
     MAP_LAYERS[l.MaLo]=poly;
     poly.on('click',function(){ selectLotOnMap(l.MaLo,false); });
+    var b=poly.getBounds(); allBounds=allBounds?allBounds.extend(b):b;
   });
+  if(allBounds) MAP_OBJ.fitBounds(allBounds.pad(0.05));
   MAP_INIT=true;
   document.getElementById('mapSearch').addEventListener('input',renderPlotPanel);
   document.getElementById('mapVungSel').addEventListener('change',renderPlotPanel);
@@ -665,7 +658,7 @@ function selectLotOnMap(maLo,pan){
   var l=null; LO.forEach(function(x){ if(x.MaLo===maLo) l=x; }); if(!l) return;
   var ten=''; VUNG.forEach(function(v){ if(v.MaVung===l.MaVung) ten=v.TenVung; });
   var det=document.getElementById('plotDetail');
-  if(det){ det.innerHTML='<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px"><h3 style="font-size:19px">Lô '+esc(l.MaLo)+' — '+esc(l.CayTrong)+'</h3><span class="badge '+(lotIsNgo(l)?'b-amber':'b-green')+'">'+esc(l.TrangThaiCanhTac||'')+'</span></div><p class="sub">'+esc(ten)+' ('+esc(l.MaVung)+') · polygon minh họa theo diện tích thật — bản chính import từ file bản đồ của khách</p><dl class="kv"><dt>Diện tích</dt><dd>'+fmt(l.DienTich_ha,2)+' ha</dd><dt>Giống</dt><dd>'+esc(l.Giong||'—')+'</dd><dt>Vùng</dt><dd>'+esc(ten)+'</dd><dt>Trạng thái bản đồ</dt><dd>'+esc(l.TrangThaiBanDo||'—')+'</dd><dt>Trạng thái canh tác</dt><dd>'+esc(l.TrangThaiCanhTac||'—')+'</dd></dl>'; }
+  if(det){ det.innerHTML='<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px"><h3 style="font-size:19px">Lô '+esc(l.MaLo)+' — '+esc(l.CayTrong)+'</h3><span class="badge '+(lotIsNgo(l)?'b-amber':'b-green')+'">'+esc(l.TrangThaiCanhTac||'')+'</span></div><p class="sub">'+esc(ten)+' ('+esc(l.MaVung)+')'+(l.GeoJSON_Polygon?' · ranh thật trích từ file KMZ khách gửi 21/10/2026':' · lô chưa có ranh thật trong file bản đồ')+'</p><dl class="kv"><dt>Diện tích</dt><dd>'+fmt(l.DienTich_ha,2)+' ha</dd><dt>Giống</dt><dd>'+esc(l.Giong||'—')+'</dd><dt>Vùng</dt><dd>'+esc(ten)+'</dd><dt>Trạng thái bản đồ</dt><dd>'+esc(l.TrangThaiBanDo||'—')+'</dd><dt>Trạng thái canh tác</dt><dd>'+esc(l.TrangThaiCanhTac||'—')+'</dd></dl>'; }
   renderPlotPanel();
   var layer=MAP_LAYERS[maLo];
   if(layer){ if(pan&&MAP_OBJ) MAP_OBJ.fitBounds(layer.getBounds().pad(0.6)); layer.openPopup(); }
