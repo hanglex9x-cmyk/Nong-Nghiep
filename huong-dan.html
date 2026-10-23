@@ -205,6 +205,10 @@ footer{
       <li><a href="#dau-diesel">Dầu diesel</a></li>
       <li><a href="#bon-phan">Bón phân</a></li>
       <li><a href="#san-luong">Sản lượng</a></li>
+      <li><a href="#chi-phi-khac">Chi phí khác</a></li>
+      <li><a href="#sua-xoa">Sửa &amp; Xóa bản ghi</a></li>
+      <li><a href="#chi-phi-vung">Chi phí theo vùng</a></li>
+      <li><a href="#ke-hoach">Kế hoạch &amp; KPI</a></li>
       <li><a href="#he-thong">Phân quyền &amp; Hệ thống</a></li>
       <li><a href="#xuat-excel">Xuất Excel</a></li>
       <li><a href="#phan-quyen">Phân quyền theo vai trò</a></li>
@@ -247,12 +251,16 @@ footer{
           <tbody>
             <tr><td>Linh.dn</td><td>Đỗ Ngọc Linh</td><td>Quản trị viên</td><td>Toàn quyền trên toàn hệ thống</td></tr>
             <tr><td>Nam.lm</td><td>Lã Minh Nam</td><td>Lãnh đạo (CEO)</td><td>Xem toàn công ty, không nhập liệu</td></tr>
-            <tr><td>Giap.nh</td><td>Nguyễn Huy Giáp</td><td>Quản lý</td><td>Xem và nhập liệu toàn công ty</td></tr>
+            <tr><td>Giap.nh</td><td>Nguyễn Huy Giáp</td><td>Quản lý</td><td>Chỉ xem toàn công ty (không nhập liệu)</td></tr>
             <tr><td>Ly.nt</td><td>Nguyễn Thị Lý</td><td>Nhân viên nhập liệu nông nghiệp</td><td>Phụ trách cả 12 vùng Z01–Z12</td></tr>
             <tr><td>Tham.mt</td><td>Mai Thị Thắm</td><td>Nhân viên nhập liệu nông nghiệp</td><td>Phụ trách cả 12 vùng Z01–Z12</td></tr>
-            <tr><td>Anh.tt</td><td>Trịnh Thị Anh</td><td>Nhân viên nhập liệu Feed Center</td><td>Xem tổng quan và nhập liệu</td></tr>
+            <tr><td>Anh.tt</td><td>Trịnh Thị Anh</td><td>Nhân viên nhập liệu Feed Center</td><td>Tạm khóa theo yêu cầu của Quý đơn vị — mở lại khi cần</td></tr>
           </tbody>
         </table>
+      </div>
+      <div class="note">
+        <span class="note-title">Cập nhật phân quyền ngày 23/10/2026</span>
+        <p>Theo yêu cầu của Quý đơn vị: tài khoản <strong>Quản lý (Giap.nh)</strong> chuyển sang <strong>chỉ xem</strong> toàn công ty (vẫn xem được mọi màn hình, gồm cả mục Phân quyền &amp; Hệ thống, nhưng không nhập/sửa/xóa dữ liệu); tài khoản <strong>Anh.tt tạm khóa</strong>, khi cần dùng lại chỉ cần báo để mở khóa. Hai tài khoản nhân viên nhập liệu Ly.nt và Tham.mt phụ trách đủ cả 12 vùng.</p>
       </div>
       <div class="note">
         <span class="note-title">Lưu ý</span>
@@ -264,9 +272,10 @@ footer{
       <h2><span class="num">4</span>Dashboard — Tổng quan</h2>
       <p>Màn hình đầu tiên sau khi đăng nhập, hiển thị các chỉ số tổng hợp của toàn hệ thống:</p>
       <ul>
-        <li><strong>Các thẻ chỉ số chính:</strong> diện tích gieo trồng, sản lượng cộng dồn, khối lượng qua cân xe và số chuyến, sản lượng DM, tổng giờ máy, tổng dầu diesel và mức tiêu hao dầu trên giờ máy, tiến độ so với KPI 15 tấn DM/ha/năm, cùng các cảnh báo (vùng chưa có sản lượng, số chuyến cân còn thiếu %DM).</li>
+        <li><strong>Các thẻ chỉ số chính:</strong> diện tích đang canh tác / tổng diện tích (hiện tại 507,7 / 778,3 ha — đang canh tác là tổng diện tích các lô có cây, tổng là tổng diện tích các vùng), sản lượng cộng dồn, khối lượng qua cân xe và số chuyến, sản lượng DM, tổng giờ máy, tổng dầu diesel và mức tiêu hao dầu trên giờ máy, tiến độ so với KPI 15 tấn DM/ha/năm, cùng các cảnh báo (vùng chưa có sản lượng, số chuyến cân còn thiếu %DM).</li>
         <li><strong>Bộ lọc xem theo vùng:</strong> ở đầu trang có ô chọn vùng. Chọn "Tất cả" để xem toàn công ty, hoặc chọn một vùng cụ thể (ví dụ Mỹ Lộc) để mọi chỉ số trên Dashboard tự tính lại chỉ trong phạm vi vùng đó. Nhân viên nhập liệu chỉ chọn được các vùng mình phụ trách.</li>
         <li><strong>Tiến độ vụ/lứa theo lô:</strong> bảng 15 lô cho biết từng lô đã thu bao nhiêu tấn, số đợt thu, đợt thu gần nhất, sản lượng DM ước tính trên mỗi héc-ta và phần trăm ước đạt KPI năm (có thanh tiến độ trực quan).</li>
+        <li><strong>KPI vụ đang chạy:</strong> khối riêng hiển thị các vụ canh tác đang trong thời gian thực hiện (theo mục Kế hoạch &amp; KPI) cùng phần trăm tiến độ sản lượng thực tế so với chỉ tiêu của vụ.</li>
         <li><strong>Biểu đồ sản lượng theo tháng:</strong> biểu đồ cột theo từng tháng, tách riêng phần cỏ và phần ngô, kèm tổng sản lượng của tháng trên đầu mỗi cột.</li>
         <li><strong>Xếp hạng vùng:</strong> bảng xếp hạng 12 vùng theo sản lượng DM trên héc-ta — chỉ hiển thị khi đang xem toàn công ty.</li>
       </ul>
@@ -274,12 +283,14 @@ footer{
 
     <section class="card" id="vung-lo">
       <h2><span class="num">5</span>Vùng &amp; Lô</h2>
-      <p>Xem danh sách 12 vùng trồng (tên vùng, mã vùng, diện tích, khoảng cách về trang trại) và 15 lô chi tiết (lô thuộc vùng nào, trồng cỏ hay ngô, diện tích bao nhiêu). Mục này có nút <strong>Xuất Excel</strong> để tải danh sách về máy.</p>
+      <p>Xem danh sách 12 vùng trồng (tên vùng, mã vùng, diện tích, khoảng cách về trang trại) và 15 lô chi tiết (lô thuộc vùng nào, trồng cỏ hay ngô, diện tích bao nhiêu). Bảng vùng có thêm cột <strong>Canh tác / Tổng (ha)</strong>: diện tích đang canh tác của từng vùng (tổng diện tích các lô có cây của vùng) so với tổng diện tích vùng. Mục này có nút <strong>Xuất Excel</strong> để tải danh sách về máy.</p>
     </section>
 
     <section class="card" id="ban-do">
       <h2><span class="num">6</span>Bản đồ</h2>
-      <p>Bản đồ nền vệ tinh hiển thị vị trí và hình dạng các lô đất, có công cụ tìm kiếm, lọc theo vùng và theo loại cây, cùng thẻ thông tin chi tiết của từng lô khi bấm vào.</p>
+      <p>Bản đồ nền vệ tinh hiển thị vị trí và hình dạng các lô đất, có công cụ tìm kiếm, lọc theo vùng và theo loại cây, cùng thẻ thông tin chi tiết của từng lô khi bấm vào (thẻ thông tin có thêm diện tích vùng dạng canh tác / tổng). </p>
+      <h3>Nhận diện vùng bằng GPS — nút "📍 Vị trí của tôi"</h3>
+      <p>Khi đang có mặt tại hiện trường (điện thoại có bật định vị), bấm nút <strong>📍 Vị trí của tôi</strong> ở đầu màn hình Bản đồ và cho phép trình duyệt truy cập vị trí: hệ thống sẽ đánh dấu vị trí của Quý vị trên bản đồ và tự nhận diện Quý vị đang đứng trong vùng/lô nào (với các vùng đã có ranh trên bản đồ), đồng thời tô sáng lô đó. Nếu vị trí nằm ngoài các vùng đã có ranh, hệ thống sẽ thông báo và cho biết vùng gần nhất cách khoảng bao nhiêu mét. Tính năng này cần Quý vị cho phép quyền vị trí khi trình duyệt hỏi; nếu từ chối quyền, hệ thống sẽ hiển thị hướng dẫn thay vì vị trí.</p>
       <div class="note">
         <span class="note-title">Lưu ý</span>
         <p>Bản đồ đã hiển thị <strong>ranh giới thật của 8/12 vùng</strong>, trích xuất từ file bản đồ KMZ Quý đơn vị gửi ngày 21/10/2026: Mỹ Phú, Xuân Thịnh, Mỹ Lộc, Mỹ Hưng, Huyện Đội, Tân Tiến (đủ ranh vùng) và Lâm Hòa, Mỹ Thắng (một phần). Bốn vùng Trang Trại, Mỹ Phong, Mỹ Lạc, Kỳ Thượng chưa có ranh trong file bản đồ đã gửi nên tạm thời chưa hiển thị; khi Quý đơn vị bổ sung được ranh của các vùng này, bản đồ sẽ được cập nhật đầy đủ.</p>
@@ -289,7 +300,7 @@ footer{
     <section class="card" id="can-xe">
       <h2><span class="num">7</span>Cân xe</h2>
       <p>Ghi nhận từng chuyến xe qua cân (nhập cỏ/ngô): ngày giờ, xe, vùng, khối lượng vào – ra và %DM. Ngày hiển thị dạng dd/mm/yyyy, vùng hiển thị theo tên vùng; mã Code SAP hiển thị dạng số nguyên đầy đủ không dấu ngăn cách (ví dụ 106200001).</p>
-      <p><strong>Cách thêm chuyến mới:</strong> đăng nhập bằng tài khoản có quyền nhập liệu → vào mục Cân xe → điền thông tin vào biểu mẫu ở đầu trang → bấm Lưu. Hệ thống tự sinh mã phiếu và ghi nhận người nhập. Tài khoản CEO không có biểu mẫu này vì chỉ dùng để xem.</p>
+      <p><strong>Cách thêm chuyến mới:</strong> đăng nhập bằng tài khoản có quyền nhập liệu → vào mục Cân xe → điền thông tin vào biểu mẫu ở đầu trang → bấm Lưu. Hệ thống tự sinh mã phiếu và ghi nhận người nhập. Các tài khoản chỉ xem (Lãnh đạo (CEO) và Quản lý) không có biểu mẫu này.</p>
     </section>
 
     <section class="card" id="gio-may">
@@ -312,25 +323,65 @@ footer{
       <p>Bảng tổng hợp sản lượng theo tháng, theo vùng và theo loại cây (cỏ/ngô): cột tháng gộp năm + tháng thành một cột dạng 01/2026, vùng và lô hiển thị theo tên vùng, tên lô, số liệu ghi ở cột <strong>Sản lượng (tấn)</strong> — là số liệu gốc để hệ thống vẽ biểu đồ và tính các chỉ số trên Dashboard.</p>
     </section>
 
+
+    <section class="card" id="chi-phi-khac">
+      <h2><span class="num">12</span>Chi phí khác</h2>
+      <p>Mục riêng để ghi nhận mọi khoản chi phí ngoài tiền phân bón (phân bón vẫn theo dõi ở mục Bón phân): ví dụ thuê máy ngoài, vật tư, sửa chữa, nhiên liệu phụ, dịch vụ thuê ngoài… Mỗi khoản chi gồm: ngày chi, vùng (và lô nếu xác định được), <strong>nội dung chi — bắt buộc ghi rõ chi cho việc gì</strong>, và số tiền.</p>
+      <p><strong>Cách nhập:</strong> tài khoản Quản trị viên hoặc Nhân viên nhập liệu vào mục <strong>Chi phí khác</strong> → điền biểu mẫu (nội dung chi viết cụ thể, ví dụ "Thuê máy cày xới đất lô Z04-CO đợt 1") → bấm Lưu. Khoản chi sẽ xuất hiện trong bảng (lọc được theo vùng như các mục khác) và được tính vào báo cáo <strong>Chi phí theo vùng</strong>. Các tài khoản chỉ xem (CEO, Quản lý) xem được bảng nhưng không có biểu mẫu nhập. Mục này có nút <strong>Xuất Excel</strong> xuất kèm nội dung chi và số tiền.</p>
+    </section>
+
+    <section class="card" id="sua-xoa">
+      <h2><span class="num">13</span>Sửa &amp; Xóa bản ghi</h2>
+      <p>Ở cả 6 mục dữ liệu (Cân xe, Giờ máy, Dầu diesel, Bón phân, Sản lượng, Chi phí khác), mỗi dòng có thêm cột <strong>Tác vụ</strong> với nút <strong>Sửa</strong> và <strong>Xóa</strong>:</p>
+      <ul>
+        <li><strong>Sửa:</strong> bấm nút Sửa, biểu mẫu ở đầu trang sẽ nạp sẵn dữ liệu cũ của dòng đó — chỉnh lại các ô cần sửa rồi bấm nút "Lưu thay đổi" (hoặc "Hủy sửa" để bỏ qua). Dữ liệu được ghi đè đúng vào dòng cũ, không tạo dòng mới.</li>
+        <li><strong>Xóa:</strong> bấm nút Xóa, hệ thống hỏi xác nhận rồi mới xóa hẳn dòng khỏi bảng.</li>
+        <li><strong>Quyền sửa/xóa:</strong> người nhập chỉ sửa/xóa được phiếu <strong>do chính mình nhập</strong> trong vùng phụ trách; Quản trị viên sửa/xóa được mọi phiếu; tài khoản chỉ xem (CEO, Quản lý) không có nút sửa/xóa. Mọi thao tác sửa/xóa đều được ghi vào Nhật ký hệ thống (ai thực hiện, lúc nào, phiếu nào, giá trị cũ → mới) để tiện đối soát.</li>
+      </ul>
+    </section>
+
+    <section class="card" id="chi-phi-vung">
+      <h2><span class="num">14</span>Chi phí theo vùng</h2>
+      <p>Báo cáo tổng hợp chi phí sản xuất theo từng vùng trong khoảng thời gian tùy chọn (ô từ ngày – đến ngày ở đầu trang), gồm các cột: tiền dầu diesel, tiền giờ máy, chi phí khác, tổng chi phí và chi phí trên mỗi héc-ta đang canh tác của vùng. Mọi tài khoản đã đăng nhập đều xem được báo cáo này; có nút <strong>Xuất Excel</strong>.</p>
+      <ul>
+        <li><strong>Tiền dầu diesel:</strong> vì phiếu dầu ghi theo máy, không ghi vùng, nên tiền dầu chỉ tổng hợp ở mức <strong>toàn công ty</strong> (dòng tổng cuối bảng), tính bằng tổng số lít × đơn giá dầu cấu hình. Đơn giá hiện dùng là <strong>29.830 đ/lít — giá tạm theo Petrolimex DO 0,05S-II vùng 2 (kỳ điều hành 15h ngày 22/10/2026)</strong>, theo thống nhất lấy giá chuẩn Petrolimex; Quản trị viên tự cập nhật đơn giá trong mục Phân quyền &amp; Hệ thống khi giá thay đổi.</li>
+        <li><strong>Tiền giờ máy:</strong> tính bằng tổng số giờ hoạt động của các lô thuộc vùng × đơn giá giờ máy. Hiện <strong>chưa có đơn giá giờ máy</strong> nên cột này hiển thị "—" và chưa tính vào tổng; khi Quý đơn vị cấp đơn giá, Quản trị viên nhập vào cấu hình là báo cáo tự tính.</li>
+        <li><strong>Tiền phân bón:</strong> dữ liệu bón phân hiện chỉ ghi khối lượng các loại phân, không ghi thành tiền, nên báo cáo hiển thị "—" kèm ghi chú thay vì số 0.</li>
+      </ul>
+    </section>
+
+    <section class="card" id="ke-hoach">
+      <h2><span class="num">15</span>Kế hoạch &amp; KPI</h2>
+      <p>Mục quản lý các vụ canh tác và theo dõi tiến độ so với chỉ tiêu:</p>
+      <ul>
+        <li><strong>Vụ canh tác:</strong> do Quản trị viên tạo — gồm vùng (và lô, để trống nếu áp dụng cả vùng), tên vụ, cây trồng, thời gian bắt đầu – kết thúc và <strong>chỉ tiêu sản lượng (tấn)</strong>.</li>
+        <li><strong>Tiến độ vụ:</strong> hệ thống tự tính sản lượng thật đã ghi nhận ở mục Sản lượng của vùng/lô trong thời gian của vụ, chia cho chỉ tiêu để ra phần trăm tiến độ kèm thanh tiến độ trực quan.</li>
+        <li><strong>Công việc theo tuần:</strong> mỗi vụ có danh sách việc cần làm theo từng tuần; Quản trị viên và Nhân viên nhập liệu được tích dấu hoàn thành khi việc đã xong.</li>
+        <li>Các vụ đang trong thời gian thực hiện còn được hiển thị ngay trên <strong>Dashboard</strong> ở khối "KPI vụ đang chạy" để lãnh đạo theo dõi nhanh.</li>
+      </ul>
+    </section>
+
     <section class="card" id="he-thong">
-      <h2><span class="num">12</span>Phân quyền &amp; Hệ thống</h2>
+      <h2><span class="num">16</span>Phân quyền &amp; Hệ thống</h2>
       <p>Mục này chỉ hiển thị với tài khoản <strong>Quản trị viên</strong> và <strong>Quản lý</strong> (tài khoản Lãnh đạo (CEO) không xem được mục này), gồm:</p>
       <ul>
         <li><strong>Tài khoản người dùng:</strong> danh sách các tài khoản của hệ thống — tên người dùng, tài khoản, vai trò, vùng phụ trách, trạng thái và lần đăng nhập gần nhất.</li>
-        <li><strong>Phân quyền theo vai trò:</strong> bảng mô tả quyền của từng vai trò trong hệ thống (xem bảng ở mục 14).</li>
-        <li><strong>Cấu hình hệ thống:</strong> các thông số chuẩn đang áp dụng, ví dụ diện tích gieo trồng hiển thị 467 ha, KPI 15 tấn DM/ha/năm.</li>
+        <li><strong>Phân quyền theo vai trò:</strong> bảng mô tả quyền của từng vai trò trong hệ thống (xem bảng ở mục 18).</li>
+        <li><strong>Cấu hình hệ thống:</strong> các thông số chuẩn đang áp dụng, ví dụ KPI 15 tấn DM/ha/năm, đơn giá dầu diesel cho báo cáo chi phí.</li>
+        <li><strong>Đơn giá cho tổng hợp chi phí (chỉ Quản trị viên sửa):</strong> hai ô đơn giá dầu diesel (đ/lít) và đơn giá giờ máy (đ/giờ) dùng cho báo cáo Chi phí theo vùng. Giá dầu hiện tại là giá tạm theo Petrolimex DO 0,05S-II vùng 2 (kỳ điều hành 15h 22/10/2026) — Quản trị viên tự cập nhật khi giá thay đổi; đơn giá giờ máy để trống cho tới khi Quý đơn vị cấp.</li>
+        <li><strong>Thêm vùng liên kết mới (chỉ Quản trị viên):</strong> khi Quý đơn vị mở thêm vùng trồng mới, Quản trị viên điền biểu mẫu "Thêm vùng liên kết mới" (tên vùng, xã, Cost Center SAP nếu có, diện tích tổng, cây trồng và diện tích của lô đầu tiên) — vùng mới sẽ xuất hiện ngay ở biểu mẫu nhập liệu, bộ lọc, Dashboard và danh sách bản đồ với trạng thái "Chờ file ranh vùng" cho tới khi có ranh giới đất được nạp.</li>
         <li><strong>Nhật ký hệ thống:</strong> ghi lại các hoạt động đăng nhập và thao tác trên hệ thống để tiện tra cứu, đối soát. Riêng <strong>Quản trị viên</strong> có thêm nút <strong>"Xoá toàn bộ nhật ký"</strong> để dọn nhật ký khi cần (hệ thống sẽ hỏi xác nhận trước khi xoá; thao tác xoá không thể hoàn tác).</li>
       </ul>
     </section>
 
     <section class="card" id="xuat-excel">
-      <h2><span class="num">13</span>Xuất Excel</h2>
-      <p>Tại các mục dữ liệu (Cân xe, Giờ máy, Dầu diesel, Bón phân, Sản lượng, Vùng &amp; Lô) đều có nút <strong>Xuất Excel</strong>: bấm vào nút, hệ thống sẽ tải về một file Excel chứa đúng dữ liệu đang hiển thị trên màn hình, dùng để lưu trữ hoặc gửi báo cáo.</p>
+      <h2><span class="num">17</span>Xuất Excel</h2>
+      <p>Tại các mục dữ liệu (Cân xe, Giờ máy, Dầu diesel, Bón phân, Sản lượng, Chi phí khác, Chi phí theo vùng, Vùng &amp; Lô) đều có nút <strong>Xuất Excel</strong>: bấm vào nút, hệ thống sẽ tải về một file Excel chứa đúng dữ liệu đang hiển thị trên màn hình, dùng để lưu trữ hoặc gửi báo cáo.</p>
       <p>Riêng Dashboard không có nút này; nếu cần số liệu tổng hợp dạng bảng, Quý vị mở mục Sản lượng hoặc các mục dữ liệu tương ứng để xuất.</p>
     </section>
 
     <section class="card" id="phan-quyen">
-      <h2><span class="num">14</span>Phân quyền theo vai trò</h2>
+      <h2><span class="num">18</span>Phân quyền theo vai trò</h2>
       <div class="tbl-wrap">
         <table>
           <thead>
@@ -339,20 +390,20 @@ footer{
           <tbody>
             <tr><td>Quản trị viên (Admin)</td><td>Có</td><td>Có</td><td>Toàn công ty; quản lý cả nhật ký hệ thống</td></tr>
             <tr><td>Lãnh đạo (CEO)</td><td>Có</td><td>Không</td><td>Toàn công ty; không xem được mục Phân quyền &amp; Hệ thống</td></tr>
-            <tr><td>Quản lý (QuanLy)</td><td>Có</td><td>Có</td><td>Toàn công ty</td></tr>
+            <tr><td>Quản lý (QuanLy)</td><td>Có</td><td>Không — chỉ xem</td><td>Toàn công ty; xem được cả mục Phân quyền &amp; Hệ thống</td></tr>
             <tr><td>Nhân viên nhập liệu (NVNhapLieu)</td><td>Có</td><td>Có</td><td>Chỉ các vùng được phân công</td></tr>
-            <tr><td>Feed Center</td><td>Có</td><td>Có</td><td>Toàn công ty</td></tr>
+            <tr><td>Feed Center</td><td>Có</td><td>Có</td><td>Toàn công ty (tài khoản Anh.tt hiện tạm khóa theo yêu cầu của Quý đơn vị)</td></tr>
           </tbody>
         </table>
       </div>
-      <p>Hệ thống kiểm tra quyền ở cả giao diện lẫn máy chủ: nhân viên nhập liệu không xem và không nhập được dữ liệu ngoài vùng mình phụ trách; tài khoản CEO dù thao tác cách nào cũng không ghi được dữ liệu, đảm bảo số liệu không bị thay đổi ngoài ý muốn.</p>
+      <p>Hệ thống kiểm tra quyền ở cả giao diện lẫn máy chủ: nhân viên nhập liệu không xem và không nhập được dữ liệu ngoài vùng mình phụ trách; tài khoản CEO và Quản lý dù thao tác cách nào cũng không ghi, sửa hay xóa được dữ liệu. Sửa/xóa bản ghi chỉ dành cho chính người đã nhập phiếu đó và Quản trị viên, đảm bảo số liệu không bị thay đổi ngoài ý muốn.</p>
     </section>
 
     <section class="card" id="luu-y">
-      <h2><span class="num">15</span>Lưu ý khi sử dụng</h2>
+      <h2><span class="num">19</span>Lưu ý khi sử dụng</h2>
       <div class="note">
-        <span class="note-title">Diện tích chuẩn hiển thị là 467 ha</span>
-        <p>Đây là diện tích gieo trồng của vụ 2026 đã được Quý đơn vị xác nhận, dùng làm cơ số tính các chỉ số trên Dashboard. Diện tích đầy đủ của các vùng và từng lô vẫn xem được trong mục Vùng &amp; Lô.</p>
+        <span class="note-title">Diện tích đang canh tác 507,7 ha / tổng 778,3 ha</span>
+        <p>Theo cách tính Quý đơn vị thống nhất ngày 23/10/2026: "đang canh tác" là tổng diện tích các lô có cây (hiện tại 507,7 ha), "tổng" là tổng diện tích các vùng (778,3 ha). Hai con số này được tính trực tiếp từ dữ liệu vùng/lô nên sẽ tự thay đổi khi Quý đơn vị thêm vùng/lô mới hoặc điều chỉnh diện tích.</p>
       </div>
       <div class="note">
         <span class="note-title">Dầu diesel không tách theo từng vùng</span>
@@ -369,7 +420,7 @@ footer{
     </section>
 
     <section class="card" id="ho-tro">
-      <h2><span class="num">16</span>Hỗ trợ</h2>
+      <h2><span class="num">20</span>Hỗ trợ</h2>
       <p>Trong quá trình sử dụng, nếu Quý đơn vị cần hỗ trợ — ví dụ cấp thêm tài khoản cho nhân viên mới, thay đổi người phụ trách vùng, nạp ranh giới đất thật lên bản đồ, hoặc điều chỉnh các chỉ số hiển thị — xin vui lòng liên hệ đầu mối triển khai hệ thống. Đầu mối triển khai sẽ tiếp nhận và xử lý theo yêu cầu của Quý đơn vị.</p>
       <p>Trân trọng cảm ơn Quý đơn vị đã tin tưởng sử dụng hệ thống.</p>
       <p style="margin-top:16px"><a class="btn-open" href="./index.html" style="background:var(--brand);color:#fff;box-shadow:var(--shadow)">
