@@ -270,7 +270,7 @@ input[type=password]:focus,input[type=time]:focus{outline:2px solid color-mix(in
     <div class="login-brand">
       <div class="brand-lockup"><span class="logo-chip"><img src="logo-th.png" alt="Logo TH"></span><div class="brand-text"><b>Hệ thống quản lý vùng trồng cỏ Mombasa &amp; Ngô</b><span class="brand-sub">Trang trại bò sữa Yên Mỹ - Công Chính, Thanh Hóa</span></div></div>
       <p>Hệ thống quản lý vùng trồng cỏ Mombasa &amp; ngô sinh khối cho trang trại bò sữa: số liệu tổng hợp theo thời gian thực cho quản lý và CEO.</p>
-      <div class="login-stats"><span>467 ha gieo trồng</span><span>12 vùng</span><span>15 lô</span></div>
+      <div class="login-stats"><span>507,7 ha đang canh tác</span><span>12 vùng</span><span>15 lô</span></div>
     </div>
     <div class="login-form">
       <h1>Đăng nhập</h1>
@@ -286,7 +286,7 @@ input[type=password]:focus,input[type=time]:focus{outline:2px solid color-mix(in
 
 <div id="app" class="app hidden">
   <aside class="sidebar">
-    <div class="farm-box"><div class="brand-lockup"><span class="logo-chip"><img src="logo-th.png" alt="Logo TH"></span><b>Hệ thống quản lý vùng trồng cỏ Mombasa &amp; Ngô</b></div><span>Trang trại bò sữa Yên Mỹ - Công Chính, Thanh Hóa · 467 ha gieo trồng · 12 vùng · 15 lô</span></div>
+    <div class="farm-box"><div class="brand-lockup"><span class="logo-chip"><img src="logo-th.png" alt="Logo TH"></span><b>Hệ thống quản lý vùng trồng cỏ Mombasa &amp; Ngô</b></div><span>Trang trại bò sữa Yên Mỹ - Công Chính, Thanh Hóa · 507,7 ha đang canh tác · 12 vùng · 15 lô</span></div>
     <nav class="nav" id="sideNav">
       <button data-pg="dashboard" class="on" onclick="go('dashboard')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span>Dashboard CEO</span></button>
       <button data-pg="vunglo" class="" onclick="go('vunglo')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 13 9 5 9-5"/></svg><span>Vùng & Lô</span></button>
@@ -295,6 +295,9 @@ input[type=password]:focus,input[type=time]:focus{outline:2px solid color-mix(in
       <button data-pg="dau" class="" onclick="go('dau')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3.4c3.1 3.9 5.9 7.2 5.9 10.2a5.9 5.9 0 1 1-11.8 0C6.1 10.6 8.9 7.3 12 3.4Z"/></svg><span>Dầu diesel</span></button>
       <button data-pg="bon" class="" onclick="go('bon')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21v-7.5"/><path d="M12 13.5c0-3.6-2.9-5.7-7.2-5.7 0 4.3 2.4 6.7 7.2 5.7Z"/><path d="M12 11.2c0-3.1 2.4-5 6.2-5 0 3.7-2 5.8-6.2 5Z"/></svg><span>Bón phân</span></button>
       <button data-pg="sanluong" class="" onclick="go('sanluong')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg><span>Sản lượng</span></button>
+      <button data-pg="chiphi" class="" onclick="go('chiphi')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v10M15 9.2c-.6-1-1.7-1.4-3-1.4-1.8 0-3 .9-3 2.2 0 3 6 1.6 6 4.1 0 1.3-1.3 2.1-3 2.1-1.3 0-2.5-.5-3.1-1.5"/></svg><span>Chi phí khác</span></button>
+      <button data-pg="chiphivung" class="" onclick="go('chiphivung')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V9M10 20V4M16 20v-6M21 20H3"/></svg><span>Chi phí theo vùng</span></button>
+      <button data-pg="kehoach" class="" onclick="go('kehoach')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg><span>Kế hoạch &amp; KPI</span></button>
       <button data-pg="bando" class="" onclick="go('bando')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg><span>Bản đồ</span></button>
       <button data-pg="hethong" class="nav-sys hidden" onclick="go('hethong')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 4.5-3.2 7.7-8 9-4.8-1.3-8-4.5-8-9V6l8-3Z"/><path d="m9 12 2 2 4-4"/></svg><span>Phân quyền &amp; Hệ thống</span></button>
     </nav>
@@ -313,6 +316,9 @@ input[type=password]:focus,input[type=time]:focus{outline:2px solid color-mix(in
     <section class="view" id="pg-dau"></section>
     <section class="view" id="pg-bon"></section>
     <section class="view" id="pg-sanluong"></section>
+    <section class="view" id="pg-chiphi"></section>
+    <section class="view" id="pg-chiphivung"></section>
+    <section class="view" id="pg-kehoach"></section>
     <section class="view" id="pg-bando"></section>
     <section class="view" id="pg-hethong"></section>
   </div>
@@ -325,6 +331,9 @@ input[type=password]:focus,input[type=time]:focus{outline:2px solid color-mix(in
   <button data-pg="dau" class="" onclick="go('dau')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3.4c3.1 3.9 5.9 7.2 5.9 10.2a5.9 5.9 0 1 1-11.8 0C6.1 10.6 8.9 7.3 12 3.4Z"/></svg><span>Dầu</span></button>
   <button data-pg="bon" class="" onclick="go('bon')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21v-7.5"/><path d="M12 13.5c0-3.6-2.9-5.7-7.2-5.7 0 4.3 2.4 6.7 7.2 5.7Z"/><path d="M12 11.2c0-3.1 2.4-5 6.2-5 0 3.7-2 5.8-6.2 5Z"/></svg><span>Bón phân</span></button>
   <button data-pg="sanluong" class="" onclick="go('sanluong')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg><span>Sản lượng</span></button>
+  <button data-pg="chiphi" class="" onclick="go('chiphi')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v10M15 9.2c-.6-1-1.7-1.4-3-1.4-1.8 0-3 .9-3 2.2 0 3 6 1.6 6 4.1 0 1.3-1.3 2.1-3 2.1-1.3 0-2.5-.5-3.1-1.5"/></svg><span>Chi phí</span></button>
+  <button data-pg="chiphivung" class="" onclick="go('chiphivung')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V9M10 20V4M16 20v-6M21 20H3"/></svg><span>CP vùng</span></button>
+  <button data-pg="kehoach" class="" onclick="go('kehoach')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg><span>KPI</span></button>
   <button data-pg="bando" class="" onclick="go('bando')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg><span>Bản đồ</span></button>
   <button data-pg="hethong" class="nav-sys hidden" onclick="go('hethong')"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 4.5-3.2 7.7-8 9-4.8-1.3-8-4.5-8-9V6l8-3Z"/><path d="m9 12 2 2 4-4"/></svg><span>Hệ thống</span></button>
 </nav>
@@ -356,6 +365,7 @@ function bangHienThi(tab,rows){
   if(tab==='DauDiezel')return rows.map(function(r){return {'Ngày':dmy(r.Ngay),'Vật tư':r.Material,'ID máy':maTho(r.IDMay),'Giờ máy':r.GioMay,'Số lít':r.SL,'Hoạt động':r.HoatDong,'Người nhập':r.NguoiNhap};});
   if(tab==='BonPhan')return rows.map(function(r){return {'Ngày':dmy(r.Ngay),'Cây trồng':r.CayTrong,'Tên vùng':tenVungTheoMa(r.MaVung),'Cost Center SAP':maTho(r.CostCenterSAP),'Diện tích (ha)':r.DienTich_ha,'Vôi (kg)':r.Lime_kg,'NPK (kg)':r.NPK_kg,'DAP (kg)':r.DAP_kg,'KCL (kg)':r.KCL_kg,'UREA (kg)':r.UREA_kg,'Hữu cơ (tấn)':r.HuuCo_tan,'Phân lỏng (m3)':r.PhanLong_m3};});
   if(tab==='SanLuong')return rows.map(function(r){var th=String(r.Thang);if(th.length<2)th='0'+th;return {'Tháng':th+'/'+r.Nam,'Tên vùng':tenVungTheoMa(r.MaVung),'Tên lô':tenLoTheoMa(r.MaLo),'Cây trồng':r.CayTrong,'Sản lượng (tấn)':r.SanLuongHeo_tan,'DM TB (%)':r.DM_TB_PhanTram,'Sản lượng DM (tấn)':r.SanLuongDM_tan};});
+  if(tab==='ChiPhiKhac')return rows.map(function(r){return {'Mã phiếu':r.MaCP,'Ngày':dmy(r.Ngay),'Tên vùng':tenVungTheoMa(r.MaVung),'Tên lô':r.MaLo?tenLoTheoMa(r.MaLo):'—','Nội dung chi':r.NoiDung,'Số tiền (đ)':r.SoTien,'Người nhập':r.NguoiNhap,'Thời gian nhập':r.ThoiGianNhap};});
   return rows;
 }
 function esc(s){return String(s===null||s===undefined?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
@@ -397,7 +407,7 @@ async function boot(){
   document.querySelectorAll('.nav-sys').forEach(function(b){ b.classList.toggle('hidden', !canSys()); });
   loadDashboard();
 }
-var TITLES={dashboard:'Dashboard CEO',vunglo:'Vùng & Lô',canxe:'Cân xe nhập cỏ/ngô',giomay:'Giờ máy',dau:'Dầu diesel',bon:'Bón phân',sanluong:'Sản lượng',bando:'Bản đồ vệ tinh & polygon lô',hethong:'Phân quyền & Hệ thống'};
+var TITLES={dashboard:'Dashboard CEO',vunglo:'Vùng & Lô',canxe:'Cân xe nhập cỏ/ngô',giomay:'Giờ máy',dau:'Dầu diesel',bon:'Bón phân',sanluong:'Sản lượng',chiphi:'Chi phí khác',chiphivung:'Tổng hợp chi phí theo vùng',kehoach:'Kế hoạch & KPI',bando:'Bản đồ vệ tinh & polygon lô',hethong:'Phân quyền & Hệ thống'};
 function go(pg,btn){
   if(pg==='hethong'&&!canSys()) pg='dashboard';
   document.querySelectorAll('#app .view').forEach(function(s){s.classList.remove('on');});
@@ -411,6 +421,9 @@ function go(pg,btn){
   if(pg==='dau') loadDau();
   if(pg==='bon') loadBon();
   if(pg==='sanluong') loadTablePage('sanluong','SanLuong','🌾 Sản lượng theo tháng × vùng/lô');
+  if(pg==='chiphi') loadChiPhi();
+  if(pg==='chiphivung') loadChiPhiVung();
+  if(pg==='kehoach') loadKeHoach();
   if(pg==='bando') loadBanDo();
   if(pg==='hethong') loadHeThong();
 }
@@ -420,7 +433,7 @@ var LASTROWS={}; var XLSX_URL='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.
 function ensureXLSX(){return new Promise(function(res,rej){ if(window.XLSX) return res(); var s=document.createElement('script'); s.src=XLSX_URL; s.onload=function(){res();}; s.onerror=function(){rej(new Error('Khong tai duoc thu vien Excel (CDN)'));}; document.head.appendChild(s); });}
 function ngayFile(){var d=new Date();function p(x){return (x<10?'0':'')+x;} return ''+d.getFullYear()+p(d.getMonth()+1)+p(d.getDate());}
 function taiXuong(name,aoa){return ensureXLSX().then(function(){var ws=XLSX.utils.aoa_to_sheet(aoa);var wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'DuLieu');XLSX.writeFile(wb,name+'_'+ngayFile()+'.xlsx');});}
-function xuatRows(name,rows){ if(!rows||!rows.length){toast('Chua co du lieu de xuat.');return;} var head=Object.keys(rows[0]); var aoa=[head].concat(rows.map(function(r){return head.map(function(h){var v=r[h];return (v===null||v===undefined)?'':v;});})); taiXuong(name,aoa).then(function(){toast('Da xuat file Excel: '+name);}).catch(function(e){toast(e.message);});}
+function xuatRows(name,rows){ if(!rows||!rows.length){toast('Chua co du lieu de xuat.');return;} var head=Object.keys(rows[0]).filter(function(h){return h!=='_r';}); var aoa=[head].concat(rows.map(function(r){return head.map(function(h){var v=r[h];return (v===null||v===undefined)?'':v;});})); taiXuong(name,aoa).then(function(){toast('Da xuat file Excel: '+name);}).catch(function(e){toast(e.message);});}
 function xuatVung(){var aoa=[['Ma vung','Ten vung','Cost Center SAP','KC ve Farm (km)','DT vung (ha)','DT co (ha)']].concat(VUNG.map(function(v){return [v.MaVung,v.TenVung,v.CostCenterSAP,v.KhoangCachVeFarm_Km,v.DienTichVung_ha,v.DienTichCo_ha];})); taiXuong('Vung',aoa).then(function(){toast('Da xuat file Excel: Vung');}).catch(function(e){toast(e.message);});}
 function xuatLo(){var aoa=[['Ma lo','Ma vung','Cay trong','Dien tich (ha)','Giong','Trang thai ban do','Trang thai canh tac']].concat(LO.map(function(l){return [l.MaLo,l.MaVung,l.CayTrong,l.DienTich_ha,l.Giong,l.TrangThaiBanDo,l.TrangThaiCanhTac];})); taiXuong('Lo',aoa).then(function(){toast('Da xuat file Excel: Lo');}).catch(function(e){toast(e.message);});}
 function nutXuat(label,fn){return '<button class="btn ghost small" onclick="'+fn+'">⬇ Xuất Excel</button>';}
@@ -466,7 +479,7 @@ async function loadDashboard(){
     var kpiPct=Math.max(0,Math.min(100,Number(d.kpiDM_tienDo)||0));
     el.innerHTML=vungFilterHtml()+
       '<div class="grid kpi-grid">'+
-      '<div class="kpi"><div class="lab">Diện tích gieo trồng</div><div class="val">'+fmt(d.dienTichGieoTrong_ha)+' <small>ha</small></div><div class="note">'+dtNote+'</div></div>'+
+      '<div class="kpi"><div class="lab">Đang canh tác / Tổng diện tích</div><div class="val">'+fmt(d.dienTichCanhTac_ha,1)+' <small>/ '+fmt(d.dienTichTong_ha,1)+' ha</small></div><div class="note">Đang canh tác = tổng diện tích các lô có cây · Tổng = tổng diện tích vùng · trong phạm vi đang xem</div></div>'+
       '<div class="kpi"><div class="lab">Sản lượng</div><div class="val">'+fmt(d.tongHeo_tan,2)+' <small>tấn</small></div><div class="note">Cộng dồn theo tháng 2026 (SanLuong)</div></div>'+
       '<div class="kpi"><div class="lab">Qua cân xe</div><div class="val">'+fmt(d.tongCanXe_tan,2)+' <small>tấn</small></div><div class="note">'+fmt(d.soChuyenCanXe)+' chuyến cân xe</div></div>'+
       '<div class="kpi"><div class="lab">DM qua cân</div><div class="val">'+fmt(d.dmCanXe_tan,2)+' <small>tấn DM</small></div><div class="note">'+fmt(d.soChuyenCoDM)+' chuyến có %DM</div></div>'+
@@ -475,6 +488,7 @@ async function loadDashboard(){
       '<div class="kpi"><div class="lab">Dầu diesel</div><div class="val">'+dauVal+'</div><div class="note">'+dauNote+'</div></div>'+
       '<div class="kpi alert-kpi"><div class="lab">Cảnh báo cần xử lý</div><div class="val">'+(d.canhBao||[]).length+' <small>mục</small></div><div class="note">Tự động quét từ dữ liệu vận hành mới nhất</div></div>'+
       '</div>'+
+      '<div id="kpiVuBox"></div>'+
       '<div class="grid cols-2" style="margin-top:16px;align-items:start"><div class="card"><h3>Sản lượng theo tháng — Cỏ / Ngô</h3><p class="sub">Cộng dồn từ tab <span class="mono">SanLuong</span> của Database trung tâm · đơn vị: tấn · cột chồng theo tháng</p>'+chartHtml+'</div>'+
       '<div class="card"><h3>Cảnh báo cần xử lý</h3><p class="sub">Tự động tổng hợp từ dữ liệu vận hành — quản lý cần theo dõi</p>'+(warns||'<p style="color:var(--ink2);font-size:14px">Không có cảnh báo trong phạm vi đang xem.</p>')+'</div></div>'+
       '<div class="card" style="margin-top:16px"><h3>Tiến độ vụ / lứa theo lô</h3><p class="sub">% ước đạt KPI '+fmt(d.kpiDM_ha)+' tấn DM/ha/năm · sản lượng đã thu qua cân xe</p>'+(progRows||'<p class="sub">Chưa có dữ liệu lô trong phạm vi đang xem.</p>')+'</div>'+
@@ -482,7 +496,18 @@ async function loadDashboard(){
       rankHtml;
     var sel=document.getElementById('fVung'); if(sel) sel.value=CUR_VUNG;
     var fnote=document.getElementById('filterNote'); if(fnote) fnote.textContent='Đang xem: '+(d.tienDoLo||[]).length+' lô · '+(pf.loai==='CONGTY'?'toàn công ty':(pf.loai==='VUNG'?'1 vùng sản xuất':'các vùng được phân công'));
+    loadKpiVuBox();
   }catch(e){ el.innerHTML=vungFilterHtml()+'<div class="demo-note">'+esc(e.message)+'</div>'; }
+}
+/* v1.9: Khoi KPI vu dang chay tren Dashboard (du lieu tu muc Ke hoach & KPI) */
+async function loadKpiVuBox(){
+  var box=document.getElementById('kpiVuBox'); if(!box) return;
+  try{
+    var d=await rpc('getKeHoach',TOKEN);
+    var dang=(d.vu||[]).filter(function(v){return v.dangChay;});
+    if(!dang.length){ box.innerHTML=''; return; }
+    box.innerHTML='<div class="card" style="margin-top:16px"><h3>🎯 KPI vụ đang chạy</h3><p class="sub">Tiến độ sản lượng thật (tab SanLuong) so với chỉ tiêu vụ — chi tiết tại mục Kế hoạch &amp; KPI</p>'+dang.map(function(v){var pct=Math.max(0,Math.min(100,Number(v.phanTram)||0));return '<div class="progress-row"><div class="progress-top"><span><b>'+esc(v.TenVu)+'</b> · '+esc(tenVungTheoMa(v.MaVung))+(v.MaLo?' · lô '+esc(v.MaLo):'')+' — đã thu '+fmt(v.thucTe_tan,2)+' / '+fmt(v.ChiTieuTan)+' tấn</span><b>'+fmt(v.phanTram,1)+'%</b></div><div class="bar"><i style="width:'+pct+'%"></i></div></div>';}).join('')+'</div>';
+  }catch(e){ box.innerHTML=''; }
 }
 
 /* Phan quyen & He thong — chi Admin / QuanLy (CEO khong duoc xem; server getHeThong cung chan theo vai tro) */
@@ -490,11 +515,11 @@ function canSys(){ return !!(USER && ['Admin','QuanLy'].indexOf(USER.role)>=0); 
 var ROLE_CARDS=[
   {ten:'Admin hệ thống',who:'Tài khoản admin · quản trị tài khoản & cấu hình',perms:[['Dashboard & báo cáo','Toàn quyền xem'],['Nhập liệu (Cân xe · Giờ máy · Dầu · Bón phân)','Toàn công ty'],['Xem theo vùng','Tất cả 12 vùng'],['Màn hình Hệ thống','Toàn quyền']]},
   {ten:'CEO / Ban lãnh đạo',who:'Xem toàn cảnh · không nhập liệu',perms:[['Dashboard & báo cáo','Chỉ xem · toàn công ty'],['Nhập liệu (Cân xe · Giờ máy · Dầu · Bón phân)','—'],['Xem theo vùng','Từng vùng / toàn công ty'],['Màn hình Hệ thống','—']]},
-  {ten:'Quản lý',who:'Quản lý sản xuất · xem + nhập toàn công ty',perms:[['Dashboard & báo cáo','Xem · toàn công ty'],['Nhập liệu (Cân xe · Giờ máy · Dầu · Bón phân)','Toàn công ty'],['Xem theo vùng','Tất cả 12 vùng'],['Màn hình Hệ thống','Xem']]},
+  {ten:'Quản lý',who:'Quản lý sản xuất · CHỈ XEM toàn công ty (khách chốt 23/10/2026)',perms:[['Dashboard & báo cáo','Chỉ xem · toàn công ty'],['Nhập liệu (Cân xe · Giờ máy · Dầu · Bón phân · Chi phí khác)','—'],['Sửa / Xóa bản ghi','—'],['Xem theo vùng','Tất cả 12 vùng'],['Màn hình Hệ thống','Xem']]},
   {ten:'Nhân viên nhập liệu',who:'2 tài khoản nông nghiệp · phụ trách cả 12 vùng',perms:[['Dashboard & báo cáo','Xem · cả 12 vùng'],['Nhập liệu (Cân xe · Giờ máy · Dầu · Bón phân)','Cả 12 vùng'],['Xem theo vùng','Tất cả 12 vùng'],['Màn hình Hệ thống','—']]},
   {ten:'Feed Center',who:'Tiếp nhận & cấp phát tại Feed Center',perms:[['Dashboard & báo cáo','Xem tổng quan'],['Nhập liệu (Cân xe · Giờ máy · Dầu · Bón phân)','Toàn công ty'],['Xem theo vùng','Tất cả 12 vùng'],['Màn hình Hệ thống','—']]}
 ];
-var CFG_LABEL={DienTichGieoTrongNam_2026:'Diện tích gieo trồng năm 2026',KPI_NangSuat_DM:'KPI năng suất DM',TenDonVi:'Tên đơn vị',TenTrangTrai:'Tên trang trại',NamHienTai:'Năm hiện tại',TrangThaiBanDo:'Trạng thái bản đồ',DienTichVungTong_ha:'Tổng diện tích 12 vùng',DienTichLoTong_ha:'Tổng diện tích 15 lô'};
+var CFG_LABEL={DienTichGieoTrongNam_2026:'Diện tích gieo trồng năm 2026',KPI_NangSuat_DM:'KPI năng suất DM',TenDonVi:'Tên đơn vị',TenTrangTrai:'Tên trang trại',NamHienTai:'Năm hiện tại',TrangThaiBanDo:'Trạng thái bản đồ',DienTichVungTong_ha:'Tổng diện tích 12 vùng',DienTichLoTong_ha:'Tổng diện tích 15 lô',GiaDauLit:'Đơn giá dầu diesel (đ/lít) — giá tạm Petrolimex, Admin tự cập nhật',GiaGioMay:'Đơn giá giờ máy (đ/giờ)'};
 async function loadHeThong(){
   var el=document.getElementById('pg-hethong');
   el.innerHTML='<p>Đang tải dữ liệu hệ thống…</p>';
@@ -513,6 +538,20 @@ async function loadHeThong(){
       return '<tr><td data-label="Thời gian" style="white-space:nowrap">'+esc(r.ThoiGian)+'</td><td class="mono" data-label="Tài khoản">'+esc(r.TaiKhoan)+'</td><td data-label="Hành động">'+esc(r.HanhDong)+'</td><td data-label="Tab">'+esc(r.Tab)+'</td><td data-label="Nội dung" style="white-space:normal;min-width:220px">'+esc(r.NoiDungThayDoi)+'</td></tr>';
     }).join('');
     var nutXoaNhatKy=(USER&&USER.role==='Admin')?'<button class="btn ghost small" onclick="xoaToanBoNhatKy()">Xoá toàn bộ nhật ký</button>':'';
+    var khoiAdmin='';
+    if(USER&&USER.role==='Admin'){
+      var gd='',gmv=''; (d.cauHinh||[]).forEach(function(c){ if(c.Khoa==='GiaDauLit') gd=c.GiaTri; if(c.Khoa==='GiaGioMay') gmv=c.GiaTri; });
+      khoiAdmin='<h2 class="sec-title" style="margin-top:26px">Đơn giá cho tổng hợp chi phí (chỉ Admin sửa)</h2>'+
+      '<div class="card"><div class="form-grid"><div class="field"><label>Đơn giá dầu diesel (đ/lít)</label><input id="dg_dau" type="number" step="1" value="'+esc(gd)+'"></div><div class="field"><label>Đơn giá giờ máy (đ/giờ) — để trống nếu chưa có</label><input id="dg_gio" type="number" step="1" value="'+esc(gmv)+'"></div></div>'+
+      '<button class="btn" style="margin-top:12px" onclick="luuDonGia()">Lưu đơn giá</button>'+
+      '<p style="font-size:13px;color:var(--ink2);margin:10px 0 0">Giá dầu hiện dùng là <b>giá tạm theo Petrolimex DO 0,05S-II vùng 2 (kỳ điều hành 15h 22/10/2026)</b> — khách chốt lấy giá chuẩn Petrolimex, Admin tự cập nhật khi giá thay đổi. Giá giờ máy chưa có giá chuẩn nhà nước, chờ khách cấp.</p></div>'+
+      '<h2 class="sec-title" style="margin-top:26px">Thêm vùng liên kết mới (chỉ Admin)</h2>'+
+      '<div class="card"><p class="sub">Vùng mới sẽ xuất hiện ngay ở form nhập liệu, bộ lọc, Dashboard và danh sách bản đồ (trạng thái bản đồ: Chờ file ranh vùng).</p><div class="form-grid">'+
+      '<div class="field"><label>Tên vùng *</label><input id="tv_ten"></div><div class="field"><label>Xã</label><input id="tv_xa"></div>'+
+      '<div class="field"><label>Cost Center SAP (nếu có)</label><input id="tv_cc"></div><div class="field"><label>Diện tích tổng của vùng (ha) *</label><input id="tv_dt" type="number" step="0.01"></div>'+
+      '<div class="field"><label>Cây trồng của lô đầu tiên *</label><select id="tv_cay"><option>Cỏ Mombasa</option><option>Ngô</option></select></div><div class="field"><label>Diện tích lô đầu tiên (ha) *</label><input id="tv_dtlo" type="number" step="0.01"></div></div>'+
+      '<button class="btn" style="margin-top:12px" onclick="submitThemVung()">Thêm vùng mới</button></div>';
+    }
     el.innerHTML=
       '<h2 class="sec-title">Tài khoản người dùng</h2>'+
       '<div class="tbl-wrap"><table><thead><tr><th>Họ tên</th><th>Tài khoản</th><th>Vai trò</th><th>Vùng phụ trách</th><th>Trạng thái</th><th>Đăng nhập cuối</th></tr></thead><tbody>'+urows+'</tbody></table></div>'+
@@ -520,10 +559,28 @@ async function loadHeThong(){
       '<div class="grid tab-grid" style="grid-template-columns:repeat(auto-fit,minmax(215px,1fr))">'+roles+'</div>'+
       '<h2 class="sec-title" style="margin-top:26px">Cấu hình hệ thống</h2>'+
       '<div class="card"><dl class="kv">'+cfg+'</dl><p style="font-size:13px;color:var(--ink2);margin:10px 0 0">Cấu hình lưu tại tab CauHinh của Database trung tâm (Google Sheets) — sửa trong Sheet là app áp dụng ngay, không cần sửa code.</p></div>'+
+      khoiAdmin+
       '<div class="sec-head" style="margin-top:26px"><h2 class="sec-title">Nhật ký hệ thống gần nhất</h2>'+nutXoaNhatKy+'</div>'+
       '<div class="tbl-wrap"><table><thead><tr><th>Thời gian</th><th>Tài khoản</th><th>Hành động</th><th>Tab</th><th>Nội dung</th></tr></thead><tbody>'+nkrows+'</tbody></table></div>'+
       '<p style="font-size:13px;color:var(--ink2);margin-top:8px">30 dòng mới nhất từ tab NhatKyHeThong — hệ thống tự ghi mọi lần đăng nhập và thao tác thêm dữ liệu để truy vết.</p>';
   }catch(e){ el.innerHTML='<div class="demo-note">'+esc(e.message)+'</div>'; }
+}
+async function luuDonGia(){
+  try{
+    await rpc('capNhatCauHinh',TOKEN,'GiaDauLit',document.getElementById('dg_dau').value.trim());
+    await rpc('capNhatCauHinh',TOKEN,'GiaGioMay',document.getElementById('dg_gio').value.trim());
+    toast('Đã lưu đơn giá.'); loadHeThong();
+  }catch(e){ toast(e.message); }
+}
+async function submitThemVung(){
+  var obj={TenVung:document.getElementById('tv_ten').value.trim(),Xa:document.getElementById('tv_xa').value.trim(),CostCenterSAP:document.getElementById('tv_cc').value.trim(),DienTichTong:document.getElementById('tv_dt').value,TenCay:document.getElementById('tv_cay').value,DienTichLo:document.getElementById('tv_dtlo').value};
+  if(!obj.TenVung||!(Number(obj.DienTichTong)>0)||!(Number(obj.DienTichLo)>0)){ toast('Nhập tên vùng, diện tích tổng và diện tích lô đầu tiên.'); return; }
+  try{
+    var r=await rpc('themVungMoi',TOKEN,obj);
+    INIT=await rpc('getInitData',TOKEN); VUNG=INIT.vung||[]; LO=INIT.lo||[];
+    toast('Đã thêm vùng '+r.maVung+' ('+obj.TenVung+') và lô '+r.maLo+'.');
+    loadHeThong();
+  }catch(e){ toast(e.message); }
 }
 async function xoaToanBoNhatKy(){
   if(!confirm('Xoá toàn bộ nhật ký hệ thống? Hành động này không thể hoàn tác.')) return;
@@ -537,17 +594,65 @@ async function xoaToanBoNhatKy(){
 /* Vung & Lo */
 function loadVungLo(){
   var el=document.getElementById('pg-vunglo');
-  var vr=VUNG.map(function(v){return '<tr><td class="mono" data-label="Mã vùng">'+esc(v.MaVung)+'</td><td data-label="Tên vùng"><b>'+esc(v.TenVung)+'</b></td><td class="mono" data-label="Cost Center SAP">'+esc(v.CostCenterSAP)+'</td><td class="num" data-label="KC về Farm (km)">'+fmt(v.KhoangCachVeFarm_Km,1)+'</td><td class="num" data-label="DT vùng (ha)">'+fmt(v.DienTichVung_ha,2)+'</td><td class="num" data-label="DT cỏ (ha)">'+fmt(v.DienTichCo_ha,1)+'</td></tr>';}).join('');
+  var vr=VUNG.map(function(v){var ct=LO.filter(function(l){return l.MaVung===v.MaVung;}).reduce(function(s,l){return s+(Number(l.DienTich_ha)||0);},0);return '<tr><td class="mono" data-label="Mã vùng">'+esc(v.MaVung)+'</td><td data-label="Tên vùng"><b>'+esc(v.TenVung)+'</b></td><td class="mono" data-label="Cost Center SAP">'+esc(v.CostCenterSAP)+'</td><td class="num" data-label="KC về Farm (km)">'+fmt(v.KhoangCachVeFarm_Km,1)+'</td><td class="num" data-label="DT vùng (ha)">'+fmt(v.DienTichVung_ha,2)+'</td><td class="num" data-label="DT cỏ (ha)">'+fmt(v.DienTichCo_ha,1)+'</td><td class="num" data-label="Canh tác / Tổng (ha)"><b>'+fmt(ct,1)+' / '+fmt(v.DienTichVung_ha,1)+' ha</b></td></tr>';}).join('');
   var lr=LO.map(function(l){return '<tr><td class="mono" data-label="Mã lô">'+esc(l.MaLo)+'</td><td class="mono" data-label="Mã vùng">'+esc(l.MaVung)+'</td><td data-label="Cây trồng"><b>'+esc(l.CayTrong)+'</b></td><td class="num" data-label="Diện tích (ha)">'+fmt(l.DienTich_ha,2)+'</td><td data-label="Giống">'+esc(l.Giong)+'</td><td data-label="Trạng thái bản đồ">'+esc(l.TrangThaiBanDo)+'</td><td data-label="Trạng thái canh tác"><span class="badge b-plain">'+esc(l.TrangThaiCanhTac)+'</span></td></tr>';}).join('');
-  el.innerHTML='<div class="sec-head"><h2 class="sec-title">12 vùng sản xuất</h2>'+nutXuat('Vung','xuatVung()')+'</div><div class="tbl-wrap"><table><thead><tr><th>Mã vùng</th><th>Tên vùng</th><th>Cost Center SAP</th><th class="num">KC về Farm (km)</th><th class="num">DT vùng (ha)</th><th class="num">DT cỏ (ha)</th></tr></thead><tbody>'+vr+'</tbody></table></div>'+
-  '<div class="sec-head"><h2 class="sec-title">15 lô (Vùng × Cây trồng)</h2>'+nutXuat('Lo','xuatLo()')+'</div><div class="tbl-wrap"><table><thead><tr><th>Mã lô</th><th>Mã vùng</th><th>Cây trồng</th><th class="num">Diện tích (ha)</th><th>Giống</th><th>Trạng thái bản đồ</th><th>Trạng thái canh tác</th></tr></thead><tbody>'+lr+'</tbody></table></div>';
+  el.innerHTML='<div class="sec-head"><h2 class="sec-title">'+VUNG.length+' vùng sản xuất</h2>'+nutXuat('Vung','xuatVung()')+'</div><div class="tbl-wrap"><table><thead><tr><th>Mã vùng</th><th>Tên vùng</th><th>Cost Center SAP</th><th class="num">KC về Farm (km)</th><th class="num">DT vùng (ha)</th><th class="num">DT cỏ (ha)</th><th class="num">Canh tác / Tổng (ha)</th></tr></thead><tbody>'+vr+'</tbody></table></div>'+
+  '<div class="sec-head"><h2 class="sec-title">'+LO.length+' lô (Vùng × Cây trồng)</h2>'+nutXuat('Lo','xuatLo()')+'</div><div class="tbl-wrap"><table><thead><tr><th>Mã lô</th><th>Mã vùng</th><th>Cây trồng</th><th class="num">Diện tích (ha)</th><th>Giống</th><th>Trạng thái bản đồ</th><th>Trạng thái canh tác</th></tr></thead><tbody>'+lr+'</tbody></table></div>';
 }
-function chiXem(){return USER&&USER.role==='CEO';}
-var FORM_KHOA='<div class="demo-note">🔒 Tài khoản CEO chỉ xem — form nhập liệu đã ẩn. Ghi dữ liệu do nhân viên phụ trách vùng / Feed Center thực hiện (máy chủ cũng từ chối ghi từ tài khoản CEO).</div>';
+/* v1.9 Pha 1: CEO + QuanLy deu CHI XEM - an form nhap, may chu cung tu choi ghi */
+function chiXem(){return USER&&(USER.role==='CEO'||USER.role==='QuanLy');}
+var FORM_KHOA='<div class="demo-note">🔒 Tài khoản chỉ xem (CEO / Quản lý) — form nhập liệu đã ẩn. Ghi dữ liệu do Admin / nhân viên phụ trách vùng thực hiện (máy chủ cũng từ chối ghi từ tài khoản chỉ xem).</div>';
 function tableHtml(rows){ if(!rows.length) return '<p>Chưa có dữ liệu.</p>'; var head=Object.keys(rows[0]); var th=head.map(function(h){return '<th>'+esc(h)+'</th>';}).join(''); var trs=rows.map(function(r){return '<tr>'+head.map(function(h){var v=r[h];return '<td data-label="'+esc(h).replace(/"/g,'&quot;')+'">'+esc(typeof v==='number'?((laCotNamThang(h)||laCotMa(h))?soNguyenText(v):fmt(v,2)):v)+'</td>';}).join('')+'</tr>';}).join(''); return '<div class="tbl-wrap"><table><thead><tr>'+th+'</tr></thead><tbody>'+trs+'</tbody></table></div>'; }
+/* ===== v1.9: Sua / Xoa ban ghi (6 module) — quyen: Admin tat ca; nguoi nhap sua phieu cua minh; QuanLy/CEO khong co nut (server cung chan) ===== */
+var EDIT=null;
+var SUA_FN={'CanXe_NhapCoNgo':'moSuaCanXe','GioMay':'moSuaGioMay','DauDiezel':'moSuaDau','BonPhan':'moSuaBon','SanLuong':'moSuaSanLuong','ChiPhiKhac':'moSuaChiPhi'};
+var TAB_PK={'CanXe_NhapCoNgo':'MaPhieu','ChiPhiKhac':'MaCP'};
+function quyenSuaXoa(row){ if(!USER) return false; if(USER.role==='Admin') return true; if(USER.role==='QuanLy'||USER.role==='CEO') return false; return String(row.NguoiNhap||'').toLowerCase()===String(USER.u||'').toLowerCase(); }
+function bangDuLieu(tab,rows){
+  var ht=bangHienThi(tab,rows);
+  if(!rows.length) return '<p>Chưa có dữ liệu.</p>';
+  var head=Object.keys(ht[0]);
+  var coQuyen=rows.some(quyenSuaXoa);
+  var th=head.map(function(h){return '<th>'+esc(h)+'</th>';}).join('')+(coQuyen?'<th>Thao tác</th>':'');
+  var trs=rows.map(function(r,i){
+    var cells=head.map(function(h){var v=ht[i][h];return '<td data-label="'+esc(h).replace(/"/g,'&quot;')+'">'+esc(typeof v==='number'?((laCotNamThang(h)||laCotMa(h))?soNguyenText(v):fmt(v,2)):v)+'</td>';}).join('');
+    var act='';
+    if(quyenSuaXoa(r)){ var ma=TAB_PK[tab]?String(r[TAB_PK[tab]]||''):''; act='<td data-label="Thao tác" style="white-space:nowrap"><button class="btn ghost small" onclick="'+SUA_FN[tab]+'('+r._r+')">✏️ Sửa</button> <button class="btn ghost small" onclick="xoaDongNhanh(\''+tab+'\','+r._r+',\''+esc(ma)+'\')">🗑️ Xoá</button></td>'; }
+    else if(coQuyen) act='<td data-label="Thao tác">—</td>';
+    return '<tr>'+cells+act+'</tr>';
+  }).join('');
+  return '<div class="tbl-wrap"><table><thead><tr>'+th+'</tr></thead><tbody>'+trs+'</tbody></table></div>';
+}
+function taiLaiTab(tab){ if(tab==='CanXe_NhapCoNgo') loadCanXe(); else if(tab==='GioMay') loadGioMay(); else if(tab==='DauDiezel') loadDau(); else if(tab==='BonPhan') loadBon(); else if(tab==='ChiPhiKhac') loadChiPhi(); else if(tab==='SanLuong') loadTablePage('sanluong','SanLuong','🌾 Sản lượng theo tháng × vùng/lô'); }
+function xoaDongNhanh(tab,r,ma){ if(!confirm('Xoá bản ghi này? Hành động sẽ được ghi vào nhật ký hệ thống và không thể hoàn tác.')) return; rpc('xoaBanGhi',TOKEN,tab,{r:r,ma:ma||''}).then(function(){ toast('Đã xoá bản ghi.'); taiLaiTab(tab); }).catch(function(e){ toast(e.message); }); }
+function timRow(tab,r){ var rows=LASTROWS[tab]||[]; for(var i=0;i<rows.length;i++) if(rows[i]._r===r) return rows[i]; return null; }
+function setVal(id,v){ var e=document.getElementById(id); if(e) e.value=(v===null||v===undefined)?'':v; }
+function setSel(id,val){ var s=document.getElementById(id); if(!s) return; var ok=false; for(var i=0;i<s.options.length;i++) if(String(s.options[i].value)===String(val)) ok=true; if(!ok&&val!==''&&val!==null&&val!==undefined){ var o=document.createElement('option'); o.value=val; o.textContent=val; s.appendChild(o); } s.value=val; }
+function ngayIsoTuPhan(d,m,y){ function p(x){x=String(x);return x.length<2?'0'+x:x;} return y+'-'+p(m)+'-'+p(d); }
+function bannerSua(tieuDe){ var b=document.getElementById('editBanner'); if(!b){ b=document.createElement('div'); b.id='editBanner'; } b.className='demo-note'; b.style.marginBottom='14px'; b.innerHTML='✏️ <b>Đang sửa: '+esc(tieuDe)+'</b> — chỉnh nội dung trong form phía trên rồi bấm nút Lưu của form để ghi đè. <button class="btn ghost small" onclick="huySua()">Huỷ sửa</button>'; return b; }
+function ganBannerSua(pgId,tieuDe){ var el=document.getElementById(pgId); var b=bannerSua(tieuDe); if(el&&el.firstChild) el.insertBefore(b,el.firstChild); window.scrollTo({top:0,behavior:'smooth'}); }
+function huySua(){ var t=EDIT?EDIT.tab:null; EDIT=null; if(t) taiLaiTab(t); }
+async function luuBanGhi(tab,obj,reloadTab){ if(EDIT&&EDIT.tab===tab){ await rpc('suaBanGhi',TOKEN,tab,{r:EDIT.r,ma:EDIT.ma},obj); EDIT=null; toast('Đã lưu thay đổi vào bản ghi.'); } else { await rpc('addRecord',TOKEN,tab,obj); } taiLaiTab(reloadTab||tab); }
+function moSuaCanXe(r){ var row=timRow('CanXe_NhapCoNgo',r); if(!row) return; EDIT={tab:'CanXe_NhapCoNgo',r:r,ma:row.MaPhieu||''}; setVal('cx_bs',row.BienSoXe); setVal('cx_ngay',row.NgayVao); setVal('cx_giovao',row.GioVao); setVal('cx_giora',row.GioRa); setSel('cx_cc',row.CostCenterSAP); setSel('cx_mat',row.Materials); setVal('cx_sap',row.CodeSAP); setVal('cx_in',row.NetWeightIn_kg); setVal('cx_out',row.NetWeightOut_kg); setVal('cx_dm',row.DM_PhanTram); setVal('cx_xa',row.Xa); ganBannerSua('pg-canxe','chuyến cân '+(row.MaPhieu||'')); }
+function moSuaGioMay(r){ var row=timRow('GioMay',r); if(!row) return; EDIT={tab:'GioMay',r:r,ma:''}; setVal('gm_ngay',ngayIsoTuPhan(row.Ngay,row.Thang,row.Nam)); setSel('gm_lo',row.MaLo); setSel('gm_hd',row.HoatDong); setVal('gm_somay',row.SoMay); setVal('gm_bd',row.GioBatDau); setVal('gm_kt',row.GioKetThuc); var hd=row.GioHoatDong; if((hd===null||hd===undefined||hd==='')&&typeof row.GioBatDau==='number'&&typeof row.GioKetThuc==='number') hd=Math.round((row.GioKetThuc-row.GioBatDau)*10)/10; setVal('gm_hd2',hd); setVal('gm_lai',row.TenLaiMay); setVal('gm_dt',row.DienTichThucHien_ha); ganBannerSua('pg-giomay','dòng giờ máy ngày '+dmyTuPhan(row.Ngay,row.Thang,row.Nam)); }
+function moSuaDau(r){ var row=timRow('DauDiezel',r); if(!row) return; EDIT={tab:'DauDiezel',r:r,ma:''}; setVal('dd_ngay',row.Ngay); setVal('dd_may',row.IDMay); setVal('dd_gio',row.GioMay); setVal('dd_sl',row.SL); setVal('dd_hd',row.HoatDong); ganBannerSua('pg-dau','phiếu dầu ngày '+dmy(row.Ngay)); }
+function moSuaBon(r){ var row=timRow('BonPhan',r); if(!row) return; EDIT={tab:'BonPhan',r:r,ma:''}; setVal('bp_ngay',row.Ngay); setSel('bp_vung',row.MaVung); setSel('bp_cay',row.CayTrong); setVal('bp_dt',row.DienTich_ha); setVal('bp_npk',row.NPK_kg); setVal('bp_dap',row.DAP_kg); setVal('bp_kcl',row.KCL_kg); setVal('bp_urea',row.UREA_kg); setVal('bp_hc',row.HuuCo_tan); setVal('bp_pl',row.PhanLong_m3); ganBannerSua('pg-bon','đợt bón phân ngày '+dmy(row.Ngay)); }
+function moSuaSanLuong(r){ var row=timRow('SanLuong',r); if(!row) return; EDIT={tab:'SanLuong',r:r,ma:''}; var el=document.getElementById('pg-sanluong'); var old=document.getElementById('formSuaSL'); if(old) old.remove(); var card=document.createElement('div'); card.className='card'; card.id='formSuaSL'; card.style.marginBottom='16px';
+  card.innerHTML='<h3>✏️ Sửa dòng sản lượng tháng '+esc(soNguyenText(row.Thang))+'/'+esc(soNguyenText(row.Nam))+' — '+esc(tenVungTheoMa(row.MaVung))+'</h3><div class="form-grid">'+
+  '<div class="field"><label>Năm</label><input id="sl_nam" type="number"></div><div class="field"><label>Tháng</label><input id="sl_thang" type="number" min="1" max="12"></div>'+
+  '<div class="field"><label>Vùng</label><select id="sl_vung">'+vungOptions2()+'</select></div><div class="field"><label>Lô</label><select id="sl_lo"><option value="">— Cả vùng —</option>'+loOptions()+'</select></div>'+
+  '<div class="field"><label>Cây trồng</label><select id="sl_cay"><option>Cỏ Mombasa</option><option>Ngô</option></select></div>'+
+  '<div class="field"><label>Sản lượng (tấn)</label><input id="sl_tan" type="number" step="0.01"></div><div class="field"><label>DM TB (%)</label><input id="sl_dm" type="number" step="0.01"></div>'+
+  '<div class="field"><label>Sản lượng DM (tấn)</label><input id="sl_dmdm" type="number" step="0.01"></div><div class="field"><label>DT thu hoạch (ha)</label><input id="sl_dt" type="number" step="0.01"></div></div>'+
+  '<div style="display:flex;gap:8px;margin-top:14px"><button class="btn" onclick="submitSuaSanLuong()">Lưu thay đổi</button><button class="btn ghost" onclick="huySua()">Huỷ sửa</button></div>';
+  el.insertBefore(card, el.firstChild);
+  setVal('sl_nam',row.Nam); setVal('sl_thang',row.Thang); setSel('sl_vung',row.MaVung); setSel('sl_lo',row.MaLo||''); setSel('sl_cay',row.CayTrong); setVal('sl_tan',row.SanLuongHeo_tan); setVal('sl_dm',row.DM_TB_PhanTram); setVal('sl_dmdm',row.SanLuongDM_tan); setVal('sl_dt',row.DTThuHoach_ha);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+async function submitSuaSanLuong(){ if(!EDIT||EDIT.tab!=='SanLuong') return; var obj={Nam:Number(document.getElementById('sl_nam').value)||'',Thang:Number(document.getElementById('sl_thang').value)||'',MaVung:document.getElementById('sl_vung').value,MaLo:document.getElementById('sl_lo').value,CayTrong:document.getElementById('sl_cay').value,SanLuongHeo_tan:document.getElementById('sl_tan').value,DM_TB_PhanTram:document.getElementById('sl_dm').value,SanLuongDM_tan:document.getElementById('sl_dmdm').value,DTThuHoach_ha:document.getElementById('sl_dt').value}; try{ await rpc('suaBanGhi',TOKEN,'SanLuong',{r:EDIT.r,ma:''},obj); EDIT=null; toast('Đã lưu thay đổi.'); taiLaiTab('SanLuong'); }catch(e){ toast(e.message); } }
 async function loadTablePage(pg,tab,title){
   var el=document.getElementById('pg-'+pg); el.innerHTML='<p>Đang tải…</p>';
-  try{ var rows=await rpc('getTable',TOKEN,tab); LASTROWS[tab]=rows; var tenFile='SanLuong'; el.innerHTML='<div class="sec-head"><h2 class="sec-title">Sản lượng theo tháng × vùng/lô</h2>'+nutXuat(tenFile,"xuatRows('"+tenFile+"', LASTROWS['"+tab+"'])")+'</div><p style="font-size:13.5px;color:var(--ink2);margin:0 0 12px">'+fmt(rows.length)+' bản ghi · tab <span class="mono">SanLuong</span> của Database trung tâm</p>'+tableHtml(bangHienThi(tab,rows)); }
+  try{ var rows=await rpc('getTable',TOKEN,tab); LASTROWS[tab]=rows; var tenFile='SanLuong'; el.innerHTML='<div class="sec-head"><h2 class="sec-title">Sản lượng theo tháng × vùng/lô</h2>'+nutXuat(tenFile,"xuatRows('"+tenFile+"', LASTROWS['"+tab+"'])")+'</div><p style="font-size:13.5px;color:var(--ink2);margin:0 0 12px">'+fmt(rows.length)+' bản ghi · tab <span class="mono">SanLuong</span> của Database trung tâm</p>'+bangDuLieu(tab,rows); }
   catch(e){ el.innerHTML='<div class="demo-note">'+esc(e.message)+'</div>'; }
 }
 /* Can xe */
@@ -557,10 +662,10 @@ async function loadCanXe(){
   try{ var rows=await rpc('getTable',TOKEN,'CanXe_NhapCoNgo'); LASTROWS['CanXe_NhapCoNgo']=rows;
     var form='<div class="card" style="margin-bottom:16px"><h3>Thêm chuyến cân xe</h3><p class="sub">Ghi nhận xe chở cỏ/ngô qua trạm cân · tab <span class="mono">CanXe_NhapCoNgo</span> của Database trung tâm</p><div class="form-grid"><div class="field"><label>Biển số xe</label><input id="cx_bs"></div><div class="field"><label>Ngày vào</label><input id="cx_ngay" type="date"></div><div class="field"><label>Giờ vào</label><input id="cx_giovao" type="time"></div><div class="field"><label>Giờ ra</label><input id="cx_giora" type="time"></div><div class="field"><label>Vùng (Cost Center SAP)</label><select id="cx_cc">'+vungOptions()+'</select></div><div class="field"><label>Vật tư (Materials)</label><select id="cx_mat"><option>Wilted Mombasa</option><option>Fresh Corn</option><option>Fresh Corn (low-grain)</option><option>Corn stalk</option><option>Sugar cane top</option><option>Rice straw</option></select></div><div class="field"><label>Mã SAP vật tư</label><input id="cx_sap" value="106200001"></div><div class="field"><label>KL vào (kg)</label><input id="cx_in" type="number"></div><div class="field"><label>KL ra (kg)</label><input id="cx_out" type="number"></div><div class="field"><label>%DM (nếu có)</label><input id="cx_dm" type="number" step="0.01"></div><div class="field"><label>Xã</label><input id="cx_xa"></div></div><button class="btn" style="margin-top:14px;width:100%" onclick="submitCanXe()">Lưu chuyến cân</button></div>';
     if(chiXem()) form=FORM_KHOA;
-    el.innerHTML=form+'<div class="sec-head"><h2 class="sec-title">'+fmt(rows.length)+' chuyến đã ghi</h2>'+nutXuat('CanXe',"xuatRows('CanXe', LASTROWS['CanXe_NhapCoNgo'])")+'</div>'+tableHtml(bangHienThi('CanXe_NhapCoNgo',rows));
+    el.innerHTML=form+'<div class="sec-head"><h2 class="sec-title">'+fmt(rows.length)+' chuyến đã ghi</h2>'+nutXuat('CanXe',"xuatRows('CanXe', LASTROWS['CanXe_NhapCoNgo'])")+'</div>'+bangDuLieu('CanXe_NhapCoNgo',rows);
   }catch(e){ el.innerHTML='<div class="demo-note">'+esc(e.message)+'</div>'; }
 }
-async function submitCanXe(){ var vin=Number(document.getElementById('cx_in').value)||0, vout=Number(document.getElementById('cx_out').value)||0; var obj={BienSoXe:document.getElementById('cx_bs').value.trim(),NgayVao:document.getElementById('cx_ngay').value,NgayRa:document.getElementById('cx_ngay').value,GioVao:document.getElementById('cx_giovao').value,GioRa:document.getElementById('cx_giora').value,CostCenterSAP:document.getElementById('cx_cc').value,Materials:document.getElementById('cx_mat').value,CodeSAP:document.getElementById('cx_sap').value.trim(),NetWeightIn_kg:vin,NetWeightOut_kg:vout,NetWeight_kg:Math.abs(vin-vout),DM_PhanTram:document.getElementById('cx_dm').value,Xa:document.getElementById('cx_xa').value.trim()}; if(!obj.BienSoXe||!obj.NgayVao){toast('Nhập biển số xe và ngày vào.');return;} try{await rpc('addRecord',TOKEN,'CanXe_NhapCoNgo',obj);toast('Đã lưu chuyến cân xe.');loadCanXe();}catch(e){toast(e.message);} }
+async function submitCanXe(){ var vin=Number(document.getElementById('cx_in').value)||0, vout=Number(document.getElementById('cx_out').value)||0; var obj={BienSoXe:document.getElementById('cx_bs').value.trim(),NgayVao:document.getElementById('cx_ngay').value,NgayRa:document.getElementById('cx_ngay').value,GioVao:document.getElementById('cx_giovao').value,GioRa:document.getElementById('cx_giora').value,CostCenterSAP:document.getElementById('cx_cc').value,Materials:document.getElementById('cx_mat').value,CodeSAP:document.getElementById('cx_sap').value.trim(),NetWeightIn_kg:vin,NetWeightOut_kg:vout,NetWeight_kg:Math.abs(vin-vout),DM_PhanTram:document.getElementById('cx_dm').value,Xa:document.getElementById('cx_xa').value.trim()}; if(!obj.BienSoXe||!obj.NgayVao){toast('Nhập biển số xe và ngày vào.');return;} try{var dangSua=EDIT&&EDIT.tab==='CanXe_NhapCoNgo';await luuBanGhi('CanXe_NhapCoNgo',obj);if(!dangSua)toast('Đã lưu chuyến cân xe.');}catch(e){toast(e.message);} }
 /* Gio may */
 function loOptions(){return LO.map(function(l){return '<option value="'+esc(l.MaLo)+'">'+esc(l.MaLo)+' — '+esc(l.CayTrong)+' ('+fmt(l.DienTich_ha,1)+' ha)</option>';}).join('');}
 function vungOptions2(){return VUNG.map(function(v){return '<option value="'+esc(v.MaVung)+'">'+esc(v.TenVung)+' ('+esc(v.MaVung)+')</option>';}).join('');}
@@ -570,36 +675,141 @@ async function loadGioMay(){
   try{ var rows=await rpc('getTable',TOKEN,'GioMay'); LASTROWS['GioMay']=rows;
     var form='<div class="card" style="margin-bottom:16px"><h3>Thêm dòng giờ máy</h3><p class="sub">Giờ máy chạy theo lô · tab <span class="mono">GioMay</span> của Database trung tâm</p><div class="form-grid"><div class="field"><label>Ngày</label><input id="gm_ngay" type="date"></div><div class="field"><label>Lô</label><select id="gm_lo">'+loOptions()+'</select></div><div class="field"><label>Hoạt động / loại máy</label><select id="gm_hd"><option>R450</option><option>Pickup</option><option>Máy khác</option></select></div><div class="field"><label>Số máy (ID)</label><input id="gm_somay" type="number"></div><div class="field"><label>Giờ máy bắt đầu (số đồng hồ)</label><input id="gm_bd" type="number" step="0.1"></div><div class="field"><label>Giờ máy kết thúc (số đồng hồ)</label><input id="gm_kt" type="number" step="0.1"></div><div class="field"><label>Giờ hoạt động (h)</label><input id="gm_hd2" type="number" step="0.1"></div><div class="field"><label>Tên lái máy</label><input id="gm_lai"></div><div class="field"><label>Diện tích thực hiện (ha)</label><input id="gm_dt" type="number" step="0.01"></div></div><button class="btn" style="margin-top:14px;width:100%" onclick="submitGioMay()">Lưu giờ máy</button></div>';
     if(chiXem()) form=FORM_KHOA;
-    el.innerHTML=form+'<div class="sec-head"><h2 class="sec-title">'+fmt(rows.length)+' bản ghi giờ máy</h2>'+nutXuat('GioMay',"xuatRows('GioMay', LASTROWS['GioMay'])")+'</div>'+tableHtml(bangHienThi('GioMay',rows));
+    el.innerHTML=form+'<div class="sec-head"><h2 class="sec-title">'+fmt(rows.length)+' bản ghi giờ máy</h2>'+nutXuat('GioMay',"xuatRows('GioMay', LASTROWS['GioMay'])")+'</div>'+bangDuLieu('GioMay',rows);
   }catch(e){ el.innerHTML='<div class="demo-note">'+esc(e.message)+'</div>'; }
 }
-async function submitGioMay(){ var dt=splitDate('gm_ngay'); if(!dt.full){toast('Chọn ngày.');return;} var sel=document.getElementById('gm_lo'); var lo=LO[sel.selectedIndex]||{}; var bd=Number(document.getElementById('gm_bd').value)||'', kt=Number(document.getElementById('gm_kt').value)||''; var hd=document.getElementById('gm_hd2').value; if(hd===''&&bd!==''&&kt!=='') hd=Math.round((kt-bd)*10)/10; var obj={Ngay:dt.d,Thang:dt.m,Nam:dt.y,MaLo:sel.value,TenVungGoc:'Yên Mỹ',CostCenterSAP:lo.CostCenterSAP||'',HoatDong:document.getElementById('gm_hd').value,LoaiCay:lo.CayTrong||'',SoMay:document.getElementById('gm_somay').value,GioBatDau:bd,GioKetThuc:kt,GioHoatDong:hd,TenLaiMay:document.getElementById('gm_lai').value.trim(),DienTichThucHien_ha:document.getElementById('gm_dt').value,GhiChu:''}; try{await rpc('addRecord',TOKEN,'GioMay',obj);toast('Đã lưu giờ máy.');loadGioMay();}catch(e){toast(e.message);} }
+async function submitGioMay(){ var dt=splitDate('gm_ngay'); if(!dt.full){toast('Chọn ngày.');return;} var sel=document.getElementById('gm_lo'); var lo=LO[sel.selectedIndex]||{}; var bd=Number(document.getElementById('gm_bd').value)||'', kt=Number(document.getElementById('gm_kt').value)||''; var hd=document.getElementById('gm_hd2').value; if(hd===''&&bd!==''&&kt!=='') hd=Math.round((kt-bd)*10)/10; var obj={Ngay:dt.d,Thang:dt.m,Nam:dt.y,MaLo:sel.value,TenVungGoc:'Yên Mỹ',CostCenterSAP:lo.CostCenterSAP||'',HoatDong:document.getElementById('gm_hd').value,LoaiCay:lo.CayTrong||'',SoMay:document.getElementById('gm_somay').value,GioBatDau:bd,GioKetThuc:kt,GioHoatDong:hd,TenLaiMay:document.getElementById('gm_lai').value.trim(),DienTichThucHien_ha:document.getElementById('gm_dt').value,GhiChu:''}; try{var dangSua=EDIT&&EDIT.tab==='GioMay';await luuBanGhi('GioMay',obj);if(!dangSua)toast('Đã lưu giờ máy.');}catch(e){toast(e.message);} }
 /* Dau */
 async function loadDau(){
   var el=document.getElementById('pg-dau'); el.innerHTML='<p>Đang tải…</p>';
   try{ var rows=await rpc('getTable',TOKEN,'DauDiezel'); LASTROWS['DauDiezel']=rows;
     var form='<div class="card" style="margin-bottom:16px"><h3>Thêm phiếu cấp dầu</h3><p class="sub">Cấp dầu diesel theo máy · tab <span class="mono">DauDiezel</span> của Database trung tâm</p><div class="form-grid"><div class="field"><label>Ngày</label><input id="dd_ngay" type="date"></div><div class="field"><label>ID máy</label><input id="dd_may" type="number"></div><div class="field"><label>Số giờ máy tại thời điểm cấp</label><input id="dd_gio" type="number" step="0.1"></div><div class="field"><label>Số lít cấp (SL)</label><input id="dd_sl" type="number" step="0.1"></div><div class="field"><label>Hoạt động</label><input id="dd_hd"></div></div><button class="btn" style="margin-top:14px;width:100%" onclick="submitDau()">Lưu phiếu dầu</button></div>';
     if(chiXem()) form=FORM_KHOA;
-    el.innerHTML=form+'<div class="sec-head"><h2 class="sec-title">'+fmt(rows.length)+' phiếu cấp dầu</h2>'+nutXuat('Dau',"xuatRows('Dau', LASTROWS['DauDiezel'])")+'</div>'+tableHtml(bangHienThi('DauDiezel',rows));
+    el.innerHTML=form+'<div class="sec-head"><h2 class="sec-title">'+fmt(rows.length)+' phiếu cấp dầu</h2>'+nutXuat('Dau',"xuatRows('Dau', LASTROWS['DauDiezel'])")+'</div>'+bangDuLieu('DauDiezel',rows);
   }catch(e){ el.innerHTML='<div class="demo-note">'+esc(e.message)+'</div>'; }
 }
-async function submitDau(){ var dt=splitDate('dd_ngay'); if(!dt.full){toast('Chọn ngày.');return;} var obj={Ngay:dt.full,Thang:dt.m,Material:'Dầu Diezen (DO)',IDMay:document.getElementById('dd_may').value,GioMay:document.getElementById('dd_gio').value,SL:document.getElementById('dd_sl').value,HoatDong:document.getElementById('dd_hd').value.trim(),GhiChu:''}; try{await rpc('addRecord',TOKEN,'DauDiezel',obj);toast('Đã lưu phiếu dầu.');loadDau();}catch(e){toast(e.message);} }
+async function submitDau(){ var dt=splitDate('dd_ngay'); if(!dt.full){toast('Chọn ngày.');return;} var obj={Ngay:dt.full,Thang:dt.m,Material:'Dầu Diezen (DO)',IDMay:document.getElementById('dd_may').value,GioMay:document.getElementById('dd_gio').value,SL:document.getElementById('dd_sl').value,HoatDong:document.getElementById('dd_hd').value.trim(),GhiChu:''}; try{var dangSua=EDIT&&EDIT.tab==='DauDiezel';await luuBanGhi('DauDiezel',obj);if(!dangSua)toast('Đã lưu phiếu dầu.');}catch(e){toast(e.message);} }
 /* Bon phan */
 async function loadBon(){
   var el=document.getElementById('pg-bon'); el.innerHTML='<p>Đang tải…</p>';
   try{ var rows=await rpc('getTable',TOKEN,'BonPhan'); LASTROWS['BonPhan']=rows;
     var form='<div class="card" style="margin-bottom:16px"><h3>Thêm đợt bón phân</h3><p class="sub">Bón phân theo vùng và cây trồng · tab <span class="mono">BonPhan</span> của Database trung tâm</p><div class="form-grid"><div class="field"><label>Ngày</label><input id="bp_ngay" type="date"></div><div class="field"><label>Vùng</label><select id="bp_vung">'+vungOptions2()+'</select></div><div class="field"><label>Cây trồng</label><select id="bp_cay"><option>Cỏ Mombasa</option><option>Ngô</option></select></div><div class="field"><label>Diện tích bón (ha)</label><input id="bp_dt" type="number" step="0.01"></div><div class="field"><label>NPK (kg)</label><input id="bp_npk" type="number"></div><div class="field"><label>DAP (kg)</label><input id="bp_dap" type="number"></div><div class="field"><label>KCL (kg)</label><input id="bp_kcl" type="number"></div><div class="field"><label>UREA (kg)</label><input id="bp_urea" type="number"></div><div class="field"><label>Hữu cơ (tấn)</label><input id="bp_hc" type="number" step="0.01"></div><div class="field"><label>Phân lỏng (m3)</label><input id="bp_pl" type="number" step="0.01"></div></div><button class="btn" style="margin-top:14px;width:100%" onclick="submitBon()">Lưu đợt bón</button></div>';
     if(chiXem()) form=FORM_KHOA;
-    el.innerHTML=form+'<div class="sec-head"><h2 class="sec-title">'+fmt(rows.length)+' đợt bón phân</h2>'+nutXuat('BonPhan',"xuatRows('BonPhan', LASTROWS['BonPhan'])")+'</div>'+tableHtml(bangHienThi('BonPhan',rows));
+    el.innerHTML=form+'<div class="sec-head"><h2 class="sec-title">'+fmt(rows.length)+' đợt bón phân</h2>'+nutXuat('BonPhan',"xuatRows('BonPhan', LASTROWS['BonPhan'])")+'</div>'+bangDuLieu('BonPhan',rows);
   }catch(e){ el.innerHTML='<div class="demo-note">'+esc(e.message)+'</div>'; }
 }
-async function submitBon(){ var dt=splitDate('bp_ngay'); if(!dt.full){toast('Chọn ngày.');return;} var sel=document.getElementById('bp_vung'); var v=VUNG[sel.selectedIndex]||{}; var obj={Ngay:dt.full,Thang:dt.m,Nam:dt.y,CayTrong:document.getElementById('bp_cay').value,MaVung:sel.value,CostCenterSAP:v.CostCenterSAP||'',DienTich_ha:document.getElementById('bp_dt').value,NPK_kg:document.getElementById('bp_npk').value,DAP_kg:document.getElementById('bp_dap').value,KCL_kg:document.getElementById('bp_kcl').value,UREA_kg:document.getElementById('bp_urea').value,HuuCo_tan:document.getElementById('bp_hc').value,PhanLong_m3:document.getElementById('bp_pl').value}; try{await rpc('addRecord',TOKEN,'BonPhan',obj);toast('Đã lưu đợt bón phân.');loadBon();}catch(e){toast(e.message);} }
+async function submitBon(){ var dt=splitDate('bp_ngay'); if(!dt.full){toast('Chọn ngày.');return;} var sel=document.getElementById('bp_vung'); var v=VUNG[sel.selectedIndex]||{}; var obj={Ngay:dt.full,Thang:dt.m,Nam:dt.y,CayTrong:document.getElementById('bp_cay').value,MaVung:sel.value,CostCenterSAP:v.CostCenterSAP||'',DienTich_ha:document.getElementById('bp_dt').value,NPK_kg:document.getElementById('bp_npk').value,DAP_kg:document.getElementById('bp_dap').value,KCL_kg:document.getElementById('bp_kcl').value,UREA_kg:document.getElementById('bp_urea').value,HuuCo_tan:document.getElementById('bp_hc').value,PhanLong_m3:document.getElementById('bp_pl').value}; try{var dangSua=EDIT&&EDIT.tab==='BonPhan';await luuBanGhi('BonPhan',obj);if(!dangSua)toast('Đã lưu đợt bón phân.');}catch(e){toast(e.message);} }
+/* ===== v1.9: Chi phi khac (muc rieng - khach chot 23/10: moi khoan chi ngoai phan bon deu vao day, nhan vien tu ghi chu noi dung) ===== */
+function loOptionsTheoVung(maVung,coTrong){ var s=coTrong?'<option value="">— Không gắn lô —</option>':''; LO.filter(function(l){return !maVung||l.MaVung===maVung;}).forEach(function(l){ s+='<option value="'+esc(l.MaLo)+'">'+esc(l.MaLo)+' — '+esc(l.CayTrong)+' ('+fmt(l.DienTich_ha,1)+' ha)</option>'; }); return s; }
+function capNhatLoChiPhi(){ var v=document.getElementById('cp_vung'); var l=document.getElementById('cp_lo'); if(v&&l) l.innerHTML=loOptionsTheoVung(v.value,true); }
+function duocNhapChiPhi(){ return USER&&(USER.role==='Admin'||USER.role==='NVNhapLieu'); }
+async function loadChiPhi(){
+  var el=document.getElementById('pg-chiphi'); el.innerHTML='<p>Đang tải…</p>';
+  try{ var rows=await rpc('getTable',TOKEN,'ChiPhiKhac'); LASTROWS['ChiPhiKhac']=rows;
+    var formHtml='';
+    if(duocNhapChiPhi()){
+      formHtml='<div class="card" style="margin-bottom:16px"><h3>Thêm khoản chi phí khác</h3><p class="sub">Mọi khoản chi ngoài tiền phân bón (thuê nhân công, phun thuốc, vật tư lẻ…) đều ghi vào đây · tab <span class="mono">ChiPhiKhac</span></p><div class="form-grid"><div class="field"><label>Ngày chi</label><input id="cp_ngay" type="date"></div><div class="field"><label>Vùng</label><select id="cp_vung" onchange="capNhatLoChiPhi()">'+vungOptions2()+'</select></div><div class="field"><label>Lô (không bắt buộc)</label><select id="cp_lo"></select></div><div class="field"><label>Số tiền (đ)</label><input id="cp_tien" type="number" step="1"></div><div class="field" style="grid-column:1/-1"><label>Nội dung chi — chi cho việc gì *</label><input id="cp_nd" placeholder="VD: Thuê nhân công nhỏ cỏ, phun thuốc đợt 2…"></div></div><button class="btn" style="margin-top:14px;width:100%" onclick="submitChiPhi()">Lưu khoản chi</button></div>';
+    } else if(chiXem()) formHtml=FORM_KHOA;
+    else formHtml='<div class="demo-note">🔒 Tài khoản Feed Center không nhập mục Chi phí khác — mục này do Admin / nhân viên nhập liệu phụ trách.</div>';
+    var tong=rows.reduce(function(s,r){return s+(Number(r.SoTien)||0);},0);
+    el.innerHTML=formHtml+'<div class="sec-head"><h2 class="sec-title">'+fmt(rows.length)+' khoản chi · Tổng '+fmt(tong)+' đ</h2>'+nutXuat('ChiPhiKhac',"xuatRows('ChiPhiKhac', LASTROWS['ChiPhiKhac'])")+'</div>'+bangDuLieu('ChiPhiKhac',rows);
+    capNhatLoChiPhi();
+  }catch(e){ el.innerHTML='<div class="demo-note">'+esc(e.message)+'</div>'; }
+}
+function moSuaChiPhi(r){ var row=timRow('ChiPhiKhac',r); if(!row) return; EDIT={tab:'ChiPhiKhac',r:r,ma:row.MaCP||''}; setVal('cp_ngay',row.Ngay); setSel('cp_vung',row.MaVung); capNhatLoChiPhi(); setSel('cp_lo',row.MaLo||''); setVal('cp_tien',row.SoTien); setVal('cp_nd',row.NoiDung); ganBannerSua('pg-chiphi','khoản chi '+(row.MaCP||'')); }
+async function submitChiPhi(){ var obj={Ngay:document.getElementById('cp_ngay').value,MaVung:document.getElementById('cp_vung').value,MaLo:document.getElementById('cp_lo').value,NoiDung:document.getElementById('cp_nd').value.trim(),SoTien:document.getElementById('cp_tien').value}; if(!obj.Ngay){toast('Chọn ngày chi.');return;} if(!obj.NoiDung){toast('Nhập nội dung chi (chi cho việc gì).');return;} if(!(Number(obj.SoTien)>0)){toast('Số tiền phải lớn hơn 0.');return;} try{ var dangSua=EDIT&&EDIT.tab==='ChiPhiKhac'; await luuBanGhi('ChiPhiKhac',obj); if(!dangSua)toast('Đã lưu khoản chi phí.'); }catch(e){ toast(e.message); } }
+
+/* ===== v1.9: Tong hop chi phi theo vung ===== */
+var CPV_DATA=null;
+async function loadChiPhiVung(){
+  var el=document.getElementById('pg-chiphivung');
+  el.innerHTML='<div class="card" style="margin-bottom:16px"><h3>Tổng hợp chi phí theo vùng</h3><p class="sub">Để trống khoảng ngày = tính toàn bộ thời gian có dữ liệu</p><div class="form-grid"><div class="field"><label>Từ ngày</label><input id="cpv_tu" type="date"></div><div class="field"><label>Đến ngày</label><input id="cpv_den" type="date"></div></div><button class="btn" style="margin-top:12px" onclick="xemChiPhiVung()">Xem tổng hợp</button> <button class="btn ghost" style="margin-top:12px" onclick="xuatChiPhiVung()">⬇ Xuất Excel</button></div><div id="cpvKetQua"><p>Đang tải…</p></div>';
+  xemChiPhiVung();
+}
+async function xemChiPhiVung(){
+  var box=document.getElementById('cpvKetQua'); if(!box) return;
+  box.innerHTML='<p>Đang tính tổng hợp…</p>';
+  try{
+    var tu=document.getElementById('cpv_tu').value, den=document.getElementById('cpv_den').value;
+    var d=await rpc('getChiPhiTheoVung',TOKEN,tu,den); CPV_DATA=d;
+    function tien(v){ return (v===null||v===undefined)?'—':fmt(v)+' đ'; }
+    var trs=d.theoVung.map(function(x){ return '<tr><td data-label="Vùng"><b>'+esc(x.tenVung)+'</b></td><td class="mono" data-label="Mã vùng">'+esc(x.maVung)+'</td><td class="num" data-label="DT canh tác (ha)">'+fmt(x.dtCanhTac_ha,1)+'</td><td class="num" data-label="Tiền phân bón">'+tien(x.tienPhanBon)+'</td><td class="num" data-label="Chi phí khác">'+tien(x.chiPhiKhac)+'</td><td class="num" data-label="Giờ máy (giờ)">'+fmt(x.gioMay_gio,1)+'</td><td class="num" data-label="Tiền giờ máy">'+tien(x.tienGioMay)+'</td><td class="num" data-label="Tiền dầu">'+tien(x.tienDau)+'</td><td class="num" data-label="Tổng chi phí"><b>'+tien(x.tongChiPhi)+'</b></td><td class="num" data-label="Chi phí/ha">'+fmt(x.chiPhiHa)+' đ</td></tr>'; }).join('');
+    var t=d.tongCongTy||{};
+    box.innerHTML='<div class="tbl-wrap"><table><thead><tr><th>Vùng</th><th>Mã vùng</th><th class="num">DT canh tác (ha)</th><th class="num">Tiền phân bón</th><th class="num">Chi phí khác</th><th class="num">Giờ máy (giờ)</th><th class="num">Tiền giờ máy</th><th class="num">Tiền dầu</th><th class="num">Tổng chi phí</th><th class="num">Chi phí/ha</th></tr></thead><tbody>'+trs+'</tbody></table></div>'+
+    '<div class="grid kpi-grid" style="margin-top:16px"><div class="kpi"><div class="lab">Tổng chi phí khác (toàn công ty)</div><div class="val">'+fmt(t.chiPhiKhac)+' <small>đ</small></div></div>'+
+    '<div class="kpi"><div class="lab">Tiền dầu diesel (toàn công ty)</div><div class="val">'+(t.tienDau===null||t.tienDau===undefined?'—':fmt(t.tienDau)+' <small>đ</small>')+'</div><div class="note">'+fmt(t.tongDau_lit)+' lít'+(d.giaDauLit?' × '+fmt(d.giaDauLit)+' đ/lít (giá tạm Petrolimex)':' · chưa có đơn giá')+'</div></div>'+
+    '<div class="kpi"><div class="lab">Tiền giờ máy (toàn công ty)</div><div class="val">'+(t.tienGioMay===null||t.tienGioMay===undefined?'—':fmt(t.tienGioMay)+' <small>đ</small>')+'</div><div class="note">'+fmt(t.gioMay_gio,1)+' giờ'+(d.giaGioMay?' × '+fmt(d.giaGioMay)+' đ/giờ':' · chưa có đơn giá giờ máy')+'</div></div>'+
+    '<div class="kpi"><div class="lab">Tổng chi phí đã tính được</div><div class="val">'+fmt(t.tongDaTinh)+' <small>đ</small></div><div class="note">Chưa gồm các thành phần ghi chú bên dưới</div></div></div>'+
+    (d.ghiChu||[]).map(function(g){return '<p class="note" style="margin-top:8px">• '+esc(g)+'</p>';}).join('');
+  }catch(e){ box.innerHTML='<div class="demo-note">'+esc(e.message)+'</div>'; }
+}
+function xuatChiPhiVung(){
+  if(!CPV_DATA){ toast('Chưa có dữ liệu tổng hợp để xuất.'); return; }
+  function t(v){ return (v===null||v===undefined)?'—':v; }
+  var aoa=[['Vùng','Mã vùng','DT canh tác (ha)','Tiền phân bón (đ)','Chi phí khác (đ)','Giờ máy (giờ)','Tiền giờ máy (đ)','Tiền dầu (đ)','Tổng chi phí (đ)','Chi phí/ha (đ)']].concat(CPV_DATA.theoVung.map(function(x){return [x.tenVung,x.maVung,x.dtCanhTac_ha,t(x.tienPhanBon),x.chiPhiKhac,x.gioMay_gio,t(x.tienGioMay),t(x.tienDau),x.tongChiPhi,x.chiPhiHa];}));
+  var tc=CPV_DATA.tongCongTy||{};
+  aoa.push(['TOÀN CÔNG TY','','', '',tc.chiPhiKhac,tc.gioMay_gio,(tc.tienGioMay===null||tc.tienGioMay===undefined?'—':tc.tienGioMay),'Dầu toàn công ty: '+(tc.tienDau===null||tc.tienDau===undefined?'—':tc.tienDau)+' đ ('+(tc.tongDau_lit||0)+' lít)',tc.tongDaTinh,'']);
+  taiXuong('ChiPhiTheoVung',aoa).then(function(){toast('Đã xuất file Excel: ChiPhiTheoVung');}).catch(function(e){toast(e.message);});
+}
+
+/* ===== v1.9: Ke hoach vu & KPI ===== */
+var KH_DATA=null, EDIT_VU=null;
+function laAdmin(){ return USER&&USER.role==='Admin'; }
+function loOptionsChoVu(maVung){ return '<option value="">— Cả vùng (không gắn lô) —</option>'+LO.filter(function(l){return !maVung||l.MaVung===maVung;}).map(function(l){return '<option value="'+esc(l.MaLo)+'">'+esc(l.MaLo)+' — '+esc(l.CayTrong)+' ('+fmt(l.DienTich_ha,1)+' ha)</option>';}).join(''); }
+function capNhatLoKeHoach(){ var v=document.getElementById('kh_vung'); var l=document.getElementById('kh_lo'); if(v&&l) l.innerHTML=loOptionsChoVu(v.value); }
+async function loadKeHoach(){
+  var el=document.getElementById('pg-kehoach'); el.innerHTML='<p>Đang tải kế hoạch…</p>';
+  try{
+    var d=await rpc('getKeHoach',TOKEN); KH_DATA=d;
+    var formHtml='';
+    if(laAdmin()){
+      formHtml='<div class="card" style="margin-bottom:16px"><h3 id="khFormTitle">Tạo vụ / kế hoạch KPI mới</h3><div class="form-grid">'+
+      '<div class="field"><label>Vùng</label><select id="kh_vung" onchange="capNhatLoKeHoach()">'+vungOptions2()+'</select></div>'+
+      '<div class="field"><label>Lô (không bắt buộc)</label><select id="kh_lo"></select></div>'+
+      '<div class="field"><label>Tên vụ *</label><input id="kh_ten" placeholder="VD: Vụ ngô đông xuân 2026"></div>'+
+      '<div class="field"><label>Cây trồng</label><select id="kh_cay"><option>Cỏ Mombasa</option><option>Ngô</option></select></div>'+
+      '<div class="field"><label>Từ ngày *</label><input id="kh_tu" type="date"></div><div class="field"><label>Đến ngày *</label><input id="kh_den" type="date"></div>'+
+      '<div class="field"><label>Chỉ tiêu sản lượng (tấn) *</label><input id="kh_chitieu" type="number" step="0.01"></div>'+
+      '<div class="field"><label>Ghi chú</label><input id="kh_ghichu"></div></div>'+
+      '<div style="display:flex;gap:8px;margin-top:14px"><button class="btn" onclick="submitKeHoachVu()">Lưu vụ</button><button class="btn ghost hidden" id="khHuySua" onclick="huySuaVu()">Huỷ sửa</button></div></div>';
+    }
+    if(!d.vu.length){ el.innerHTML=formHtml+'<div class="card"><h3>Chưa có vụ / kế hoạch KPI nào</h3><p class="sub">'+(laAdmin()?'Dùng form phía trên để tạo vụ đầu tiên (VD: Trang Trại — vụ ngô 01/01/2026–30/06/2026, chỉ tiêu 500 tấn).':'Quản trị viên chưa tạo vụ nào. Tiến độ sẽ tự tính từ sản lượng thật trong tab SanLuong.')+'</p></div>'; capNhatLoKeHoach(); return; }
+    el.innerHTML=formHtml+d.vu.map(function(v){
+      var pct=Math.max(0,Math.min(100,Number(v.phanTram)||0));
+      var viecHtml=(v.viec||[]).map(function(w){
+        var chk='<input type="checkbox" '+(w.HoanThanh?'checked':'')+' '+((laAdmin()||(USER&&USER.role==='NVNhapLieu'))?'':'disabled')+' onchange="tichViecUI(\''+w.MaViec+'\',this.checked)">';
+        var xoaV=laAdmin()?'<button class="btn ghost small" onclick="xoaViecUI(\''+w.MaViec+'\')">🗑️</button>':'';
+        return '<div style="display:flex;gap:9px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed var(--line)"><label style="padding-top:2px">'+chk+'</label><div style="flex:1"><b>Tuần '+esc(soNguyenText(w.Tuan))+'</b> · <span'+(w.HoanThanh?' style="text-decoration:line-through;color:var(--ink2)"':'')+'>'+esc(w.NoiDung)+'</span></div>'+xoaV+'</div>';
+      }).join('');
+      var formViec=laAdmin()?'<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><input id="vw_tuan_'+v.MaKH+'" type="number" min="1" placeholder="Tuần" style="width:90px"><input id="vw_nd_'+v.MaKH+'" placeholder="Nội dung công việc tuần này…" style="flex:1;min-width:200px"><button class="btn small" onclick="submitViecUI(\''+v.MaKH+'\')">+ Thêm việc</button></div>':'';
+      var nutVu=laAdmin()?'<button class="btn ghost small" onclick="moSuaVu(\''+v.MaKH+'\')">✏️ Sửa vụ</button> <button class="btn ghost small" onclick="xoaVuUI(\''+v.MaKH+'\')">🗑️ Xoá vụ</button>':'';
+      return '<div class="card" style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap"><h3 style="font-size:18px">'+esc(v.TenVu)+(v.dangChay?' <span class="badge b-green">Đang chạy</span>':'')+'</h3><div>'+nutVu+'</div></div>'+
+      '<p class="sub">'+esc(tenVungTheoMa(v.MaVung))+(v.MaLo?' · Lô '+esc(v.MaLo):' · Cả vùng')+' · '+esc(v.CayTrong)+' · '+dmy(v.TuNgay)+' → '+dmy(v.DenNgay)+(v.GhiChu?' · '+esc(v.GhiChu):'')+'</p>'+
+      '<div class="progress-top"><span>Đã thu <b>'+fmt(v.thucTe_tan,2)+' tấn</b> / chỉ tiêu <b>'+fmt(v.ChiTieuTan)+' tấn</b></span><b>'+fmt(v.phanTram,1)+'%</b></div><div class="bar"><i style="width:'+pct+'%"></i></div>'+
+      '<h4 style="margin:16px 0 4px;font-size:15px">Kế hoạch công việc theo tuần</h4>'+(viecHtml||'<p class="sub">Chưa có công việc nào trong vụ này.</p>')+formViec+'</div>';
+    }).join('');
+    capNhatLoKeHoach();
+  }catch(e){ el.innerHTML='<div class="demo-note">'+esc(e.message)+'</div>'; }
+}
+async function submitKeHoachVu(){
+  var obj={MaVung:document.getElementById('kh_vung').value,MaLo:document.getElementById('kh_lo').value,TenVu:document.getElementById('kh_ten').value.trim(),CayTrong:document.getElementById('kh_cay').value,TuNgay:document.getElementById('kh_tu').value,DenNgay:document.getElementById('kh_den').value,ChiTieuTan:document.getElementById('kh_chitieu').value,GhiChu:document.getElementById('kh_ghichu').value.trim()};
+  if(EDIT_VU) obj.MaKH=EDIT_VU;
+  try{ await rpc('luuKeHoachVu',TOKEN,obj); toast(EDIT_VU?'Đã lưu thay đổi vụ.':'Đã tạo vụ mới.'); EDIT_VU=null; loadKeHoach(); }catch(e){ toast(e.message); }
+}
+function moSuaVu(maKH){ var v=(KH_DATA&&KH_DATA.vu||[]).filter(function(x){return x.MaKH===maKH;})[0]; if(!v) return; EDIT_VU=maKH; setSel('kh_vung',v.MaVung); capNhatLoKeHoach(); setSel('kh_lo',v.MaLo||''); setVal('kh_ten',v.TenVu); setSel('kh_cay',v.CayTrong); setVal('kh_tu',v.TuNgay); setVal('kh_den',v.DenNgay); setVal('kh_chitieu',v.ChiTieuTan); setVal('kh_ghichu',v.GhiChu); var t=document.getElementById('khFormTitle'); if(t) t.textContent='✏️ Sửa vụ: '+v.TenVu; var h=document.getElementById('khHuySua'); if(h) h.classList.remove('hidden'); window.scrollTo({top:0,behavior:'smooth'}); }
+function huySuaVu(){ EDIT_VU=null; loadKeHoach(); }
+async function xoaVuUI(maKH){ if(!confirm('Xoá vụ này cùng toàn bộ công việc thuộc vụ?')) return; try{ await rpc('xoaKeHoachVu',TOKEN,maKH); toast('Đã xoá vụ.'); loadKeHoach(); }catch(e){ toast(e.message); } }
+async function submitViecUI(maKH){ var t=document.getElementById('vw_tuan_'+maKH), n=document.getElementById('vw_nd_'+maKH); var obj={MaKH:maKH,Tuan:t.value,NoiDung:n.value.trim(),HoanThanh:false}; if(!(Number(obj.Tuan)>=1)||!obj.NoiDung){ toast('Nhập số tuần (>= 1) và nội dung công việc.'); return; } try{ await rpc('luuKeHoachViec',TOKEN,obj); toast('Đã thêm công việc.'); loadKeHoach(); }catch(e){ toast(e.message); } }
+async function tichViecUI(maViec,checked){ try{ await rpc('tichViec',TOKEN,maViec,checked); toast(checked?'Đã tích hoàn thành.':'Đã bỏ tích hoàn thành.'); loadKeHoach(); }catch(e){ toast(e.message); loadKeHoach(); } }
+async function xoaViecUI(maViec){ if(!confirm('Xoá công việc này?')) return; try{ await rpc('xoaKeHoachViec',TOKEN,maViec); toast('Đã xoá công việc.'); loadKeHoach(); }catch(e){ toast(e.message); } }
+
 /* Ban do — Leaflet lazy */
 function ensureLeaflet(){return new Promise(function(res,rej){ if(window.L) return res(); var s=document.createElement('script'); s.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'; s.onload=function(){res();}; s.onerror=function(){rej(new Error('Khong tai duoc Leaflet'));}; document.head.appendChild(s); });}
 async function loadBanDo(){
   var el=document.getElementById('pg-bando');
   if(MAP_INIT && MAP_OBJ){ setTimeout(function(){ MAP_OBJ.invalidateSize(); },80); return; }
-  el.innerHTML='<div class="map-tools"><input type="text" id="mapSearch" placeholder="Tìm lô theo mã, cây trồng, vùng…"><select id="mapVungSel"><option value="all">Tất cả vùng</option>'+VUNG.map(function(v){return '<option value="'+esc(v.MaVung)+'">'+esc(v.TenVung)+' ('+esc(v.MaVung)+')</option>';}).join('')+'</select></div>'+
+  el.innerHTML='<div class="map-tools"><input type="text" id="mapSearch" placeholder="Tìm lô theo mã, cây trồng, vùng…"><select id="mapVungSel"><option value="all">Tất cả vùng</option>'+VUNG.map(function(v){return '<option value="'+esc(v.MaVung)+'">'+esc(v.TenVung)+' ('+esc(v.MaVung)+')</option>';}).join('')+'</select><button type="button" class="btn small" onclick="dinhViToi()">📍 Vị trí của tôi</button></div>'+
+  '<div id="gpsMsg"></div>'+
   '<div class="map-tools" id="cropChips"><button type="button" class="chip on" data-crop="all">Tất cả cây trồng</button><button type="button" class="chip" data-crop="co">Cỏ</button><button type="button" class="chip" data-crop="ngo">Ngô</button></div>'+
   '<div class="map-layout"><div><div id="map"></div><div class="legend"><span><i class="sw" style="background:#2f9e44"></i>Cỏ</span><span><i class="sw" style="background:#e8a13a"></i>Ngô</span><span style="margin-left:auto">Bấm polygon để xem chi tiết lô · Chuyển lớp nền: vệ tinh Esri / bản đồ OSM ở góc phải bản đồ</span></div></div>'+
   '<div><div class="card" id="plotDetail" style="margin-bottom:16px"></div><div class="card" style="padding:8px 12px"><h3 style="padding:10px 6px 4px">Danh sách lô (<span id="plotCount"></span>)</h3><div id="plotList"></div></div></div></div>';
@@ -619,7 +829,8 @@ async function loadBanDo(){
     var color=lotIsNgo(l)?'#e8a13a':'#2f9e44';
     var poly=L.geoJSON(geom,{style:{color:color,weight:2,fillColor:color,fillOpacity:0.45}}).addTo(MAP_OBJ);
     poly.bindTooltip(esc(l.MaLo),{permanent:true,direction:'center',className:'lo-label'});
-    poly.bindPopup('<b>'+esc(l.MaLo)+' · '+esc(tenVung)+'</b><br>Cây trồng: '+esc(l.CayTrong)+'<br>Diện tích: '+fmt(l.DienTich_ha,2)+' ha<br>Trạng thái bản đồ: '+esc(l.TrangThaiBanDo||'')+'<br>Trạng thái canh tác: '+esc(l.TrangThaiCanhTac||''));
+    var vdt=dtVung(l.MaVung);
+    poly.bindPopup('<b>'+esc(l.MaLo)+' · '+esc(tenVung)+'</b><br>Cây trồng: '+esc(l.CayTrong)+'<br>Diện tích lô: '+fmt(l.DienTich_ha,2)+' ha<br>Diện tích vùng: canh tác '+fmt(vdt.canhTac,1)+' / tổng '+fmt(vdt.tong,1)+' ha<br>Trạng thái bản đồ: '+esc(l.TrangThaiBanDo||'')+'<br>Trạng thái canh tác: '+esc(l.TrangThaiCanhTac||''));
     MAP_LAYERS[l.MaLo]=poly;
     poly.on('click',function(){ selectLotOnMap(l.MaLo,false); });
     var b=poly.getBounds(); allBounds=allBounds?allBounds.extend(b):b;
@@ -657,10 +868,52 @@ function selectLotOnMap(maLo,pan){
   var l=null; LO.forEach(function(x){ if(x.MaLo===maLo) l=x; }); if(!l) return;
   var ten=''; VUNG.forEach(function(v){ if(v.MaVung===l.MaVung) ten=v.TenVung; });
   var det=document.getElementById('plotDetail');
-  if(det){ det.innerHTML='<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px"><h3 style="font-size:19px">Lô '+esc(l.MaLo)+' — '+esc(l.CayTrong)+'</h3><span class="badge '+(lotIsNgo(l)?'b-amber':'b-green')+'">'+esc(l.TrangThaiCanhTac||'')+'</span></div><p class="sub">'+esc(ten)+' ('+esc(l.MaVung)+')'+(l.GeoJSON_Polygon?' · ranh thật trích từ file KMZ khách gửi 21/10/2026':' · lô chưa có ranh thật trong file bản đồ')+'</p><dl class="kv"><dt>Diện tích</dt><dd>'+fmt(l.DienTich_ha,2)+' ha</dd><dt>Giống</dt><dd>'+esc(l.Giong||'—')+'</dd><dt>Vùng</dt><dd>'+esc(ten)+'</dd><dt>Trạng thái bản đồ</dt><dd>'+esc(l.TrangThaiBanDo||'—')+'</dd><dt>Trạng thái canh tác</dt><dd>'+esc(l.TrangThaiCanhTac||'—')+'</dd></dl>'; }
+  if(det){ var vdt=dtVung(l.MaVung); det.innerHTML='<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px"><h3 style="font-size:19px">Lô '+esc(l.MaLo)+' — '+esc(l.CayTrong)+'</h3><span class="badge '+(lotIsNgo(l)?'b-amber':'b-green')+'">'+esc(l.TrangThaiCanhTac||'')+'</span></div><p class="sub">'+esc(ten)+' ('+esc(l.MaVung)+')'+(l.GeoJSON_Polygon?' · ranh thật trích từ file KMZ khách gửi 21/10/2026':' · lô chưa có ranh thật trong file bản đồ')+'</p><dl class="kv"><dt>Diện tích lô</dt><dd>'+fmt(l.DienTich_ha,2)+' ha</dd><dt>Diện tích vùng</dt><dd>Canh tác '+fmt(vdt.canhTac,1)+' / Tổng '+fmt(vdt.tong,1)+' ha</dd><dt>Giống</dt><dd>'+esc(l.Giong||'—')+'</dd><dt>Vùng</dt><dd>'+esc(ten)+'</dd><dt>Trạng thái bản đồ</dt><dd>'+esc(l.TrangThaiBanDo||'—')+'</dd><dt>Trạng thái canh tác</dt><dd>'+esc(l.TrangThaiCanhTac||'—')+'</dd></dl>'; }
   renderPlotPanel();
   var layer=MAP_LAYERS[maLo];
   if(layer){ if(pan&&MAP_OBJ) MAP_OBJ.fitBounds(layer.getBounds().pad(0.6)); layer.openPopup(); }
+}
+/* ===== v1.9: GPS nhan dien vung tren Ban do ===== */
+function dtVung(maVung){ var ct=0,tong=0; LO.forEach(function(l){ if(l.MaVung===maVung) ct+=Number(l.DienTich_ha)||0; }); VUNG.forEach(function(v){ if(v.MaVung===maVung) tong=Number(v.DienTichVung_ha)||0; }); return {canhTac:ct,tong:tong}; }
+function pipRing(ring,x,y){ var inside=false; for(var i=0,j=ring.length-1;i<ring.length;j=i++){ var xi=ring[i][0],yi=ring[i][1],xj=ring[j][0],yj=ring[j][1]; if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi)) inside=!inside; } return inside; }
+function pipPolygon(coords,x,y){ if(!coords||!coords.length) return false; if(!pipRing(coords[0],x,y)) return false; for(var k=1;k<coords.length;k++) if(pipRing(coords[k],x,y)) return false; return true; }
+function geomContains(geom,x,y){ if(!geom) return false; if(geom.type==='Polygon') return pipPolygon(geom.coordinates,x,y); if(geom.type==='MultiPolygon') return geom.coordinates.some(function(p){return pipPolygon(p,x,y);}); if(geom.type==='Feature') return geomContains(geom.geometry,x,y); if(geom.type==='FeatureCollection') return geom.features.some(function(f){return geomContains(f,x,y);}); return false; }
+function distSegM(px,py,ax,ay,bx,by,lat0){ var kx=111320*Math.cos(lat0*Math.PI/180),ky=111320; var X=(px-ax)*kx,Y=(py-ay)*ky,BX=(bx-ax)*kx,BY=(by-ay)*ky; var L2=BX*BX+BY*BY; var t=L2>0?Math.max(0,Math.min(1,(X*BX+Y*BY)/L2)):0; var dx=X-t*BX,dy=Y-t*BY; return Math.sqrt(dx*dx+dy*dy); }
+function geomMinDistM(geom,lng,lat){ var best=Infinity; function ringD(ring){ for(var i=0;i<ring.length-1;i++){ var d=distSegM(lng,lat,ring[i][0],ring[i][1],ring[i+1][0],ring[i+1][1],lat); if(d<best)best=d; } } function polyD(coords){ (coords||[]).forEach(ringD); } if(!geom) return best; if(geom.type==='Polygon') polyD(geom.coordinates); else if(geom.type==='MultiPolygon') geom.coordinates.forEach(polyD); else if(geom.type==='Feature') return geomMinDistM(geom.geometry,lng,lat); return best; }
+var GPS_MARKER=null,GPS_CIRCLE=null;
+function gpsThongBao(html){ var b=document.getElementById('gpsMsg'); if(b) b.innerHTML=html?'<div class="demo-note" style="margin-bottom:14px">'+html+'</div>':''; }
+function dinhViToi(){
+  if(!MAP_OBJ){ toast('Bản đồ chưa sẵn sàng.'); return; }
+  if(!navigator.geolocation){ gpsThongBao('⚠️ Trình duyệt này không hỗ trợ định vị GPS.'); return; }
+  gpsThongBao('⏳ Đang lấy vị trí GPS…');
+  navigator.geolocation.getCurrentPosition(function(pos){
+    var lat=pos.coords.latitude,lng=pos.coords.longitude,acc=pos.coords.accuracy||0;
+    if(GPS_MARKER){ MAP_OBJ.removeLayer(GPS_MARKER); GPS_MARKER=null; }
+    if(GPS_CIRCLE){ MAP_OBJ.removeLayer(GPS_CIRCLE); GPS_CIRCLE=null; }
+    GPS_MARKER=L.marker([lat,lng]).addTo(MAP_OBJ).bindPopup('<b>📍 Vị trí của bạn</b><br>Độ chính xác khoảng '+fmt(acc)+' m');
+    if(acc>0) GPS_CIRCLE=L.circle([lat,lng],{radius:acc,color:'#2563eb',weight:1,fillColor:'#2563eb',fillOpacity:0.12}).addTo(MAP_OBJ);
+    MAP_OBJ.setView([lat,lng],Math.max(MAP_OBJ.getZoom(),15));
+    GPS_MARKER.openPopup();
+    var trung=null;
+    LO.forEach(function(l){ if(trung||!l.GeoJSON_Polygon) return; var g=null; try{ g=JSON.parse(l.GeoJSON_Polygon); }catch(e){} if(g&&geomContains(g,lng,lat)) trung=l; });
+    if(trung){
+      gpsThongBao('🎯 <b>Bạn đang đứng ở vùng '+esc(tenVungTheoMa(trung.MaVung))+'</b> ('+esc(trung.MaVung)+') · lô '+esc(trung.MaLo)+' — '+esc(trung.CayTrong)+' · Diện tích lô '+fmt(trung.DienTich_ha,2)+' ha. Polygon của lô đã được tô sáng.');
+      selectLotOnMap(trung.MaLo,false);
+      var layer=MAP_LAYERS[trung.MaLo];
+      if(layer){ layer.setStyle&&layer.setStyle({weight:4,fillOpacity:0.7}); if(layer.eachLayer) layer.eachLayer(function(s){ if(s.setStyle) s.setStyle({weight:4,fillOpacity:0.7}); }); }
+    } else {
+      var ganNhat=null,ganD=Infinity;
+      LO.forEach(function(l){ if(!l.GeoJSON_Polygon) return; var g=null; try{ g=JSON.parse(l.GeoJSON_Polygon); }catch(e){} if(!g) return; var d=geomMinDistM(g,lng,lat); if(d<ganD){ ganD=d; ganNhat=l; } });
+      var them=(ganNhat&&isFinite(ganD))?' Vùng đã có ranh gần nhất: <b>'+esc(tenVungTheoMa(ganNhat.MaVung))+'</b> (lô '+esc(ganNhat.MaLo)+'), cách khoảng '+(ganD>=1000?fmt(ganD/1000,2)+' km':fmt(ganD)+' m')+'.':'';
+      gpsThongBao('📍 <b>Bạn đang ở ngoài các vùng đã có ranh.</b>'+them+' (Các vùng chưa nạp ranh — Trang Trại, Mỹ Phong, Mỹ Lạc, Kỳ Thượng — chưa nhận diện được.)');
+    }
+  },function(err){
+    var msg='Không lấy được vị trí GPS.';
+    if(err&&err.code===1) msg='Bạn đã từ chối quyền truy cập vị trí. Hãy bật quyền vị trí cho trang này trong cài đặt trình duyệt rồi thử lại.';
+    else if(err&&err.code===2) msg='Thiết bị chưa xác định được vị trí (GPS/yếu sóng). Ra chỗ thoáng và thử lại.';
+    else if(err&&err.code===3) msg='Hết thời gian chờ lấy vị trí. Thử lại sau ít phút.';
+    gpsThongBao('⚠️ '+msg);
+  },{enableHighAccuracy:true,timeout:15000,maximumAge:30000});
 }
 document.getElementById('lgPass').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
 </script>
