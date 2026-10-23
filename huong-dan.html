@@ -310,12 +310,12 @@ footer{
 
     <section class="card" id="dau-diesel">
       <h2><span class="num">9</span>Dầu diesel</h2>
-      <p>Ghi nhận lượng dầu diesel cấp cho từng máy (số lít, ngày cấp). Phạm vi quản lý nhiên liệu của hệ thống gồm giờ máy chạy và số lít dầu sử dụng, đúng như Quý đơn vị đã thống nhất.</p>
+      <p>Ghi nhận lượng dầu diesel cấp cho từng máy (số lít, ngày cấp). Khi nhập phiếu mới, biểu mẫu có thêm ô <strong>Vùng</strong> — chọn vùng mà máy phục vụ (bắt buộc) để hệ thống tính tiền dầu theo từng vùng trong báo cáo Chi phí theo vùng. Bảng phiếu dầu có thêm cột <strong>Vùng</strong> hiển thị tên vùng; các phiếu đã nhập từ trước (chưa gắn vùng) hiển thị <strong>"Chưa phân vùng"</strong> — mở phiếu bằng nút Sửa để bổ sung hoặc đổi vùng khi cần.</p>
     </section>
 
     <section class="card" id="bon-phan">
       <h2><span class="num">10</span>Bón phân</h2>
-      <p>Ghi nhận các đợt bón phân: ngày bón (hiển thị dạng dd/mm/yyyy), vùng hiển thị theo tên vùng, loại phân và diện tích áp dụng.</p>
+      <p>Ghi nhận các đợt bón phân: ngày bón (hiển thị dạng dd/mm/yyyy), vùng hiển thị theo tên vùng, loại phân và diện tích áp dụng. Biểu mẫu nhập có thêm ô <strong>Đơn giá (đ/kg)</strong> — <strong>bắt buộc với phiếu mới</strong>: nhập đơn giá bình quân của đợt phân, hệ thống tự tính <strong>Thành tiền</strong> = tổng lượng phân của phiếu quy về kg (các loại phân tính bằng kg cộng trực tiếp, phân hữu cơ 1 tấn = 1.000 kg, phân lỏng 1 m³ ≈ 1.000 kg) × đơn giá, rồi ghi vào bảng ở hai cột Đơn giá và Thành tiền. Các phiếu đã nhập từ trước chưa có đơn giá hiển thị "—" ở hai cột này; mở phiếu bằng nút Sửa và bổ sung Đơn giá là hệ thống tự tính lại Thành tiền (sửa lượng phân cũng tự tính lại).</p>
     </section>
 
     <section class="card" id="san-luong">
@@ -344,9 +344,9 @@ footer{
       <h2><span class="num">14</span>Chi phí theo vùng</h2>
       <p>Báo cáo tổng hợp chi phí sản xuất theo từng vùng trong khoảng thời gian tùy chọn (ô từ ngày – đến ngày ở đầu trang), gồm các cột: tiền dầu diesel, tiền giờ máy, chi phí khác, tổng chi phí và chi phí trên mỗi héc-ta đang canh tác của vùng. Mọi tài khoản đã đăng nhập đều xem được báo cáo này; có nút <strong>Xuất Excel</strong>.</p>
       <ul>
-        <li><strong>Tiền dầu diesel:</strong> vì phiếu dầu ghi theo máy, không ghi vùng, nên tiền dầu chỉ tổng hợp ở mức <strong>toàn công ty</strong> (dòng tổng cuối bảng), tính bằng tổng số lít × đơn giá dầu cấu hình. Đơn giá hiện dùng là <strong>29.830 đ/lít — giá tạm theo Petrolimex DO 0,05S-II vùng 2 (kỳ điều hành 15h ngày 22/10/2026)</strong>, theo thống nhất lấy giá chuẩn Petrolimex; Quản trị viên tự cập nhật đơn giá trong mục Phân quyền &amp; Hệ thống khi giá thay đổi.</li>
+        <li><strong>Tiền dầu diesel:</strong> tính theo từng vùng từ ô Vùng của phiếu cấp dầu (số lít của vùng × đơn giá dầu cấu hình) và cộng vào tổng chi phí của vùng đó. Các phiếu cũ chưa gắn vùng được gộp ở dòng <strong>"Chưa phân vùng"</strong> cuối bảng để tổng toàn công ty vẫn khớp. Đơn giá hiện dùng là <strong>29.830 đ/lít — giá tạm theo Petrolimex DO 0,05S-II vùng 2 (kỳ điều hành 15h ngày 22/10/2026)</strong>, theo thống nhất lấy giá chuẩn Petrolimex; Quản trị viên tự cập nhật đơn giá trong mục Phân quyền &amp; Hệ thống khi giá thay đổi.</li>
         <li><strong>Tiền giờ máy:</strong> tính bằng tổng số giờ hoạt động của các lô thuộc vùng × đơn giá giờ máy. Hiện <strong>chưa có đơn giá giờ máy</strong> nên cột này hiển thị "—" và chưa tính vào tổng; khi Quý đơn vị cấp đơn giá, Quản trị viên nhập vào cấu hình là báo cáo tự tính.</li>
-        <li><strong>Tiền phân bón:</strong> dữ liệu bón phân hiện chỉ ghi khối lượng các loại phân, không ghi thành tiền, nên báo cáo hiển thị "—" kèm ghi chú thay vì số 0.</li>
+        <li><strong>Tiền phân bón:</strong> tính từ cột <strong>Thành tiền</strong> của các phiếu bón phân có đơn giá trong khoảng thời gian chọn. Các phiếu chưa có đơn giá (toàn bộ phiếu đã nhập trước khi có cột Đơn giá) không tính vào tiền phân, mà được đếm riêng trong dòng ghi chú dưới bảng ("còn X phiếu bón phân chưa có đơn giá") để Quý đơn vị bổ sung dần qua nút Sửa của mục Bón phân.</li>
       </ul>
     </section>
 
@@ -406,8 +406,8 @@ footer{
         <p>Theo cách tính Quý đơn vị thống nhất ngày 23/10/2026: "đang canh tác" là tổng diện tích các lô có cây (hiện tại 507,7 ha), "tổng" là tổng diện tích các vùng (778,3 ha). Hai con số này được tính trực tiếp từ dữ liệu vùng/lô nên sẽ tự thay đổi khi Quý đơn vị thêm vùng/lô mới hoặc điều chỉnh diện tích.</p>
       </div>
       <div class="note">
-        <span class="note-title">Dầu diesel không tách theo từng vùng</span>
-        <p>Dữ liệu dầu được cấp theo máy và không ghi vùng, nên khi lọc Dashboard theo một vùng, chỉ số dầu sẽ hiển thị dấu "—" kèm ghi chú. Muốn xem tổng dầu, chọn xem toàn công ty.</p>
+        <span class="note-title">Dầu diesel trên Dashboard</span>
+        <p>Phiếu dầu từ nay ghi thêm vùng, và báo cáo Chi phí theo vùng đã tách được tiền dầu theo từng vùng. Riêng trên Dashboard, khi lọc theo một vùng, chỉ số dầu vẫn hiển thị dấu "—" kèm ghi chú như trước (chỉ số dầu của Dashboard tính ở mức toàn công ty). Muốn xem dầu của từng vùng, mở mục Chi phí theo vùng.</p>
       </div>
       <div class="note">
         <span class="note-title">Về %DM</span>
