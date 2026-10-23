@@ -550,7 +550,15 @@ async function loadHeThong(){
       '<div class="field"><label>Tên vùng *</label><input id="tv_ten"></div><div class="field"><label>Xã</label><input id="tv_xa"></div>'+
       '<div class="field"><label>Cost Center SAP (nếu có)</label><input id="tv_cc"></div><div class="field"><label>Diện tích tổng của vùng (ha) *</label><input id="tv_dt" type="number" step="0.01"></div>'+
       '<div class="field"><label>Cây trồng của lô đầu tiên *</label><select id="tv_cay"><option>Cỏ Mombasa</option><option>Ngô</option></select></div><div class="field"><label>Diện tích lô đầu tiên (ha) *</label><input id="tv_dtlo" type="number" step="0.01"></div></div>'+
-      '<button class="btn" style="margin-top:12px" onclick="submitThemVung()">Thêm vùng mới</button></div>';
+      '<div class="field" style="margin-top:10px"><label>File ranh của vùng (không bắt buộc) — .kmz / .kml / .geojson</label><input id="tv_ranh_file" type="file" accept=".kmz,.kml,.geojson,.json" onchange="chonFileRanhTV(this)"><p id="tv_ranh_info" style="font-size:13px;color:var(--ink2);margin:6px 0 0"></p></div>'+
+      '<button class="btn" style="margin-top:12px" onclick="submitThemVung()">Thêm vùng mới</button></div>'+
+      '<h2 class="sec-title" style="margin-top:26px">Cập nhật ranh vùng từ file (chỉ Admin)</h2>'+
+      '<div class="card"><p class="sub">Nạp hoặc thay ranh cho một vùng đã có bằng file KMZ/KML/GeoJSON (ví dụ file bên địa chính xuất). Ranh được ghi vào lô chính của vùng. Hãy chọn vùng + file, xem trước trên bản đồ nhỏ rồi bấm Lưu ranh mới ghi thật vào hệ thống.</p><div class="form-grid">'+
+      '<div class="field"><label>Vùng cần cập nhật ranh *</label><select id="cr_vung" onchange="capNhatGoiYRanh_()">'+vungOptionsRanh_()+'</select></div>'+
+      '<div class="field"><label>File ranh *</label><input id="cr_file" type="file" accept=".kmz,.kml,.geojson,.json" onchange="chonFileRanhCR(this)"></div></div>'+
+      '<p id="cr_goiy" style="font-size:13px;color:var(--ink2);margin:8px 0 0"></p><div id="cr_info" style="margin-top:8px;font-size:13.5px"></div>'+
+      '<div id="cr_map" style="height:280px;border:1px solid var(--line);border-radius:12px;margin-top:10px;display:none"></div>'+
+      '<button class="btn" id="cr_btn" style="margin-top:12px" onclick="luuRanhCR()" disabled>Lưu ranh vào hệ thống</button></div>';
     }
     el.innerHTML=
       '<h2 class="sec-title">Tài khoản người dùng</h2>'+
@@ -563,6 +571,9 @@ async function loadHeThong(){
       '<div class="sec-head" style="margin-top:26px"><h2 class="sec-title">Nhật ký hệ thống gần nhất</h2>'+nutXoaNhatKy+'</div>'+
       '<div class="tbl-wrap"><table><thead><tr><th>Thời gian</th><th>Tài khoản</th><th>Hành động</th><th>Tab</th><th>Nội dung</th></tr></thead><tbody>'+nkrows+'</tbody></table></div>'+
       '<p style="font-size:13px;color:var(--ink2);margin-top:8px">30 dòng mới nhất từ tab NhatKyHeThong — hệ thống tự ghi mọi lần đăng nhập và thao tác thêm dữ liệu để truy vết.</p>';
+    if(window.RANH_MAP){ try{ RANH_MAP.remove(); }catch(e2){} RANH_MAP=null; RANH_LAYER=null; }
+    RANH_CR=null;
+    capNhatGoiYRanh_();
   }catch(e){ el.innerHTML='<div class="demo-note">'+esc(e.message)+'</div>'; }
 }
 async function luuDonGia(){
@@ -575,10 +586,12 @@ async function luuDonGia(){
 async function submitThemVung(){
   var obj={TenVung:document.getElementById('tv_ten').value.trim(),Xa:document.getElementById('tv_xa').value.trim(),CostCenterSAP:document.getElementById('tv_cc').value.trim(),DienTichTong:document.getElementById('tv_dt').value,TenCay:document.getElementById('tv_cay').value,DienTichLo:document.getElementById('tv_dtlo').value};
   if(!obj.TenVung||!(Number(obj.DienTichTong)>0)||!(Number(obj.DienTichLo)>0)){ toast('Nhập tên vùng, diện tích tổng và diện tích lô đầu tiên.'); return; }
+  if(window.RANH_TV&&RANH_TV.str) obj.geojson=RANH_TV.str;
   try{
     var r=await rpc('themVungMoi',TOKEN,obj);
     INIT=await rpc('getInitData',TOKEN); VUNG=INIT.vung||[]; LO=INIT.lo||[];
-    toast('Đã thêm vùng '+r.maVung+' ('+obj.TenVung+') và lô '+r.maLo+'.');
+    RANH_TV=null;
+    toast('Đã thêm vùng '+r.maVung+' ('+obj.TenVung+') và lô '+r.maLo+(r.ranh?'. Đã nạp ranh kèm theo: '+fmt(r.ranh.dienTichHa,2)+' ha.':'.'));
     loadHeThong();
   }catch(e){ toast(e.message); }
 }
@@ -588,6 +601,180 @@ async function xoaToanBoNhatKy(){
     var r=await rpc('xoaNhatKy',TOKEN);
     toast('Đã xoá '+(r.deleted||0)+' dòng nhật ký.');
     await loadHeThong();
+  }catch(e){ toast(e.message); }
+}
+/* ===== v2.1: Tai file ranh vung (KMZ/KML/GeoJSON) — chi Admin =====
+   Xu ly hoan toan phia client: doc file -> geometry Polygon/MultiPolygon -> lam tron 6 so le ->
+   rut gon Douglas-Peucker (dung sai tang dan 2-10m) sao cho chuoi JSON <= 45.000 ky tu (gioi han server).
+   KML: chi doc vong ngoai cua moi Polygon (bo qua vong trong/lo). KMZ: giai nen bang JSZip (CDN cdnjs) roi doc doc.kml. */
+var RANH_TV=null, RANH_CR=null, RANH_MAP=null, RANH_LAYER=null;
+var JSZIP_URL='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+var RANH_MAX_LEN_FE=45000;
+function ensureJSZip(){
+  return new Promise(function(res,rej){
+    if(window.JSZip) return res();
+    var s=document.createElement('script'); s.src=JSZIP_URL;
+    s.onload=function(){ res(); };
+    s.onerror=function(){ rej(new Error('Không tải được thư viện giải nén JSZip (cần để đọc file KMZ). Hãy kiểm tra mạng rồi thử lại, hoặc xuất file sang KML/GeoJSON.')); };
+    document.head.appendChild(s);
+  });
+}
+function r6_(x){ return Math.round(x*1e6)/1e6; }
+function lamTronGeom_(geom){
+  function mapC(c){ return (typeof c[0]==='number') ? [r6_(c[0]), r6_(c[1])] : c.map(mapC); }
+  return { type: geom.type, coordinates: mapC(geom.coordinates) };
+}
+function dienTichVongFE_(ring){
+  var R=6371008.8, tong=0;
+  for(var i=0;i<ring.length-1;i++){
+    var dLon=(ring[i+1][0]-ring[i][0])*Math.PI/180;
+    tong+=dLon*(2+Math.sin(ring[i][1]*Math.PI/180)+Math.sin(ring[i+1][1]*Math.PI/180));
+  }
+  return Math.abs(tong*R*R/2)/10000;
+}
+function dienTichGeomFE_(geom){
+  var polys=geom.type==='Polygon'?[geom.coordinates]:geom.coordinates, s=0;
+  polys.forEach(function(poly){ if(!poly||!poly.length) return; s+=dienTichVongFE_(poly[0]); for(var k=1;k<poly.length;k++) s-=dienTichVongFE_(poly[k]); });
+  return Math.round(s*100)/100;
+}
+function dpKeep_(pts,tol){
+  var n=pts.length, keep=[], i;
+  for(i=0;i<n;i++) keep.push(false);
+  keep[0]=keep[n-1]=true;
+  var stack=[[0,n-1]];
+  while(stack.length){
+    var seg=stack.pop(), a=seg[0], b=seg[1];
+    var ax=pts[a][0], ay=pts[a][1], dx=pts[b][0]-ax, dy=pts[b][1]-ay, len2=dx*dx+dy*dy;
+    var maxD=0, idx=-1;
+    for(var j=a+1;j<b;j++){
+      var px=pts[j][0], py=pts[j][1], d;
+      if(len2===0) d=Math.sqrt((px-ax)*(px-ax)+(py-ay)*(py-ay));
+      else { var t=((px-ax)*dx+(py-ay)*dy)/len2; t=Math.max(0,Math.min(1,t)); var ex=ax+t*dx-px, ey=ay+t*dy-py; d=Math.sqrt(ex*ex+ey*ey); }
+      if(d>maxD){ maxD=d; idx=j; }
+    }
+    if(idx>0&&maxD>tol){ keep[idx]=true; stack.push([a,idx]); stack.push([idx,b]); }
+  }
+  return keep;
+}
+function rutGonRing_(ring,tolM){
+  if(!ring||ring.length<5||tolM<=0) return ring;
+  var lat0=ring[0][1]*Math.PI/180, kx=111320*Math.cos(lat0), ky=111320;
+  var pts=ring.map(function(p){ return [p[0]*kx, p[1]*ky]; });
+  var keep=dpKeep_(pts,tolM);
+  var out=ring.filter(function(p,i){ return keep[i]; });
+  return out.length>=4 ? out : ring;
+}
+function rutGonGeom_(geom,tolM){
+  function rg(poly){ return poly.map(function(ring,ri){ return ri===0 ? rutGonRing_(ring,tolM) : ring; }); }
+  if(geom.type==='Polygon') return { type:'Polygon', coordinates: rg(geom.coordinates) };
+  return { type:'MultiPolygon', coordinates: geom.coordinates.map(rg) };
+}
+function chuanHoaGeomFE_(obj){
+  if(!obj) return null;
+  if(obj.type==='Feature') return chuanHoaGeomFE_(obj.geometry);
+  if(obj.type==='FeatureCollection'){
+    var ps=[];
+    (obj.features||[]).forEach(function(f){ var g=chuanHoaGeomFE_(f); if(g){ if(g.type==='Polygon') ps.push(g.coordinates); else g.coordinates.forEach(function(p){ ps.push(p); }); } });
+    if(!ps.length) return null;
+    return ps.length===1 ? { type:'Polygon', coordinates: ps[0] } : { type:'MultiPolygon', coordinates: ps };
+  }
+  if(obj.type==='Polygon') return { type:'Polygon', coordinates: obj.coordinates };
+  if(obj.type==='MultiPolygon') return { type:'MultiPolygon', coordinates: obj.coordinates };
+  return null;
+}
+function parseKmlCoords_(text){
+  return String(text||'').trim().split(/\s+/).map(function(tok){ var p=tok.split(','); return [parseFloat(p[0]), parseFloat(p[1])]; }).filter(function(p){ return isFinite(p[0])&&isFinite(p[1]); });
+}
+function geomTuKML_(text){
+  var doc=new DOMParser().parseFromString(text,'text/xml');
+  if(doc.getElementsByTagName('parsererror').length) throw new Error('File KML không đọc được (XML không hợp lệ).');
+  var polys=[], els=doc.getElementsByTagName('Polygon');
+  for(var i=0;i<els.length;i++){
+    var outer=els[i].getElementsByTagName('outerBoundaryIs')[0]; if(!outer) continue;
+    var cel=outer.getElementsByTagName('coordinates')[0]; if(!cel) continue;
+    var ring=parseKmlCoords_(cel.textContent);
+    if(ring.length>=4) polys.push([ring]);
+  }
+  if(!polys.length) return null;
+  return polys.length===1 ? { type:'Polygon', coordinates: polys[0] } : { type:'MultiPolygon', coordinates: polys };
+}
+async function docFileRanhFE_(file){
+  if(!file) throw new Error('Chưa chọn file ranh.');
+  var ext=((file.name||'').split('.').pop()||'').toLowerCase(), geom=null;
+  if(ext==='kmz'){
+    await ensureJSZip();
+    var zip=await JSZip.loadAsync(await file.arrayBuffer());
+    var kmlName=null;
+    Object.keys(zip.files).forEach(function(n){ if(/\.kml$/i.test(n)&&(n.toLowerCase().indexOf('doc.kml')>=0||!kmlName)) kmlName=n; });
+    if(!kmlName) throw new Error('File KMZ không chứa file .kml ở bên trong.');
+    geom=geomTuKML_(await zip.files[kmlName].async('text'));
+  } else if(ext==='kml'){
+    geom=geomTuKML_(await file.text());
+  } else if(ext==='geojson'||ext==='json'){
+    var obj=null;
+    try{ obj=JSON.parse(await file.text()); }catch(e){ throw new Error('File GeoJSON không đọc được (JSON không hợp lệ).'); }
+    geom=chuanHoaGeomFE_(obj);
+  } else throw new Error('Định dạng file chưa được hỗ trợ. Hãy chọn file .kmz, .kml hoặc .geojson.');
+  if(!geom) throw new Error('Không tìm thấy polygon nào trong file. File ranh cần chứa ít nhất một Polygon (khối đất khép kín).');
+  geom=lamTronGeom_(geom);
+  var tols=[2,4,6,8,10], dungSai=2, str=JSON.stringify(geom), g=geom;
+  for(var t=0;t<tols.length;t++){ var gg=rutGonGeom_(geom,tols[t]), ss=JSON.stringify(gg); dungSai=tols[t]; g=gg; str=ss; if(ss.length<=RANH_MAX_LEN_FE) break; }
+  return { geom:g, str:str, dungSai:dungSai, dienTich:dienTichGeomFE_(g), quaLon: str.length>RANH_MAX_LEN_FE };
+}
+function vungOptionsRanh_(){ return VUNG.map(function(v){ return '<option value="'+esc(v.MaVung)+'">'+esc(v.MaVung)+' — '+esc(v.TenVung)+'</option>'; }).join(''); }
+function capNhatGoiYRanh_(){
+  var sel=document.getElementById('cr_vung'), box=document.getElementById('cr_goiy');
+  if(!sel||!box) return;
+  var chinh=null;
+  LO.forEach(function(l){ if(!chinh&&l.MaVung===sel.value) chinh=l; });
+  box.textContent=chinh ? ('Lô chính: '+chinh.MaLo+' · Trạng thái ranh hiện tại: '+(chinh.TrangThaiBanDo||'—')+(chinh.GeoJSON_Polygon?' (đang có ranh — lưu mới sẽ thay thế)':' (chưa có ranh)')) : '';
+}
+async function chonFileRanhTV(inp){
+  var info=document.getElementById('tv_ranh_info'); RANH_TV=null;
+  if(!inp.files||!inp.files.length){ if(info) info.textContent=''; return; }
+  if(info) info.textContent='Đang đọc file ranh…';
+  try{
+    RANH_TV=await docFileRanhFE_(inp.files[0]);
+    if(info) info.innerHTML='📐 Ranh từ file <b>'+esc(inp.files[0].name)+'</b>: diện tích <b>'+fmt(RANH_TV.dienTich,2)+' ha</b>, đã rút gọn đường biên dung sai '+RANH_TV.dungSai+' m ('+RANH_TV.str.length.toLocaleString('vi-VN')+' ký tự). Ranh này sẽ được lưu kèm khi bấm Thêm vùng mới.'+(RANH_TV.quaLon?' <b style="color:#c92a2a">Lưu ý: file vẫn vượt giới hạn 45.000 ký tự — máy chủ sẽ từ chối; hãy giảm chi tiết file.</b>':'');
+  }catch(e){ if(info) info.innerHTML='<span style="color:#c92a2a">'+esc(e.message)+'</span> Nếu vẫn bấm Thêm vùng mới, vùng sẽ được tạo mà chưa có ranh.'; }
+}
+async function chonFileRanhCR(inp){
+  var info=document.getElementById('cr_info'), btn=document.getElementById('cr_btn');
+  RANH_CR=null; if(btn) btn.disabled=true;
+  if(!inp.files||!inp.files.length){ if(info) info.innerHTML=''; return; }
+  if(info) info.innerHTML='Đang đọc file…';
+  try{
+    RANH_CR=await docFileRanhFE_(inp.files[0]);
+    var mv=document.getElementById('cr_vung').value;
+    info.innerHTML='📐 File <b>'+esc(inp.files[0].name)+'</b>: diện tích ranh tính được <b>'+fmt(RANH_CR.dienTich,2)+' ha</b> · sẽ ghi vào lô chính của vùng <b>'+esc(mv)+'</b> · đã rút gọn đường biên (dung sai '+RANH_CR.dungSai+' m), còn '+RANH_CR.str.length.toLocaleString('vi-VN')+' ký tự.'+(RANH_CR.quaLon?' <b style="color:#c92a2a">Vẫn vượt giới hạn 45.000 ký tự — máy chủ sẽ từ chối; hãy giảm chi tiết file rồi thử lại.</b>':'')+'<br>Hãy kiểm tra hình ranh trên bản đồ nhỏ bên dưới, đúng vùng đất thì bấm <b>Lưu ranh vào hệ thống</b>.';
+    if(btn) btn.disabled=false;
+    veXemTruocRanh_(RANH_CR.geom);
+  }catch(e){ if(info) info.innerHTML='<span style="color:#c92a2a">'+esc(e.message)+'</span>'; }
+}
+async function veXemTruocRanh_(geom){
+  try{
+    await ensureLeaflet();
+    var div=document.getElementById('cr_map'); if(!div) return;
+    div.style.display='block';
+    if(!RANH_MAP){
+      RANH_MAP=L.map('cr_map').setView([19.502,105.648],13);
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Esri World Imagery',maxZoom:19}).addTo(RANH_MAP);
+    }
+    if(RANH_LAYER){ RANH_MAP.removeLayer(RANH_LAYER); RANH_LAYER=null; }
+    RANH_LAYER=L.geoJSON(geom,{style:{color:'#e03131',weight:2,fillColor:'#e03131',fillOpacity:0.35}}).addTo(RANH_MAP);
+    setTimeout(function(){ try{ RANH_MAP.invalidateSize(); RANH_MAP.fitBounds(RANH_LAYER.getBounds().pad(0.15)); }catch(e){} },60);
+  }catch(e){ /* Khong xem truoc duoc (CDN loi) thi van cho Luu — server se validate lai */ }
+}
+async function luuRanhCR(){
+  if(!RANH_CR){ toast('Hãy chọn file ranh trước.'); return; }
+  var maVung=document.getElementById('cr_vung').value;
+  if(!confirm('Ghi ranh mới ('+fmt(RANH_CR.dienTich,2)+' ha) cho vùng '+maVung+'? Ranh hiện tại của lô chính vùng này (nếu có) sẽ bị thay thế.')) return;
+  try{
+    var r=await rpc('capNhatRanh',TOKEN,{maVung:maVung,geojson:RANH_CR.str});
+    INIT=await rpc('getInitData',TOKEN); VUNG=INIT.vung||[]; LO=INIT.lo||[];
+    RANH_CR=null;
+    toast('Đã lưu ranh cho vùng '+r.maVung+' (lô chính '+r.maLo+'), diện tích đối chiếu phía máy chủ: '+fmt(r.dienTichHa,2)+' ha.');
+    loadHeThong();
   }catch(e){ toast(e.message); }
 }
 
