@@ -371,7 +371,7 @@ footer{
         <li><strong>Đơn giá cho tổng hợp chi phí (chỉ Quản trị viên sửa):</strong> hai ô đơn giá dầu diesel (đ/lít) và đơn giá giờ máy (đ/giờ) dùng cho báo cáo Chi phí theo vùng. Giá dầu hiện tại là giá tạm theo Petrolimex DO 0,05S-II vùng 2 (kỳ điều hành 15h 22/10/2026) — Quản trị viên tự cập nhật khi giá thay đổi; đơn giá giờ máy để trống cho tới khi Quý đơn vị cấp.</li>
         <li><strong>Thêm vùng liên kết mới (chỉ Quản trị viên):</strong> khi Quý đơn vị mở thêm vùng trồng mới, Quản trị viên điền biểu mẫu "Thêm vùng liên kết mới" (tên vùng, xã, Cost Center SAP nếu có, diện tích tổng, cây trồng và diện tích của lô đầu tiên) — vùng mới sẽ xuất hiện ngay ở biểu mẫu nhập liệu, bộ lọc, Dashboard và danh sách bản đồ với trạng thái "Chờ file ranh vùng" cho tới khi có ranh giới đất được nạp. Biểu mẫu có thêm ô chọn <strong>file ranh của vùng</strong> (không bắt buộc): nếu đã có file ranh, chọn kèm theo để vùng mới có ranh ngay từ đầu.</li>
         <li><strong>Cập nhật ranh vùng từ file (chỉ Quản trị viên):</strong> để nạp mới hoặc thay ranh cho một vùng đã có, Quản trị viên chọn vùng cần cập nhật, chọn file ranh dạng <strong>KMZ, KML hoặc GeoJSON</strong> — hệ thống đọc file, tự rút gọn đường biên nếu file quá chi tiết, hiển thị <strong>diện tích tính được và hình ranh xem trước trên bản đồ nhỏ</strong>; kiểm tra đúng vùng đất rồi bấm <strong>"Lưu ranh vào hệ thống"</strong> mới ghi thật. Ranh được ghi vào lô chính của vùng, trạng thái ranh và nhật ký hệ thống được cập nhật tự động. Lưu ý: file KML/KMZ nên chỉ chứa đường bao của vùng đất (Polygon); các điểm đánh dấu (Placemark dạng điểm) hoặc đường vẽ sẽ bị bỏ qua.</li>
-        <li><strong>Nhật ký hệ thống:</strong> ghi lại các hoạt động đăng nhập và thao tác trên hệ thống để tiện tra cứu, đối soát. Riêng <strong>Quản trị viên</strong> có thêm nút <strong>"Xoá toàn bộ nhật ký"</strong> để dọn nhật ký khi cần (hệ thống sẽ hỏi xác nhận trước khi xoá; thao tác xoá không thể hoàn tác).</li>
+        <li><strong>Nhật ký hệ thống:</strong> ghi lại các hoạt động đăng nhập và thao tác trên hệ thống để tiện tra cứu, đối soát. Nhật ký <strong>chỉ ghi thêm, không ai xoá được trong app (kể cả Quản trị viên)</strong> — đây là vết truy vết phục vụ đối soát.</li>
       </ul>
     </section>
 
@@ -389,7 +389,7 @@ footer{
             <tr><th>Vai trò</th><th>Xem dữ liệu</th><th>Nhập liệu</th><th>Phạm vi</th></tr>
           </thead>
           <tbody>
-            <tr><td>Quản trị viên (Admin)</td><td>Có</td><td>Có</td><td>Toàn công ty; quản lý cả nhật ký hệ thống</td></tr>
+            <tr><td>Quản trị viên (Admin)</td><td>Có</td><td>Có</td><td>Toàn công ty; xem nhật ký hệ thống (không xoá được)</td></tr>
             <tr><td>Lãnh đạo (CEO)</td><td>Có</td><td>Không</td><td>Toàn công ty; không xem được mục Phân quyền &amp; Hệ thống</td></tr>
             <tr><td>Quản lý (QuanLy)</td><td>Có</td><td>Không — chỉ xem</td><td>Toàn công ty; xem được cả mục Phân quyền &amp; Hệ thống</td></tr>
             <tr><td>Nhân viên nhập liệu (NVNhapLieu)</td><td>Có</td><td>Có</td><td>Chỉ các vùng được phân công</td></tr>
