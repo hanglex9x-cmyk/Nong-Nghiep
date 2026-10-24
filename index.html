@@ -540,6 +540,7 @@ async function loadHeThong(){
     var nutXoaNhatKy='';
     var khoiAdmin='';
     if(USER&&USER.role==='Admin'){
+      nutXoaNhatKy='<button class="btn" onclick="xoaToanBoNhatKy()">🗑️ Xoá nhật ký</button>';
       var gd='',gmv=''; (d.cauHinh||[]).forEach(function(c){ if(c.Khoa==='GiaDauLit') gd=c.GiaTri; if(c.Khoa==='GiaGioMay') gmv=c.GiaTri; });
       khoiAdmin='<h2 class="sec-title" style="margin-top:26px">Đơn giá cho tổng hợp chi phí (chỉ Admin sửa)</h2>'+
       '<div class="card"><div class="form-grid"><div class="field"><label>Đơn giá dầu diesel (đ/lít)</label><input id="dg_dau" type="number" step="1" value="'+esc(gd)+'"></div><div class="field"><label>Đơn giá giờ máy (đ/giờ) — để trống nếu chưa có</label><input id="dg_gio" type="number" step="1" value="'+esc(gmv)+'"></div></div>'+
@@ -570,7 +571,7 @@ async function loadHeThong(){
       khoiAdmin+
       '<div class="sec-head" style="margin-top:26px"><h2 class="sec-title">Nhật ký hệ thống gần nhất</h2>'+nutXoaNhatKy+'</div>'+
       '<div class="tbl-wrap"><table><thead><tr><th>Thời gian</th><th>Tài khoản</th><th>Hành động</th><th>Tab</th><th>Nội dung</th></tr></thead><tbody>'+nkrows+'</tbody></table></div>'+
-      '<p style="font-size:13px;color:var(--ink2);margin-top:8px">30 dòng mới nhất từ tab NhatKyHeThong — hệ thống tự ghi mọi lần đăng nhập và thao tác thêm/sửa/xoá dữ liệu để truy vết. Nhật ký chỉ ghi thêm, không xoá được trong app.</p>';
+      '<p style="font-size:13px;color:var(--ink2);margin-top:8px">30 dòng mới nhất từ tab NhatKyHeThong — hệ thống tự ghi mọi lần đăng nhập và thao tác thêm/sửa/xoá dữ liệu để truy vết. Trong giai đoạn chạy thử, Quản trị viên có thể xoá toàn bộ nhật ký để dọn dữ liệu test (nút “Xoá nhật ký” ở trên, chỉ Admin thấy); sau khi bàn giao chính thức, chức năng này sẽ bị khoá và không ai xoá được.</p>';
     if(window.RANH_MAP){ try{ RANH_MAP.remove(); }catch(e2){} RANH_MAP=null; RANH_LAYER=null; }
     RANH_CR=null;
     capNhatGoiYRanh_();
@@ -595,7 +596,15 @@ async function submitThemVung(){
     loadHeThong();
   }catch(e){ toast(e.message); }
 }
-/* v2.2: da bo chuc nang xoa nhat ky trong app - NhatKyHeThong la vet truy vet, chi ghi them, khong xoa duoc (ke ca Admin). */
+/* v2.2.1 (giai doan chay thu): khoi phuc nut xoa nhat ky cho Admin — SE GO LAI sau khi ban giao chinh thuc. */
+async function xoaToanBoNhatKy(){
+  if(!confirm('Xoá toàn bộ nhật ký hệ thống? Hành động này không hoàn tác được trong giai đoạn chạy thử.')) return;
+  try{
+    var r=await run('xoaNhatKy',TOKEN);
+    toast('Đã xoá '+(r.deleted||0)+' dòng nhật ký.');
+    loadHeThong();
+  }catch(e){ toast(e.message); }
+}
 /* ===== v2.1: Tai file ranh vung (KMZ/KML/GeoJSON) — chi Admin =====
    Xu ly hoan toan phia client: doc file -> geometry Polygon/MultiPolygon -> lam tron 6 so le ->
    rut gon Douglas-Peucker (dung sai tang dan 2-10m) sao cho chuoi JSON <= 45.000 ky tu (gioi han server).
