@@ -96,6 +96,7 @@
       .btn.ghost{background:var(--surface);color:var(--brand);border:1.5px solid var(--brand)}
       .btn.ghost:hover{background:var(--brand-soft)}
       .btn.small{min-height:38px;padding:7px 13px;font-size:13.5px}.btn.mini{min-height:36px;padding:6px 14px;font-size:13.5px;border-radius:9px}
+      .row-act{display:inline-flex;gap:6px;align-items:center}
       .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
       .form-grid .full{grid-column:1/-1}
       @media (max-width:640px){.form-grid{grid-template-columns:1fr}}
@@ -215,6 +216,7 @@
         .bottomnav button{flex:1 1 0;min-width:0;background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;line-height:1.2;text-align:center;font-weight:600;color:var(--ink3);padding:5px 1px;cursor:pointer;border-radius:9px}
         .bottomnav button.on{color:var(--brand)}
         .topbar h1{font-size:18px}
+        body{touch-action:pan-x pan-y}#map{touch-action:none}input,select,textarea{font-size:16px}
       }
       .sec-title{font-size:17px;font-weight:800;margin:22px 0 10px}
       .sec-title:first-child{margin-top:0}
@@ -857,7 +859,7 @@ function bangDuLieu(tab,rows){
   var trs=rows.map(function(r,i){
     var cells=head.map(function(h){var v=ht[i][h];var st=(tab==='BonPhan'&&(h==='Loại phân'||h==='Số lượng'||h==='Đơn vị'))?' style="white-space:pre-line;vertical-align:top"':'';return '<td data-label="'+esc(h).replace(/"/g,'&quot;')+'"'+st+'>'+esc(typeof v==='number'?((laCotNamThang(h)||laCotMa(h))?soNguyenText(v):fmt(v,2)):v)+'</td>';}).join('');
     var act='';
-    if(quyenSuaXoa(r)){ var ma=TAB_PK[tab]?String(r[TAB_PK[tab]]||''):''; act='<td data-label="Thao tác" style="white-space:nowrap"><button class="btn ghost small" title="Sửa" onclick="'+SUA_FN[tab]+'('+r._r+')">✏️</button> <button class="btn ghost small" title="Xoá" onclick="xoaDongNhanh(\''+tab+'\','+r._r+',\''+esc(ma)+'\')">🗑️</button></td>'; }
+    if(quyenSuaXoa(r)){ var ma=TAB_PK[tab]?String(r[TAB_PK[tab]]||''):''; act='<td data-label="Thao tác" style="white-space:nowrap"><span class="row-act"><button class="btn ghost small" title="Sửa" onclick="'+SUA_FN[tab]+'('+r._r+')">✏️</button> <button class="btn ghost small" title="Xoá" onclick="xoaDongNhanh(\''+tab+'\','+r._r+',\''+esc(ma)+'\')">🗑️</button></span></td>'; }
     else if(coQuyen) act='<td data-label="Thao tác">—</td>';
     return '<tr>'+cells+act+'</tr>';
   }).join('');
@@ -1169,6 +1171,9 @@ function dinhViToi(){
   },{enableHighAccuracy:true,timeout:15000,maximumAge:30000});
 }
 document.getElementById('lgPass').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
+/* v2.2.9: khoa zoom trang tren mobile (<=1024px); PC khong doi */
+document.addEventListener('gesturestart',function(e){if(window.innerWidth<=1024)e.preventDefault();},{passive:false});
+document.addEventListener('touchmove',function(e){if(window.innerWidth<=1024&&e.touches&&e.touches.length>1)e.preventDefault();},{passive:false});
 </script>
 </body>
 </html>
