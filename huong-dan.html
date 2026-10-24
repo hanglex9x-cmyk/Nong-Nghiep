@@ -316,7 +316,7 @@ footer{
 
     <section class="card" id="bon-phan">
       <h2><span class="num">10</span>Bón phân</h2>
-      <p>Ghi nhận các đợt bón phân: ngày bón (hiển thị dạng dd/mm/yyyy), vùng hiển thị theo tên vùng, diện tích áp dụng. Từ v2.2.4, mỗi đợt bón nhập theo từng dòng tự do: mỗi dòng gồm <strong>Loại phân</strong> (gõ tự do, ví dụ NPK 16-16-8, Lân Văn Điển, Vôi), <strong>Số lượng</strong>, <strong>Đơn vị</strong> (kg/tấn/m³/lít) và <strong>Đơn giá</strong> (đ/đơn vị, bắt buộc) — hệ thống tự tính thành tiền từng dòng và cộng thành tổng phiếu, hiển thị ở cột <strong>Chi tiết phân</strong> và <strong>Thành tiền</strong>. Bấm "＋ Thêm dòng" để thêm loại phân, bấm ✕ để bỏ dòng; phiếu cần ít nhất 1 dòng. Các phiếu đã nhập từ trước (dạng cột cố định theo từng loại phân) vẫn hiển thị đầy đủ lượng từng loại trong cột Chi tiết phân và giữ nguyên tổng tiền; mở phiếu cũ bằng nút Sửa vẫn sửa theo dạng cũ, không làm mất dữ liệu cũ.</p>
+      <p>Ghi nhận các đợt bón phân: ngày bón (hiển thị dạng dd/mm/yyyy), vùng hiển thị theo tên vùng, diện tích áp dụng. Từ v2.2.4, mỗi đợt bón nhập theo từng dòng tự do: mỗi dòng gồm <strong>Loại phân</strong> (gõ tự do, ví dụ NPK 16-16-8, Lân Văn Điển, Vôi; từ v2.2.5 ô này có gợi ý sẵn NPK, NPK 16-16-8, DAP, KCL, UREA, Vôi, Hữu cơ, Phân lỏng — gõ loại ngoài danh sách vẫn lưu bình thường), <strong>Số lượng</strong>, <strong>Đơn vị</strong> (kg/tấn/m³/lít) và <strong>Đơn giá</strong> (đ/đơn vị, bắt buộc) — hệ thống tự tính thành tiền từng dòng và cộng thành tổng phiếu, hiển thị ở 3 cột <strong>Loại phân | Số lượng | Đơn vị</strong> và cột <strong>Thành tiền</strong>. Bấm "＋ Thêm dòng" để thêm loại phân, bấm ✕ để bỏ dòng; phiếu cần ít nhất 1 dòng. Các phiếu đã nhập từ trước (dạng cột cố định theo từng loại phân) vẫn hiển thị đầy đủ lượng từng loại trong 3 cột Loại phân | Số lượng | Đơn vị và giữ nguyên tổng tiền; mở phiếu cũ bằng nút ✏️ vẫn sửa theo dạng cũ, không làm mất dữ liệu cũ.</p>
     </section>
 
     <section class="card" id="san-luong">
@@ -333,10 +333,10 @@ footer{
 
     <section class="card" id="sua-xoa">
       <h2><span class="num">13</span>Sửa &amp; Xóa bản ghi</h2>
-      <p>Ở cả 6 mục dữ liệu (Cân xe, Giờ máy, Dầu diesel, Bón phân, Sản lượng, Chi phí khác), mỗi dòng có thêm cột <strong>Tác vụ</strong> với nút <strong>Sửa</strong> và <strong>Xóa</strong>:</p>
+      <p>Ở cả 6 mục dữ liệu (Cân xe, Giờ máy, Dầu diesel, Bón phân, Sản lượng, Chi phí khác), mỗi dòng có thêm cột <strong>Thao tác</strong> với 2 nút chỉ hiện icon ✏️ (Sửa) và 🗑️ (Xóa) — rê chuột vào nút sẽ hiện chú thích:</p>
       <ul>
-        <li><strong>Sửa:</strong> bấm nút Sửa, biểu mẫu ở đầu trang sẽ nạp sẵn dữ liệu cũ của dòng đó — chỉnh lại các ô cần sửa rồi bấm nút "Lưu thay đổi" (hoặc "Hủy sửa" để bỏ qua). Dữ liệu được ghi đè đúng vào dòng cũ, không tạo dòng mới.</li>
-        <li><strong>Xóa:</strong> bấm nút Xóa, hệ thống hỏi xác nhận rồi mới xóa hẳn dòng khỏi bảng.</li>
+        <li><strong>Sửa (✏️):</strong> bấm nút ✏️, biểu mẫu ở đầu trang sẽ nạp sẵn dữ liệu cũ của dòng đó — chỉnh lại các ô cần sửa rồi bấm nút "Lưu thay đổi" (hoặc "Hủy sửa" để bỏ qua). Dữ liệu được ghi đè đúng vào dòng cũ, không tạo dòng mới.</li>
+        <li><strong>Xóa (🗑️):</strong> bấm nút 🗑️, hệ thống hỏi xác nhận rồi mới xóa hẳn dòng khỏi bảng.</li>
         <li><strong>Quyền sửa/xóa:</strong> người nhập chỉ sửa/xóa được phiếu <strong>do chính mình nhập</strong> trong vùng phụ trách; Quản trị viên sửa/xóa được mọi phiếu; tài khoản chỉ xem (CEO, Quản lý) không có nút sửa/xóa. Mọi thao tác sửa/xóa đều được ghi vào Nhật ký hệ thống (ai thực hiện, lúc nào, phiếu nào, giá trị cũ → mới) để tiện đối soát.</li>
       </ul>
     </section>
