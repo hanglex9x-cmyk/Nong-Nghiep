@@ -242,7 +242,7 @@ footer{
       <h2><span class="num">3</span>Đăng nhập</h2>
       <p><strong>Mỗi lần mở trang</strong> (kể cả tải lại trang hoặc đóng rồi mở lại), hệ thống đều yêu cầu đăng nhập — đây là cơ chế bảo mật: phiên đăng nhập không được lưu lại trên máy, tránh người khác mở máy là vào được dữ liệu. Sau khi đăng nhập xong, Quý vị sử dụng bình thường cho tới khi đóng trang hoặc bấm Đăng xuất.</p>
       <h3>Tài khoản người dùng</h3>
-      <p>Mật khẩu của tất cả các tài khoản đều là <strong>1234</strong>.</p>
+      <p>Mật khẩu ban đầu của tất cả các tài khoản đều là <strong>1234</strong> — mỗi người nên đổi mật khẩu riêng ngay sau khi nhận bàn giao (nút "Đổi mật khẩu của tôi" ở khung thông tin tài khoản).</p>
       <div class="tbl-wrap">
         <table>
           <thead>
@@ -264,7 +264,7 @@ footer{
       </div>
       <div class="note">
         <span class="note-title">Lưu ý</span>
-        <p>Đây là các tài khoản chính thức, được tạo theo danh sách người dùng Quý đơn vị đã cung cấp. Mật khẩu ban đầu của tất cả các tài khoản là <strong>1234</strong>; khi cần đổi mật khẩu cho từng người, Quý vị vui lòng liên hệ đầu mối triển khai hệ thống để được hỗ trợ.</p>
+        <p>Đây là các tài khoản chính thức, được tạo theo danh sách người dùng Quý đơn vị đã cung cấp. Mật khẩu ban đầu của tất cả các tài khoản là <strong>1234</strong>. Mỗi người tự đổi mật khẩu riêng bằng nút <strong>"Đổi mật khẩu của tôi"</strong> ở khung thông tin tài khoản; người nào quên mật khẩu thì <strong>Quản trị viên đặt lại</strong> trong mục Phân quyền &amp; Hệ thống (không cần liên hệ đầu mối triển khai).</p>
       </div>
     </section>
 
@@ -372,6 +372,7 @@ footer{
         <li><strong>Thêm vùng liên kết mới (chỉ Quản trị viên):</strong> khi Quý đơn vị mở thêm vùng trồng mới, Quản trị viên điền biểu mẫu "Thêm vùng liên kết mới" (tên vùng, xã, Cost Center SAP nếu có, diện tích tổng, cây trồng và diện tích của lô đầu tiên) — vùng mới sẽ xuất hiện ngay ở biểu mẫu nhập liệu, bộ lọc, Dashboard và danh sách bản đồ với trạng thái "Chờ file ranh vùng" cho tới khi có ranh giới đất được nạp. Biểu mẫu có thêm ô chọn <strong>file ranh của vùng</strong> (không bắt buộc): nếu đã có file ranh, chọn kèm theo để vùng mới có ranh ngay từ đầu.</li>
         <li><strong>Cập nhật ranh vùng từ file (chỉ Quản trị viên):</strong> để nạp mới hoặc thay ranh cho một vùng đã có, Quản trị viên chọn vùng cần cập nhật, chọn file ranh dạng <strong>KMZ, KML hoặc GeoJSON</strong> — hệ thống đọc file, tự rút gọn đường biên nếu file quá chi tiết, hiển thị <strong>diện tích tính được và hình ranh xem trước trên bản đồ nhỏ</strong>; kiểm tra đúng vùng đất rồi bấm <strong>"Lưu ranh vào hệ thống"</strong> mới ghi thật. Ranh được ghi vào lô chính của vùng, trạng thái ranh và nhật ký hệ thống được cập nhật tự động. Lưu ý: file KML/KMZ nên chỉ chứa đường bao của vùng đất (Polygon); các điểm đánh dấu (Placemark dạng điểm) hoặc đường vẽ sẽ bị bỏ qua.</li>
         <li><strong>Nhật ký hệ thống:</strong> ghi lại các hoạt động đăng nhập và thao tác trên hệ thống để tiện tra cứu, đối soát. Trong <strong>giai đoạn chạy thử</strong>, Quản trị viên có thể <strong>xoá nhật ký</strong> để dọn dữ liệu test; sau khi bàn giao chính thức, chức năng này sẽ bị khoá và không ai xoá được. Nhật ký là vết truy vết phục vụ đối soát.</li>
+        <li><strong>Mật khẩu:</strong> mỗi người dùng tự đổi mật khẩu của mình bằng nút <strong>"Đổi mật khẩu của tôi"</strong> ở khung thông tin tài khoản (nhập mật khẩu cũ + mật khẩu mới 2 lần, mật khẩu mới tối thiểu 6 ký tự). Khi ai quên mật khẩu, Quản trị viên đặt lại mật khẩu mới cho tài khoản đó trong khối <strong>"Đặt lại mật khẩu cho tài khoản"</strong> (chỉ Admin, không cần biết mật khẩu cũ; tài khoản đang bị khoá vẫn giữ trạng thái khoá sau khi đặt lại). Nhật ký hệ thống chỉ ghi sự kiện đổi/đặt lại mật khẩu, không ghi mật khẩu.</li>
       </ul>
     </section>
 
