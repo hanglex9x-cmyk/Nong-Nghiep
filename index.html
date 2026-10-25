@@ -406,12 +406,7 @@ async function boot(){
   document.getElementById('loginBox').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
   document.getElementById('bottomNav').classList.remove('hidden');
-  document.getElementById('uinfo').innerHTML=esc(USER.ten||USER.u||'')+'<br>Vai trò: '+esc(USER.role||'')+(USER.vung?'<br>Vùng phụ trách: '+esc(USER.vung):'')+
-  '<div style="margin-top:8px"><button class="btn" onclick="toggleDoiMK_()">🔑 Đổi mật khẩu của tôi</button>'+
-  '<div id="mkForm" class="hidden" style="margin-top:8px"><div class="field"><label>Mật khẩu cũ *</label><input id="mk_cu" type="password" autocomplete="current-password"></div>'+
-  '<div class="field"><label>Mật khẩu mới * (từ 6 ký tự)</label><input id="mk_moi" type="password" autocomplete="new-password"></div>'+
-  '<div class="field"><label>Nhập lại mật khẩu mới *</label><input id="mk_moi2" type="password" autocomplete="new-password"></div>'+
-  '<button class="btn" style="margin-top:8px" onclick="submitDoiMK_()">Lưu mật khẩu mới</button></div></div>';
+  document.getElementById('uinfo').innerHTML=esc(USER.ten||USER.u||'')+'<br>Vai trò: '+esc(USER.role||'')+(USER.vung?'<br>Vùng phụ trách: '+esc(USER.vung):'');
   document.querySelectorAll('.nav-sys').forEach(function(b){ b.classList.toggle('hidden', !canSys()); });
   loadDashboard();
 }
@@ -594,7 +589,13 @@ async function loadHeThong(){
       khoiAdmin+
       '<div class="sec-head" style="margin-top:26px"><h2 class="sec-title">Nhật ký hệ thống gần nhất</h2>'+nutXoaNhatKy+'</div>'+
       '<div class="tbl-wrap"><table><thead><tr><th>Thời gian</th><th>Tài khoản</th><th>Hành động</th><th>Tab</th><th>Nội dung</th></tr></thead><tbody>'+nkrows+'</tbody></table></div>'+
-      '<p style="font-size:13px;color:var(--ink2);margin-top:8px">30 dòng mới nhất từ tab NhatKyHeThong — hệ thống tự ghi mọi lần đăng nhập và thao tác thêm/sửa/xoá dữ liệu để truy vết. Trong giai đoạn chạy thử, Quản trị viên có thể xoá toàn bộ nhật ký để dọn dữ liệu test (nút “Xoá nhật ký” ở trên, chỉ Admin thấy); sau khi bàn giao chính thức, chức năng này sẽ bị khoá và không ai xoá được.</p>';
+      '<p style="font-size:13px;color:var(--ink2);margin-top:8px">30 dòng mới nhất từ tab NhatKyHeThong — hệ thống tự ghi mọi lần đăng nhập và thao tác thêm/sửa/xoá dữ liệu để truy vết. Trong giai đoạn chạy thử, Quản trị viên có thể xoá toàn bộ nhật ký để dọn dữ liệu test (nút “Xoá nhật ký” ở trên, chỉ Admin thấy); sau khi bàn giao chính thức, chức năng này sẽ bị khoá và không ai xoá được.</p>'+
+      '<h2 class="sec-title" style="margin-top:26px">Đổi mật khẩu của tôi</h2>'+
+      '<div class="card"><p class="sub">Đổi mật khẩu đăng nhập của chính bạn. Không cần nhờ Admin.</p><button class="btn" onclick="toggleDoiMK_()">🔑 Đổi mật khẩu của tôi</button>'+
+      '<div id="mkForm" class="hidden" style="margin-top:8px"><div class="field"><label>Mật khẩu cũ *</label><input id="mk_cu" type="password" autocomplete="current-password"></div>'+
+      '<div class="field"><label>Mật khẩu mới * (từ 6 ký tự)</label><input id="mk_moi" type="password" autocomplete="new-password"></div>'+
+      '<div class="field"><label>Nhập lại mật khẩu mới *</label><input id="mk_moi2" type="password" autocomplete="new-password"></div>'+
+      '<button class="btn" style="margin-top:8px" onclick="submitDoiMK_()">Lưu mật khẩu mới</button></div></div>';
     if(window.RANH_MAP){ try{ RANH_MAP.remove(); }catch(e2){} RANH_MAP=null; RANH_LAYER=null; }
     RANH_CR=null;
     capNhatGoiYRanh_();
