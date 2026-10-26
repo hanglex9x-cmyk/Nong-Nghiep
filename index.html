@@ -1012,6 +1012,7 @@ function xuatChiPhiVung(){
 /* ===== v1.9: Ke hoach vu & KPI ===== */
 var KH_DATA=null, EDIT_VU=null;
 function laAdmin(){ return USER&&USER.role==='Admin'; }
+function duocNhapKpi(){ return laAdmin()||(USER&&USER.role==='NVNhapLieu'); }
 function loOptionsChoVu(maVung){ return '<option value="">— Cả vùng (không gắn lô) —</option>'+LO.filter(function(l){return !maVung||l.MaVung===maVung;}).map(function(l){return '<option value="'+esc(l.MaLo)+'">'+esc(l.MaLo)+' — '+esc(l.CayTrong)+' ('+fmt(l.DienTich_ha,1)+' ha)</option>';}).join(''); }
 function capNhatLoKeHoach(){ var v=document.getElementById('kh_vung'); var l=document.getElementById('kh_lo'); if(v&&l) l.innerHTML=loOptionsChoVu(v.value); }
 async function loadKeHoach(){
@@ -1019,7 +1020,7 @@ async function loadKeHoach(){
   try{
     var d=await run('getKeHoach',TOKEN); KH_DATA=d;
     var formHtml='';
-    if(laAdmin()){
+    if(duocNhapKpi()){
       formHtml='<div class="card" style="margin-bottom:16px"><h3 id="khFormTitle">Tạo vụ / kế hoạch KPI mới</h3><div class="form-grid">'+
       '<div class="field"><label>Vùng</label><select id="kh_vung" onchange="capNhatLoKeHoach()">'+vungOptions2()+'</select></div>'+
       '<div class="field"><label>Lô (không bắt buộc)</label><select id="kh_lo"></select></div>'+
@@ -1030,7 +1031,7 @@ async function loadKeHoach(){
       '<div class="field"><label>Ghi chú</label><input id="kh_ghichu"></div></div>'+
       '<div style="display:flex;gap:8px;margin-top:14px"><button class="btn" onclick="submitKeHoachVu()">Lưu vụ</button><button class="btn ghost hidden" id="khHuySua" onclick="huySuaVu()">Huỷ sửa</button></div></div>';
     }
-    if(!d.vu.length){ el.innerHTML=formHtml+'<div class="card"><h3>Chưa có vụ / kế hoạch KPI nào</h3><p class="sub">'+(laAdmin()?'Dùng form phía trên để tạo vụ đầu tiên (VD: Trang Trại — vụ ngô 01/01/2026–30/06/2026, chỉ tiêu 500 tấn DM).':'Quản trị viên chưa tạo vụ nào. Tiến độ sẽ tự tính từ sản lượng thật trong tab SanLuong.')+'</p></div>'; capNhatLoKeHoach(); return; }
+    if(!d.vu.length){ el.innerHTML=formHtml+'<div class="card"><h3>Chưa có vụ / kế hoạch KPI nào</h3><p class="sub">'+(duocNhapKpi()?'Dùng form phía trên để tạo vụ đầu tiên (VD: Trang Trại — vụ ngô 01/01/2026–30/06/2026, chỉ tiêu 500 tấn DM).':'Quản trị viên chưa tạo vụ nào. Tiến độ sẽ tự tính từ sản lượng thật trong tab SanLuong.')+'</p></div>'; capNhatLoKeHoach(); return; }
     el.innerHTML=formHtml+d.vu.map(function(v){
       var pct=Math.max(0,Math.min(100,Number(v.phanTram)||0));
       var viecHtml=(v.viec||[]).map(function(w){
@@ -1038,8 +1039,8 @@ async function loadKeHoach(){
         var xoaV=laAdmin()?'<button class="btn ghost small" title="Xoá việc" onclick="xoaViecUI(\''+w.MaViec+'\')">🗑️</button>':'';
         return '<div style="display:flex;gap:9px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed var(--line)"><label style="padding-top:2px">'+chk+'</label><div style="flex:1"><b>Tuần '+esc(soNguyenText(w.Tuan))+'</b> · <span'+(w.HoanThanh?' style="text-decoration:line-through;color:var(--ink2)"':'')+'>'+esc(w.NoiDung)+'</span></div>'+xoaV+'</div>';
       }).join('');
-      var formViec=laAdmin()?'<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><input id="vw_tuan_'+v.MaKH+'" type="number" min="1" placeholder="Tuần" style="width:90px"><input id="vw_nd_'+v.MaKH+'" placeholder="Nội dung công việc tuần này…" style="flex:1;min-width:200px"><button class="btn small" onclick="submitViecUI(\''+v.MaKH+'\')">+ Thêm việc</button></div>':'';
-      var nutVu=laAdmin()?'<button class="btn ghost small" title="Sửa vụ" onclick="moSuaVu(\''+v.MaKH+'\')">✏️</button> <button class="btn ghost small" title="Xoá vụ" onclick="xoaVuUI(\''+v.MaKH+'\')">🗑️</button>':'';
+      var formViec=duocNhapKpi()?'<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><input id="vw_tuan_'+v.MaKH+'" type="number" min="1" placeholder="Tuần" style="width:90px"><input id="vw_nd_'+v.MaKH+'" placeholder="Nội dung công việc tuần này…" style="flex:1;min-width:200px"><button class="btn small" onclick="submitViecUI(\''+v.MaKH+'\')">+ Thêm việc</button></div>':'';
+      var nutVu=(duocNhapKpi()?'<button class="btn ghost small" title="Sửa vụ" onclick="moSuaVu(\''+v.MaKH+'\')">✏️</button> ':'')+(laAdmin()?'<button class="btn ghost small" title="Xoá vụ" onclick="xoaVuUI(\''+v.MaKH+'\')">🗑️</button>':'');
       return '<div class="card" style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap"><h3 style="font-size:18px">'+esc(v.TenVu)+(v.dangChay?' <span class="badge b-green">Đang chạy</span>':'')+'</h3><div>'+nutVu+'</div></div>'+
       '<p class="sub">'+esc(tenVungTheoMa(v.MaVung))+(v.MaLo?' · Lô '+esc(v.MaLo):' · Cả vùng')+' · '+esc(v.CayTrong)+' · '+dmy(v.TuNgay)+' → '+dmy(v.DenNgay)+(v.GhiChu?' · '+esc(v.GhiChu):'')+'</p>'+
       '<div class="progress-top"><span>Đã thu <b>'+fmt(v.thucTeDM_tan,2)+' tấn DM</b> / chỉ tiêu <b>'+fmt(v.ChiTieuDM_tan)+' tấn DM</b> <span style="color:var(--ink2)">(tương đương '+fmt(v.thucTe_tan,2)+' tấn tươi)</span></span><b>'+fmt(v.phanTram,1)+'%</b></div><div class="bar"><i style="width:'+pct+'%"></i></div>'+
