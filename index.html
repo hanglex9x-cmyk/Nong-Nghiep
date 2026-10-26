@@ -407,7 +407,7 @@ async function boot(){
   document.getElementById('loginBox').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
   document.getElementById('bottomNav').classList.remove('hidden');
-  document.getElementById('uinfo').innerHTML=esc(USER.ten||USER.u||'')+'<br>Vai trò: '+esc(USER.role||'')+(USER.vung?'<br>Vùng phụ trách: '+esc(USER.vung):'');
+  document.getElementById('uinfo').innerHTML=esc(USER.ten||USER.u||'')+'<br>Vai trò: '+esc(USER.role||'');
   document.querySelectorAll('.nav-sys').forEach(function(b){ b.classList.toggle('hidden', !canSys()); });
   loadDashboard();
 }
