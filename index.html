@@ -522,12 +522,12 @@ async function loadKpiVuBox(){
   }catch(e){ box.innerHTML=''; }
 }
 
-/* Phan quyen & He thong — chi Admin / QuanLy (CEO khong duoc xem; server getHeThong cung chan theo vai tro) */
-function canSys(){ return !!(USER && ['Admin','QuanLy'].indexOf(USER.role)>=0); }
+/* Phan quyen & He thong — chi Admin (CEO va QuanLy khong duoc xem; server getHeThong cung chan theo vai tro) */
+function canSys(){ return !!(USER && USER.role==='Admin'); }
 var ROLE_CARDS=[
   {ten:'Admin hệ thống',who:'Tài khoản admin · quản trị tài khoản & cấu hình',perms:[['Dashboard & báo cáo','Toàn quyền xem'],['Nhập liệu (Cân xe · Giờ máy · Dầu · Bón phân)','Toàn công ty'],['Xem theo vùng','Tất cả 12 vùng'],['Màn hình Hệ thống','Toàn quyền']]},
   {ten:'CEO / Ban lãnh đạo',who:'Xem toàn cảnh · không nhập liệu',perms:[['Dashboard & báo cáo','Chỉ xem · toàn công ty'],['Nhập liệu (Cân xe · Giờ máy · Dầu · Bón phân)','—'],['Xem theo vùng','Từng vùng / toàn công ty'],['Màn hình Hệ thống','—']]},
-  {ten:'Quản lý',who:'Quản lý sản xuất · CHỈ XEM toàn công ty (khách chốt 23/10/2026)',perms:[['Dashboard & báo cáo','Chỉ xem · toàn công ty'],['Nhập liệu (Cân xe · Giờ máy · Dầu · Bón phân · Chi phí khác)','—'],['Sửa / Xóa bản ghi','—'],['Xem theo vùng','Tất cả 12 vùng'],['Màn hình Hệ thống','Xem']]},
+  {ten:'Quản lý',who:'Quản lý sản xuất · CHỈ XEM toàn công ty (khách chốt 23/10/2026)',perms:[['Dashboard & báo cáo','Chỉ xem · toàn công ty'],['Nhập liệu (Cân xe · Giờ máy · Dầu · Bón phân · Chi phí khác)','—'],['Sửa / Xóa bản ghi','—'],['Xem theo vùng','Tất cả 12 vùng'],['Màn hình Hệ thống','—']]},
   {ten:'Nhân viên nhập liệu',who:'2 tài khoản nông nghiệp · phụ trách cả 12 vùng',perms:[['Dashboard & báo cáo','Xem · cả 12 vùng'],['Nhập liệu (Cân xe · Giờ máy · Dầu · Bón phân)','Cả 12 vùng'],['Xem theo vùng','Tất cả 12 vùng'],['Màn hình Hệ thống','—']]},
   {ten:'Feed Center',who:'Tiếp nhận & cấp phát tại Feed Center',perms:[['Dashboard & báo cáo','Xem tổng quan'],['Nhập liệu (Cân xe · Giờ máy · Dầu · Bón phân)','Toàn công ty'],['Xem theo vùng','Tất cả 12 vùng'],['Màn hình Hệ thống','—']]}
 ];
