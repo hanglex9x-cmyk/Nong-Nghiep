@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <link rel="icon" type="image/png" href="https://hanglex9x-cmyk.github.io/Nong-Nghiep/logo-th.png">
 <title>Hệ thống quản lý vùng trồng cỏ Mombasa &amp; Ngô</title>
@@ -327,6 +327,55 @@ input[type=password]:focus,input[type=time]:focus{outline:2px solid color-mix(in
       @media (max-width:700px){
         /* the xep chong: chi cho phep ngat chu (min-width td da khoa tu v2.3.4). Khong dat overflow-x:clip cho .tbl-wrap o day vi se pha cuon ngang cua bang o tablet 701-1024px. */
         .tbl-wrap td{overflow-wrap:anywhere;}
+      }
+      /* v2.3.7: FIX DUT DIEM KEO NGANG theo spec Hang gui — CHI mobile (<=768px), PC giu nguyen. (Ghi chu: 2 dong padding 12px cua khoi Meta cu da go tu v2.3.6, grep = 0, khong con trong file.) */
+      @media (max-width: 768px) {
+        /* Khóa khung ngoài - chống kéo ngang toàn trang */
+        html, body {
+          width: 100% !important;
+          overflow-x: clip !important;
+          position: relative;
+        }
+        body {
+          overscroll-behavior-x: none;
+        }
+
+        /* Khóa thủ phạm 1: Cái biểu đồ sản lượng - Nó đang có width cố định > 390px */
+        [id*="chart"], [class*="chart"], canvas {
+          max-width: 100% !important;
+          width: 100% !important;
+          box-sizing: border-box !important;
+        }
+        .chart-wrapper, .chart-container, .card:has(canvas) {
+          overflow: hidden !important;
+          width: 100% !important;
+        }
+
+        /* Khóa thủ phạm 2: Cái lưới KPI QUA CÂN XE... */
+        div[style*="grid"], div[style*="Grid"], .grid {
+          max-width: 100% !important;
+          min-width: 0 !important;
+        }
+        /* Tất cả phần tử con trong lưới phải co lại được */
+        div[style*="grid"] > *, .grid > * {
+          min-width: 0 !important;
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+        }
+
+        /* Khóa thủ phạm 3: Thanh nav dưới Tổng Vùng Cân... */
+        nav, [class*="bottom"], [class*="nav"], [class*="tab-bar"] {
+          max-width: 100vw !important;
+          box-sizing: border-box !important;
+        }
+        /* Cho phép cuộn DỌC trong nav nếu dài, nhưng không cho tràn ngang cả trang */
+        [class*="bottom"] > div, [class*="nav"] > div {
+          overflow-x: auto !important;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        /* THEM (Muse): khoa cu chi vuot ngang o tang cam ung — body tu v2.2.9 dang la touch-action:pan-x pan-y (cho phep keo ngang). Chi mobile <=768px; #map giu touch-action:none rieng; bang o 701-768px cuon trong khung cua no nen khong anh huong. */
+        body{ touch-action: pan-y !important; }
       }
 </style>
 </head>
