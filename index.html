@@ -270,6 +270,41 @@ input[type=password]:focus,input[type=time]:focus{outline:2px solid color-mix(in
 .login-foot{margin:16px 0 0;font-size:12.5px;color:var(--ink3);border-top:1px solid var(--line);padding-top:12px}
 @media (max-width:700px){.login-card{grid-template-columns:1fr}.login-brand{padding:22px}.login-stats{margin-top:12px}.login-form{padding:22px}}
 .leaflet-tooltip.lo-label{background:rgba(255,255,255,.88);border:1px solid var(--line);box-shadow:0 2px 8px rgba(20,40,20,.18);font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;color:#1c2b1c}
+      /* v2.3.5: FIX MOBILE KEO NGANG theo code Hang dua — CHI mobile (<=768px), PC giu nguyen */
+      @media (max-width: 768px) {
+        html, body {
+          width: 100% !important;
+          max-width: 100vw !important;
+          overflow-x: hidden !important;
+          overscroll-behavior-x: none !important;
+        }
+        #app, .container, .dashboard, .content {
+          width: 100% !important;
+          max-width: 100% !important;
+          overflow-x: hidden !important;
+          padding-left: 12px !important;
+          padding-right: 12px !important;
+          box-sizing: border-box !important;
+        }
+        .grid-2, .kpi-grid, .stats-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+          gap: 8px !important;
+          width: 100% !important;
+        }
+        .card, .kpi-card {
+          min-width: 0 !important;
+          width: 100% !important;
+        }
+        canvas {
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+        .bottom-nav {
+          width: 100% !important;
+          max-width: 100vw !important;
+          overflow-x: auto !important;
+        }
+      }
 </style>
 </head>
 <body>
