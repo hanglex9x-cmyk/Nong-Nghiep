@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" style="overflow-x:hidden;touch-action:pan-y">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<!-- v2.3.11: khoa keo ngang SOM (inline) — dat overflowX/touchAction len the <html> (the cuon that su that trong Safari) ngay khi parse <head>, truoc ca khi stylesheet load; bo sung cho rule body{touch-action:pan-y} trong stylesheet (v2.3.7) von khong cham toi the <html>. Khong doi giao dien (chi gioi han cu chi, khong doi layout/mau/kich thuoc). -->
+<script>try{document.documentElement.style.overflowX='hidden';document.documentElement.style.touchAction='pan-y';}catch(e){}</script>
 <meta name="color-scheme" content="light dark">
 <link rel="icon" type="image/png" href="https://hanglex9x-cmyk.github.io/Nong-Nghiep/logo-th.png">
 <title>Hệ thống quản lý vùng trồng cỏ Mombasa &amp; Ngô</title>
@@ -370,9 +372,9 @@ input[type=password]:focus,input[type=time]:focus{outline:2px solid color-mix(in
       }
 </style>
 </head>
-<body>
+<body style="overflow-x:hidden;touch-action:pan-y">
 
-<div id="loginBox" class="login-wrap">
+<div id="loginBox" class="login-wrap" style="overflow-x:hidden;touch-action:pan-y">
   <div class="login-card">
     <div class="login-brand">
       <div class="brand-lockup"><span class="logo-chip"><img src="https://hanglex9x-cmyk.github.io/Nong-Nghiep/logo-th.png" alt="Logo TH"></span><div class="brand-text"><b>Hệ thống quản lý vùng trồng cỏ Mombasa &amp; Ngô</b><span class="brand-sub">Trang trại bò sữa Yên Mỹ - Công Chính, Thanh Hóa</span></div></div>
@@ -391,7 +393,7 @@ input[type=password]:focus,input[type=time]:focus{outline:2px solid color-mix(in
   </div>
 </div>
 
-<div id="app" class="app hidden">
+<div id="app" class="app hidden" style="overflow-x:hidden;touch-action:pan-y">
   <aside class="sidebar">
     <div class="farm-box"><div class="brand-lockup"><span class="logo-chip"><img src="https://hanglex9x-cmyk.github.io/Nong-Nghiep/logo-th.png" alt="Logo TH"></span><b>Hệ thống quản lý vùng trồng cỏ Mombasa &amp; Ngô</b></div><span>Trang trại bò sữa Yên Mỹ - Công Chính, Thanh Hóa · 507,7 ha đang canh tác · 12 vùng · 15 lô</span></div>
     <nav class="nav" id="sideNav">
