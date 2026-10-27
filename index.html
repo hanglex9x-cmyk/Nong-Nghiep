@@ -220,7 +220,7 @@
         .topbar h1{font-size:18px}
         body{touch-action:pan-x pan-y}#map{touch-action:none}input,select,textarea{font-size:16px}
         /* v2.3.4: chan tran ngang kieu Bao An — CHI mobile (<=1024px), khong dung PC */
-        html,body{overflow-x:hidden}
+        /* v2.3.8: da go dong chet html,body{overflow-x:hidden} — v2.3.6 dat overflow-x:clip !important cung breakpoint (sau hon, thang). Cac dong con lai GIU NGUYEN (chi chung cap min/max-width o 769-1024px). */
         .app,.main,.view,.card,.kpi,.grid,.cols-2,.cols-2b,.tbl-wrap,.chart-box,.filters,.topbar,.farm-box{min-width:0;max-width:100%}
         .topbar>*{min-width:0}
         img,svg,canvas,video{max-width:100%}
@@ -271,49 +271,38 @@ input[type=password]:focus,input[type=time]:focus{outline:2px solid color-mix(in
 @media (max-width:700px){.login-card{grid-template-columns:1fr}.login-brand{padding:22px}.login-stats{margin-top:12px}.login-form{padding:22px}}
 .leaflet-tooltip.lo-label{background:rgba(255,255,255,.88);border:1px solid var(--line);box-shadow:0 2px 8px rgba(20,40,20,.18);font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;color:#1c2b1c}
       /* v2.3.5: FIX MOBILE KEO NGANG theo code Hang dua — CHI mobile (<=768px), PC giu nguyen */
+      /* v2.3.8: da gon — go 2 khai bao chet trong html,body (width:100%!important va overflow-x:hidden!important: v2.3.7 dat y het/gia tri thang hon, cung breakpoint, sau hon); go selector chet .container/.dashboard/.content (khong co phan tu nao), .grid-2/.stats-grid, .kpi-card, va 2 rule chet canvas + .bottom-nav (app khong co canvas, nav that la .bottomnav — v2.3.7 da khoa canvas). Cac khai bao con lai GIU NGUYEN. */
       @media (max-width: 768px) {
         html, body {
-          width: 100% !important;
           max-width: 100vw !important;
-          overflow-x: hidden !important;
           overscroll-behavior-x: none !important;
         }
-        #app, .container, .dashboard, .content {
+        #app {
           width: 100% !important;
           max-width: 100% !important;
           overflow-x: hidden !important;
           box-sizing: border-box !important;
         }
-        .grid-2, .kpi-grid, .stats-grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        .kpi-grid {
           gap: 8px !important;
           width: 100% !important;
         }
-        .card, .kpi-card {
+        .card {
           min-width: 0 !important;
           width: 100% !important;
         }
-        canvas {
-          width: 100% !important;
-          max-width: 100% !important;
-        }
-        .bottom-nav {
-          width: 100% !important;
-          max-width: 100vw !important;
-          overflow-x: auto !important;
-        }
       }
       /* v2.3.6: diet goc tran ngang theo ket luan 2 agent chuyen mobile — CHI mobile (<=1024px), PC giu nguyen */
+      /* v2.3.8: da gon — go overflow-x:hidden (chet trong chinh rule nay, clip !important thang); go min/max-width cua .app,.main,.view (v2.3.4 dat y het, cung breakpoint); go .topbar>* (v2.3.4 dat y het); go max-width/left/right cua .bottomnav (max-width: v2.3.7 dat 100vw!important thang; left/right: rule goc da co); go rule .bottomnav button (ban sao y het rule goc). Cac khai bao con lai GIU NGUYEN. */
       @media (max-width:1024px){
-        html,body{overflow-x:hidden;overflow-x:clip !important;}
+        html,body{overflow-x:clip !important;}
         body{position:relative;}
-        .app,.main,.view{min-width:0;max-width:100%;overflow-x:clip;}
+        .app,.main,.view{overflow-x:clip;}
         .kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
         .cols-2,.cols-2b{grid-template-columns:minmax(0,1fr) !important;}
         .grid>*{min-width:0;}
         .chart-box{min-width:0;overflow:hidden;}
         .chart-box svg{width:100% !important;max-width:100% !important;min-width:0;display:block;}
-        .topbar>*{min-width:0;}
         .filters .field{min-width:0;}
         .filters select{max-width:100%;}
         .progress-top>*{min-width:0;}
@@ -321,8 +310,7 @@ input[type=password]:focus,input[type=time]:focus{outline:2px solid color-mix(in
         .alert-item>*{min-width:0;}
         .alert-item p{overflow-wrap:anywhere;}
         .legend span{min-width:0;}
-        .bottomnav{width:100% !important;max-width:100% !important;left:0;right:0;overflow:hidden;}
-        .bottomnav button{flex:1 1 0;min-width:0;}
+        .bottomnav{width:100% !important;overflow:hidden;}
       }
       @media (max-width:700px){
         /* the xep chong: chi cho phep ngat chu (min-width td da khoa tu v2.3.4). Khong dat overflow-x:clip cho .tbl-wrap o day vi se pha cuon ngang cua bang o tablet 701-1024px. */
@@ -558,6 +546,7 @@ function xuatLo(){var aoa=[['Ma lo','Ma vung','Cay trong','Dien tich (ha)','Gion
 function nutXuat(label,fn){return '<button class="btn ghost small" onclick="'+fn+'">⬇ Xuất Excel</button>';}
 
 /* Dashboard */
+var KPI_PROMISE=null; /* v2.3.8: promise getKeHoach chay song song voi getDashboard (xem loadDashboard/loadKpiVuBox) — tiet kiem 1 vong doi mang; khong doi DOM */
 function allowedVungList(){
   if(USER && USER.role==='NVNhapLieu' && USER.vung){ var codes=String(USER.vung).split(';').map(function(s){return s.trim();}).filter(Boolean); return VUNG.filter(function(v){return codes.indexOf(v.MaVung)>=0;}); }
   return VUNG;
@@ -577,6 +566,8 @@ function onNamChange(v){ CUR_NAM=v?Number(v):null; loadDashboard(); }
 async function loadDashboard(){
   var el=document.getElementById('pg-dashboard');
   el.innerHTML=vungFilterHtml()+'<p>Đang tải số liệu từ Database…</p>';
+  /* v2.3.8: chay getKeHoach SONG SONG voi getDashboard (truoc day loadKpiVuBox doi getDashboard xong moi goi — ton them 1 vong doi mang). KPI box van render sau, dung vi tri cu (#kpiVuBox), DOM cuoi giong het. */
+  if(!KPI_PROMISE){ KPI_PROMISE=run('getKeHoach',TOKEN); KPI_PROMISE.catch(function(){}); }
   try{
     var d=await run('getDashboard',TOKEN,CUR_VUNG,CUR_NAM);
     if(d.dsNam&&d.dsNam.length) CUR_DS_NAM=d.dsNam;
@@ -596,7 +587,8 @@ async function loadDashboard(){
     for(var gi=0;gi<=4;gi++){ var gy=SBase-(SBase-STop)*gi/4, gv=niceMax*gi/4; svg+='<line x1="'+SLeft+'" y1="'+gy+'" x2="'+(SW-SRight)+'" y2="'+gy+'" stroke="var(--line)" stroke-width="1"/><text x="'+(SLeft-8)+'" y="'+(gy+4)+'" text-anchor="end" font-size="11.5" fill="var(--ink3)">'+fmt(gv)+'</text>'; }
     months.forEach(function(m,mi){ var cx=SLeft+sStep*mi+sStep/2; if(m.tong>0){ var bh=(SBase-STop)*m.tong/niceMax; var bhNgo=bh*(Number(m.ngo)||0)/m.tong; var bhCo=bh-bhNgo; var bx=cx-sBw/2; svg+='<rect x="'+bx+'" y="'+(SBase-bhCo)+'" width="'+sBw+'" height="'+bhCo+'"'+(bhNgo>0?'':' rx="5"')+' fill="var(--green)"/>'; if(bhNgo>0) svg+='<rect x="'+bx+'" y="'+(SBase-bh)+'" width="'+sBw+'" height="'+bhNgo+'" rx="5" fill="#e8a13a"/>'; svg+='<text x="'+cx+'" y="'+(SBase-bh-7)+'" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--ink)">'+fmt(m.tong)+'</text>'; } svg+='<text x="'+cx+'" y="'+(SBase+20)+'" text-anchor="middle" font-size="12" fill="var(--ink2)">Tháng '+esc(soNguyenText(m.thang))+'</text>'; });
     svg+='<line x1="'+SLeft+'" y1="'+SBase+'" x2="'+(SW-SRight)+'" y2="'+SBase+'" stroke="var(--ink3)" stroke-width="1.2"/></svg>';
-    var chartHtml='<div class="chart-box">'+svg+'</div><div class="legend"><span><i class="sw" style="background:var(--green)"></i>Cỏ: <b>'+fmt(tongCo,2)+' tấn</b></span><span><i class="sw" style="background:#e8a13a"></i>Ngô: <b>'+fmt(tongNgo,2)+' tấn</b></span><span>Tổng: <b>'+fmt(tongCo+tongNgo,2)+' tấn</b></span></div>';
+    /* v2.3.8: bieu do ve luoi — .chart-box de trong luc dau, dien SVG khi luot toi (IntersectionObserver) hoac sau 1200ms (fallback) hoac ngay neu khong co IO. DOM cuoi giong het (SVG giong het, data-chart duoc go sau khi dien). */
+    var chartHtml='<div class="chart-box" data-chart="'+(++CHART_FILL_ID)+'"></div><div class="legend"><span><i class="sw" style="background:var(--green)"></i>Cỏ: <b>'+fmt(tongCo,2)+' tấn</b></span><span><i class="sw" style="background:#e8a13a"></i>Ngô: <b>'+fmt(tongNgo,2)+' tấn</b></span><span>Tổng: <b>'+fmt(tongCo+tongNgo,2)+' tấn</b></span></div>';
     var lotRows=(d.tienDoLo||[]).map(function(l){var pct=Math.max(0,Math.min(100,Number(l.kpi_PhanTram)||0)); return '<tr><td class="mono" data-label="Mã lô">'+esc(l.maLo)+'</td><td data-label="Vùng">'+esc(l.tenVung)+'</td><td data-label="Cây">'+esc(l.cayTrong)+'</td><td class="num" data-label="DT (ha)">'+fmt(l.dienTich_ha,2)+'</td><td class="num" data-label="Đã thu (tấn)">'+fmt(l.daThu_tan,2)+'</td><td class="num" data-label="Số đợt thu">'+fmt(l.soDot)+'</td><td data-label="Thu gần nhất">'+esc(l.thuGanNhat||'—')+'</td><td class="num" data-label="DM ước (tấn/ha)">'+fmt(l.dm_ha,3)+(l.dmTheoLo?'':' *')+'</td><td data-label="Ước đạt KPI năm" style="min-width:180px"><div class="bar" style="margin-bottom:5px"><i class="'+(pct>=80?'':(pct>=40?'amber':'red'))+'" style="width:'+pct+'%"></i></div><b>'+fmt(l.kpi_PhanTram,1)+'% KPI</b></td></tr>';}).join('');
     var progRows=(d.tienDoLo||[]).map(function(l){var pct=Math.max(0,Math.min(100,Number(l.kpi_PhanTram)||0)); var cls=pct>=80?'':(pct>=40?'amber':'red'); return '<div class="progress-row"><div class="progress-top"><span><b>'+esc(l.maLo)+'</b> · '+esc(l.cayTrong)+' · '+esc(l.tenVung)+' — đã thu '+fmt(l.daThu_tan,2)+' tấn · '+fmt(l.soDot)+' đợt · DM ước '+fmt(l.dm_ha,3)+' tấn/ha'+(l.dmTheoLo?'':' *')+'</span><b>'+fmt(l.kpi_PhanTram,1)+'%</b></div><div class="bar"><i class="'+cls+'" style="width:'+pct+'%"></i></div></div>';}).join('');
     var dauVal=(d.tongDau_lit===null||d.tongDau_lit===undefined)?'—':fmt(d.tongDau_lit)+' <small>lít</small>';
@@ -623,14 +615,39 @@ async function loadDashboard(){
     var sel=document.getElementById('fVung'); if(sel) sel.value=CUR_VUNG;
     var selN=document.getElementById('fNam'); if(selN) selN.value=d.nam;
     var fnote=document.getElementById('filterNote'); if(fnote) fnote.textContent='Đang xem số liệu năm '+d.nam+' · '+(d.tienDoLo||[]).length+' lô · '+(pf.loai==='CONGTY'?'toàn công ty':(pf.loai==='VUNG'?'1 vùng sản xuất':'các vùng được phân công'));
+    fillChartLazy(svg,CHART_FILL_ID);
     loadKpiVuBox();
   }catch(e){ el.innerHTML=vungFilterHtml()+'<div class="demo-note">'+esc(e.message)+'</div>'; }
+}
+/* v2.3.8: dien luoi bieu do Dashboard — chi chay khi .chart-box luot toi gan (IntersectionObserver, rootMargin 300px), fallback hen gio 1200ms de bieu do luon hien, neu khong co IO thi dien ngay. id chong doi cheo khi loadDashboard chay lai truoc khi timer cu kich hoat (chi dien dung ban SVG cua lan load moi nhat). */
+var CHART_FILL_ID=0, CHART_FILL_TIMER=null, CHART_IO=null;
+function fillChartLazy(svg,cid){
+  function fill(){
+    var b=document.querySelector('#pg-dashboard .chart-box[data-chart="'+cid+'"]');
+    if(!b) return;
+    b.innerHTML=svg; b.removeAttribute('data-chart');
+    if(CHART_IO){ try{CHART_IO.disconnect();}catch(e){} CHART_IO=null; }
+  }
+  if(CHART_FILL_TIMER) clearTimeout(CHART_FILL_TIMER);
+  CHART_FILL_TIMER=setTimeout(fill,1200);
+  if(!('IntersectionObserver' in window)){ fill(); return; }
+  setTimeout(function(){
+    var box=document.querySelector('#pg-dashboard .chart-box[data-chart="'+cid+'"]');
+    if(!box) return;
+    try{
+      if(CHART_IO){ try{CHART_IO.disconnect();}catch(e){} }
+      CHART_IO=new IntersectionObserver(function(es){ var hit=false; es.forEach(function(en){ if(en.isIntersecting) hit=true; }); if(hit) fill(); },{rootMargin:'300px'});
+      CHART_IO.observe(box);
+    }catch(e){ fill(); }
+  },0);
 }
 /* v1.9: Khoi KPI vu dang chay tren Dashboard (du lieu tu muc Ke hoach & KPI) */
 async function loadKpiVuBox(){
   var box=document.getElementById('kpiVuBox'); if(!box) return;
   try{
-    var d=await run('getKeHoach',TOKEN);
+    /* v2.3.8: dung promise getKeHoach da chay song song tu loadDashboard (neu co); xong thi xoa de lan sau goi moi — du lieu KPI thay doi sau khi sua/tich viec. */
+    var p=KPI_PROMISE; KPI_PROMISE=null;
+    var d=await (p||run('getKeHoach',TOKEN));
     var dang=(d.vu||[]).filter(function(v){return v.dangChay;});
     if(!dang.length){ box.innerHTML=''; return; }
     box.innerHTML='<div class="card" style="margin-top:16px"><h3>🎯 KPI vụ đang chạy</h3><p class="sub">Tiến độ sản lượng thật (tab SanLuong) so với chỉ tiêu vụ — chi tiết tại mục Kế hoạch &amp; KPI</p>'+dang.map(function(v){var pct=Math.max(0,Math.min(100,Number(v.phanTram)||0));return '<div class="progress-row"><div class="progress-top"><span><b>'+esc(v.TenVu)+'</b> · '+esc(tenVungTheoMa(v.MaVung))+(v.MaLo?' · lô '+esc(v.MaLo):'')+' — đã thu '+fmt(v.thucTeDM_tan,2)+' / '+fmt(v.ChiTieuDM_tan)+' tấn DM</span><b>'+fmt(v.phanTram,1)+'%</b></div><div class="bar"><i style="width:'+pct+'%"></i></div></div>';}).join('')+'</div>';
@@ -958,7 +975,7 @@ function loadVungLo(){
 /* v1.9 Pha 1: CEO + QuanLy deu CHI XEM - an form nhap, may chu cung tu choi ghi */
 function chiXem(){return USER&&(USER.role==='CEO'||USER.role==='QuanLy');}
 var FORM_KHOA='<div class="demo-note">🔒 Tài khoản chỉ xem (CEO / Quản lý) — form nhập liệu đã ẩn. Ghi dữ liệu do Admin / nhân viên phụ trách vùng thực hiện (máy chủ cũng từ chối ghi từ tài khoản chỉ xem).</div>';
-function tableHtml(rows){ if(!rows.length) return '<p>Chưa có dữ liệu.</p>'; var head=Object.keys(rows[0]); var th=head.map(function(h){return '<th>'+esc(h)+'</th>';}).join(''); var trs=rows.map(function(r){return '<tr>'+head.map(function(h){var v=r[h];return '<td data-label="'+esc(h).replace(/"/g,'&quot;')+'">'+esc(typeof v==='number'?((laCotNamThang(h)||laCotMa(h))?soNguyenText(v):fmt(v,2)):v)+'</td>';}).join('')+'</tr>';}).join(''); return '<div class="tbl-wrap"><table><thead><tr>'+th+'</tr></thead><tbody>'+trs+'</tbody></table></div>'; }
+/* v2.3.8: da xoa ham tableHtml (dead code — dinh nghia nhung khong noi nao goi; bang that dung bangDuLieu). */
 /* ===== v1.9: Sua / Xoa ban ghi (6 module) — quyen: Admin tat ca; nguoi nhap sua phieu cua minh; QuanLy/CEO khong co nut (server cung chan) ===== */
 var EDIT=null;
 var SUA_FN={'CanXe_NhapCoNgo':'moSuaCanXe','GioMay':'moSuaGioMay','DauDiezel':'moSuaDau','BonPhan':'moSuaBon','SanLuong':'moSuaSanLuong','ChiPhiKhac':'moSuaChiPhi'};
@@ -967,20 +984,49 @@ var TAB_PK={'CanXe_NhapCoNgo':'MaPhieu','ChiPhiKhac':'MaCP','GioMay':'IDBanGhi',
 var FORM_SUBMIT_ID='';
 function newSubmitId(){ FORM_SUBMIT_ID='s'+Date.now().toString(36)+Math.random().toString(36).slice(2,8); return FORM_SUBMIT_ID; }
 function quyenSuaXoa(row){ if(!USER) return false; if(USER.role==='Admin') return true; if(USER.role==='QuanLy'||USER.role==='CEO') return false; return String(row.NguoiNhap||'').toLowerCase()===String(USER.u||'').toLowerCase(); }
+/* v2.3.8: bang lon ve theo dot (chunked render) — 80 dong dau hien ngay de trang len nhanh, cac dong con lai chen them khi bang luot toi gan (IntersectionObserver) hoac sau 1200ms (fallback) hoac ngay neu khong co IO. DOM cuoi giong het (du hang, dung thu tu, data-lazy duoc go sau khi chen xong). */
+var LAZY_CHUNK_ROWS=80, LAZY_SEQ=0, LAZY_PENDING={}, LAZY_TIMER=null, LAZY_IO=null;
+function appendLazyRows(){
+  Object.keys(LAZY_PENDING).forEach(function(id){
+    var tb=document.querySelector('tbody[data-lazy="'+id+'"]');
+    if(!tb){ delete LAZY_PENDING[id]; return; } /* tbody da bi thay khi tai lai tab — bo job cu */
+    tb.insertAdjacentHTML('beforeend',LAZY_PENDING[id]);
+    tb.removeAttribute('data-lazy');
+    delete LAZY_PENDING[id];
+  });
+  if(LAZY_IO){ try{LAZY_IO.disconnect();}catch(e){} LAZY_IO=null; }
+}
+function scheduleLazyRows(id){
+  if(LAZY_TIMER) clearTimeout(LAZY_TIMER);
+  LAZY_TIMER=setTimeout(appendLazyRows,1200); /* fallback: kieu gi sau 1200ms cung du hang */
+  setTimeout(function(){ /* doi 1 tick de innerHTML cua caller gan xong, tbody moi co trong DOM */
+    if(!LAZY_PENDING[id]) return;
+    if(!('IntersectionObserver' in window)){ appendLazyRows(); return; }
+    try{
+      if(!LAZY_IO) LAZY_IO=new IntersectionObserver(function(es){ var hit=false; es.forEach(function(en){ if(en.isIntersecting) hit=true; }); if(hit) appendLazyRows(); },{rootMargin:'300px'});
+      var tb=document.querySelector('tbody[data-lazy="'+id+'"]');
+      if(tb) LAZY_IO.observe(tb);
+    }catch(e){ appendLazyRows(); }
+  },0);
+}
 function bangDuLieu(tab,rows){
   var ht=bangHienThi(tab,rows);
   if(!rows.length) return '<p>Chưa có dữ liệu.</p>';
   var head=Object.keys(ht[0]);
   var coQuyen=rows.some(quyenSuaXoa);
   var th=head.map(function(h){return '<th>'+esc(h)+'</th>';}).join('')+(coQuyen?'<th>Thao tác</th>':'');
-  var trs=rows.map(function(r,i){
+  var trsArr=rows.map(function(r,i){
     var cells=head.map(function(h){var v=ht[i][h];var st=(tab==='BonPhan'&&(h==='Loại phân'||h==='Số lượng'||h==='Đơn vị'))?' style="white-space:pre-line;vertical-align:top"':'';return '<td data-label="'+esc(h).replace(/"/g,'&quot;')+'"'+st+'>'+esc(typeof v==='number'?((laCotNamThang(h)||laCotMa(h))?soNguyenText(v):fmt(v,2)):v)+'</td>';}).join('');
     var act='';
     if(quyenSuaXoa(r)){ var ma=TAB_PK[tab]?String(r[TAB_PK[tab]]||''):''; act='<td data-label="Thao tác" style="white-space:nowrap"><span class="row-act"><button class="btn ghost small" title="Sửa" onclick="'+SUA_FN[tab]+'('+r._r+')">✏️</button> <button class="btn ghost small" title="Xoá" onclick="xoaDongNhanh(\''+tab+'\','+r._r+',\''+esc(ma)+'\')">🗑️</button></span></td>'; }
     else if(coQuyen) act='<td data-label="Thao tác">—</td>';
     return '<tr>'+cells+act+'</tr>';
-  }).join('');
-  return '<div class="tbl-wrap"><table><thead><tr>'+th+'</tr></thead><tbody>'+trs+'</tbody></table></div>';
+  });
+  if(trsArr.length<=LAZY_CHUNK_ROWS) return '<div class="tbl-wrap"><table><thead><tr>'+th+'</tr></thead><tbody>'+trsArr.join('')+'</tbody></table></div>';
+  var lazyId=++LAZY_SEQ;
+  LAZY_PENDING[lazyId]=trsArr.slice(LAZY_CHUNK_ROWS).join('');
+  scheduleLazyRows(lazyId);
+  return '<div class="tbl-wrap"><table><thead><tr>'+th+'</tr></thead><tbody data-lazy="'+lazyId+'">'+trsArr.slice(0,LAZY_CHUNK_ROWS).join('')+'</tbody></table></div>';
 }
 function taiLaiTab(tab){ FORM_SUBMIT_ID=''; if(tab==='CanXe_NhapCoNgo') loadCanXe(); else if(tab==='GioMay') loadGioMay(); else if(tab==='DauDiezel') loadDau(); else if(tab==='BonPhan') loadBon(); else if(tab==='ChiPhiKhac') loadChiPhi(); else if(tab==='SanLuong') loadTablePage('sanluong','SanLuong','🌾 Sản lượng theo tháng × vùng/lô'); }
 function xoaDongNhanh(tab,r,ma){ if(!confirm('Xoá bản ghi này? Hành động sẽ được ghi vào nhật ký hệ thống và không thể hoàn tác.')) return; var row=timRow(tab,r); run('xoaBanGhi',TOKEN,tab,{r:r,ma:ma||'',vt:(row&&row._vt)||'',submitId:newSubmitId()}).then(function(){ toast('Đã xoá bản ghi.'); taiLaiTab(tab); }).catch(function(e){ toast(e.message); }); }
