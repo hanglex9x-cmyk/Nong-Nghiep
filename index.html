@@ -715,7 +715,16 @@ async function loadHeThong(){
       '<div class="field"><label>Tài khoản *</label><select id="mk_tk">' + mkOpts + '</select></div>' +
       '<div class="field"><label>Mật khẩu mới * (từ 6 ký tự)</label><input id="mk_moi_admin" type="password" autocomplete="new-password"></div></div>' +
       '<div class="field" style="margin-top:10px"><label>Nhập lại mật khẩu mới *</label><input id="mk_moi_admin2" type="password" autocomplete="new-password"></div>' +
-      '<button class="btn" style="margin-top:12px" onclick="submitDatLaiMK_()">Đặt lại mật khẩu</button></div>';
+      '<button class="btn" style="margin-top:12px" onclick="submitDatLaiMK_()">Đặt lại mật khẩu</button></div>' +
+      '<h2 class="sec-title" style="margin-top:26px">Thêm tài khoản mới (chỉ Admin)</h2>' +
+      '<div class="card"><p class="sub">Tạo tài khoản đăng nhập mới cho người dùng. Tài khoản mới đăng nhập được ngay bằng mật khẩu ban đầu — nhớ báo mật khẩu cho người đó. Tài khoản chỉ xem thì chọn vai trò Quản lý; Nhân viên nhập liệu phải chọn ít nhất 1 vùng phụ trách.</p><div class="form-grid">' +
+      '<div class="field"><label>Họ tên *</label><input id="tu_hoten" placeholder="vd: Nguyễn Văn Bình"></div>' +
+      '<div class="field"><label>Tài khoản *</label><input id="tu_tk" placeholder="vd: binh.ln" autocapitalize="off" autocomplete="off"></div>' +
+      '<div class="field"><label>Vai trò *</label><select id="tu_role" onchange="toggleVungThemUser_()"><option value="QuanLy">Quản lý (chỉ xem)</option><option value="NVNhapLieu">Nhân viên nhập liệu</option><option value="Admin">Admin hệ thống</option><option value="CEO">CEO / Ban lãnh đạo</option><option value="FeedCenter">Feed Center</option></select></div>' +
+      '<div class="field"><label>Mật khẩu ban đầu * (từ 6 ký tự)</label><input id="tu_mk" type="password" autocomplete="new-password"></div></div>' +
+      '<div class="field" style="margin-top:10px"><label>Nhập lại mật khẩu ban đầu *</label><input id="tu_mk2" type="password" autocomplete="new-password"></div>' +
+      '<div id="tu_vung_wrap" class="hidden" style="margin-top:10px"><label style="font-size:13px;font-weight:600">Vùng phụ trách * (Nhân viên nhập liệu — chọn ít nhất 1 vùng)</label><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px">' + vungCheckboxes_() + '</div></div>' +
+      '<button class="btn" style="margin-top:12px" onclick="submitThemUser_()">＋ Thêm tài khoản</button></div>';
     }
     el.innerHTML=
       '<h2 class="sec-title">Tài khoản người dùng</h2>'+
@@ -770,6 +779,40 @@ async function submitDatLaiMK_(){
     await run('datLaiMatKhau',TOKEN,tk,moi);
     toast('Đã đặt lại mật khẩu cho '+tk+'. Hãy báo mật khẩu mới cho người dùng.');
     document.getElementById('mk_moi_admin').value=''; document.getElementById('mk_moi_admin2').value='';
+    loadHeThong();
+  }catch(e){ toast(e.message); }
+}
+/* v2.3.12: Admin tu tao tai khoan moi trong app. */
+function vungCheckboxes_(){
+  return (VUNG||[]).map(function(v){
+    return '<label style="display:inline-flex;align-items:center;gap:5px;font-size:13.5px;border:1px solid var(--line);border-radius:8px;padding:6px 9px;cursor:pointer"><input type="checkbox" class="tu_vung_cb" value="'+esc(v.MaVung)+'" style="width:auto"> '+esc(v.TenVung)+' ('+esc(v.MaVung)+')</label>';
+  }).join('');
+}
+function toggleVungThemUser_(){
+  var sel=document.getElementById('tu_role'), wrap=document.getElementById('tu_vung_wrap');
+  if(!sel||!wrap) return;
+  wrap.classList.toggle('hidden', sel.value!=='NVNhapLieu');
+}
+async function submitThemUser_(){
+  var ten=document.getElementById('tu_hoten').value.trim();
+  var tk=document.getElementById('tu_tk').value.trim().toLowerCase();
+  var role=document.getElementById('tu_role').value;
+  var mk=document.getElementById('tu_mk').value, mk2=document.getElementById('tu_mk2').value;
+  if(!ten||!tk){ toast('Nhập họ tên và tài khoản.'); return; }
+  if(!/^[a-z0-9.]+$/.test(tk)){ toast('Tài khoản chỉ được dùng chữ thường, số và dấu chấm (vd: binh.ln).'); return; }
+  if(!mk||mk.length<6){ toast('Mật khẩu ban đầu phải từ 6 ký tự trở lên.'); return; }
+  if(mk!==mk2){ toast('Hai lần nhập mật khẩu không khớp.'); return; }
+  var vung='';
+  if(role==='NVNhapLieu'){
+    vung=Array.prototype.slice.call(document.querySelectorAll('.tu_vung_cb:checked')).map(function(c){ return c.value; }).join(';');
+    if(!vung){ toast('Nhân viên nhập liệu phải chọn ít nhất 1 vùng phụ trách.'); return; }
+  }
+  if(!confirm('Tạo tài khoản mới '+tk+' ('+ten+', vai trò '+role+')?')) return;
+  try{
+    var r=await run('themNguoiDung',TOKEN,ten,tk,role,vung,mk);
+    toast('Đã tạo tài khoản '+r.taiKhoan+' (mã '+r.ma+'). Hãy báo mật khẩu ban đầu cho người dùng.');
+    document.getElementById('tu_hoten').value=''; document.getElementById('tu_tk').value=''; document.getElementById('tu_mk').value=''; document.getElementById('tu_mk2').value='';
+    document.querySelectorAll('.tu_vung_cb').forEach(function(c){ c.checked=false; });
     loadHeThong();
   }catch(e){ toast(e.message); }
 }
