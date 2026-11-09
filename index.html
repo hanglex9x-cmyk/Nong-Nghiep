@@ -7,6 +7,8 @@
 <script>try{document.documentElement.style.overflowX='hidden';document.documentElement.style.touchAction='pan-y';}catch(e){}</script>
 <meta name="color-scheme" content="light dark">
 <link rel="icon" type="image/png" href="https://hanglex9x-cmyk.github.io/Nong-Nghiep/logo-th.png">
+<link rel="apple-touch-icon" href="https://hanglex9x-cmyk.github.io/Nong-Nghiep/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="THYM">
 <title>Hệ thống quản lý vùng trồng cỏ Mombasa &amp; Ngô</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1058,6 +1060,7 @@ function scheduleLazyRows(id){
   },0);
 }
 function bangDuLieu(tab,rows){
+  rows=rows.slice().reverse(); // v2.3.13: moi nhat len tren — nhap xong thay ngay o dau bang; LASTROWS giu thu tu Sheet (xuat Excel/sua/xoa khong doi)
   var ht=bangHienThi(tab,rows);
   if(!rows.length) return '<p>Chưa có dữ liệu.</p>';
   var head=Object.keys(ht[0]);
